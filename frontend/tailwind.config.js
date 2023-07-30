@@ -21,6 +21,9 @@ module.exports = {
       },
       fontFamily: {
         fondamento: ["Fondamento", "cursive"],
+        montserrat: ["Montserrat", "sans-serif"],
+        cormorant: ["Cormorant Garamond", "serif"],
+        lato: ["Lato", "sans-serif"],
       },
     },
   },

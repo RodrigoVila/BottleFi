@@ -1,6 +1,29 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap') */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* This won't be included in your compiled CSS unless you actually use it */
+  .glass {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .gradient-text {
+    background: linear-gradient(to right, #9F00C5, #E6007E, #E6007E);
+    background-clip: text;
+    -webkit-background-clip: text; /* For Safari support */
+    color: transparent;
+  }
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

@@ -1,8 +1,8 @@
- 
+'use client'
 import { useState, useEffect } from "react";
 import { Contract } from "ethers";
 
-export const useNFTContract = (
+export const useContract = (
   contractAddress: string,
   contractABI: any[],
   provider: any
@@ -16,6 +16,6 @@ export const useNFTContract = (
     };
     getContract();
   }, [contractAddress, contractABI, provider]);
-
+  
   return contract;
 };

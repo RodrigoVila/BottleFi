@@ -1,16 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { DappProvider } from "@context/dapp";
 import { StylesProvider } from "@context/styles";
 
 import { Layout } from "@layout";
 import { Dashboard } from "@features/dashboard";
 import { AddToken } from "@features/tokens";
 import { Login } from "@features/login";
+import { ModalProvider } from "@context/modals";
+import { Modals } from "@components/Modal";
 
 function App() {
   return (
-    <DappProvider>
+    <ModalProvider>
+      <Modals />
       <StylesProvider>
         <BrowserRouter>
           <Routes>
@@ -22,7 +24,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </StylesProvider>
-    </DappProvider>
+    </ModalProvider>
   );
 }
 

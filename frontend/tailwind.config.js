@@ -15,7 +15,7 @@ module.exports = {
         darkGlass: "rgba(255, 255, 255, 0.2)",
         glass: "rgba(255, 255, 255, 0.5)",
         lightGlass: "rgba(255, 255, 255, 0.7)",
-        lightOverlay: "rgba(0, 0, 0, 0.2)",
+        lightOverlay: "rgba(0, 0, 0, 0.35)",
         overlay: "rgba(0, 0, 0, 0.5)",
         darkOverlay: "rgba(0, 0, 0, 0.7)",
       },

@@ -1,2 +1,2 @@
 export { Modal } from "./Modal";
-export { WalletModal } from "./WalletModal/WalletModal";
+export { Modals } from "./Modals";

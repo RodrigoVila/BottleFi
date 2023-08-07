@@ -32,7 +32,7 @@ export const MainContainer = ({ children }: { children: ReactNode }) => {
   return (
     <main
       className={twMerge(
-        "z-1 relative flex items-center w-full h-full overflow-hidden border-t-2 border-l-2",
+        "z-1 relative flex flex-col items-center h-full rounded-2xl glass p-6 m-6",
         borderColor
       )}
     >

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button } from "../../components";
+import { Button } from "@components/Buttons";
 import styles from "./TransferToken.module.css";
 
 export const TransferToken = () => {
@@ -9,6 +9,8 @@ export const TransferToken = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const tokens = [{id: 1, name: "token"}]
 
   const clearInputs = () => {
     setSuccessMessage("");
@@ -27,21 +29,21 @@ export const TransferToken = () => {
       return;
     }
     setIsLoading(true);
-    await transfer(tokenID, destinationAddress)
-      .then(() => {
-        setIsLoading(false);
-        setSuccessMessage("Success!");
-        clearInputs();
-      })
-      .catch((e) => {
-        setErrorMessage(`Error: ${e}`);
-        setIsLoading(false);
-        clearInputs();
-      });
+    // await transfer(tokenID, destinationAddress)
+    //   .then(() => {
+    //     setIsLoading(false);
+    //     setSuccessMessage("Success!");
+    //     clearInputs();
+    //   })
+    //   .catch((e) => {
+    //     setErrorMessage(`Error: ${e}`);
+    //     setIsLoading(false);
+    //     clearInputs();
+    //   });
   };
 
   return (
-    !chainError && (
+    true && (
       <div className={styles.container}>
         <div className={styles.form}>
           <label className={styles.title}>Transfer Bottle</label>
@@ -70,9 +72,9 @@ export const TransferToken = () => {
             onChange={(e) => setDestinationAddress(e.target.value)}
           />
           {isLoading ? (
-            <Button label="Loading..." onClick={() => {}} />
+            <Button>Loading...</Button>
           ) : (
-            <Button label="Submit" onClick={handleSubmit} />
+            <Button onClick={handleSubmit}>Submit</Button>
           )}
         </div>
         {errorMessage && (

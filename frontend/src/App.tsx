@@ -19,10 +19,10 @@ function App() {
             <Modals />
             <Routes>
               <Route path="/" element={<Login />} />
-              {/* <Route path="/dashboard" element={<Layout />}>
+              <Route path="/dashboard" element={<Layout />}>
               <Route path="" element={<Dashboard />} />
               <Route path="add" element={<AddToken />} />
-            </Route> */}
+            </Route>
             </Routes>
           </BrowserRouter>
         </StylesProvider>

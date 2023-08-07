@@ -3,8 +3,8 @@ import { CurrentPage, AccountData } from "./";
 
 export const Navbar = () => {
   return (
-    <header className="w-full py-1 text-xl font-semibold text-white z-1 center glass">
-      <Logo />
+    <header className="w-full py-1 text-xl font-semibold text-white z-1 flex items-center justify-between glass">
+      <Logo type="navbar" />
       <CurrentPage />
       <AccountData />
     </header>

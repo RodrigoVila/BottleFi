@@ -1,8 +1,33 @@
-export const Logo = () => {
+import { twMerge } from "tailwind-merge";
+
+type LogoProps = {
+  type?: "login" | "navbar";
+};
+
+export const Logo = ({ type = "login" }: LogoProps) => {
+  const isLogin = type === "login";
+  const containerStyles = isLogin ? "flex-col" : "flex-row";
+  const imageStyles = isLogin ? "h-14 w-14" : "h-8 w-8";
+  const textStyles = isLogin ? "text-5xl" : "text-2xl";
+
   return (
-    <div className="flex flex-col items-center justify-center gap-1">
-      <img src={"./src/assets/guaranteeIcon.png"} className="h-14 w-14" alt="BottleFi" />
-      <h1 className="m-0 text-5xl font-semibold leading-none font-fondamento">
+    <div
+      className={twMerge(
+        "flex flex-1 items-center justify-start gap-1",
+        containerStyles
+      )}
+    >
+      <img
+        src={"./src/assets/guaranteeIcon.png"}
+        className={imageStyles}
+        alt="BottleFi"
+      />
+      <h1
+        className={twMerge(
+          "m-0 font-semibold leading-none font-fondamento",
+          textStyles
+        )}
+      >
         BottleFi
       </h1>
     </div>

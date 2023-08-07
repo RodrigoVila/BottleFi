@@ -37,4 +37,4 @@ export const SuccessError = ({
   );
 };
 
-export default SuccessErrorScreen;
+export default SuccessError;

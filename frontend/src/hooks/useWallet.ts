@@ -24,23 +24,26 @@ export const useWallet = () => {
   const connectWithBrowserWallet = async () => {
     const signer = getSigner();
     const address = await getCurrentAccount();
-    const network = await getNetwork();
-
-    const chainId = network?.chainId || null;
     const account: Account = {
       address,
       name: "",
       type: "",
     };
+    const network = await getNetwork();
+    const chainId = network?.chainId || null;
 
-    console.log("connectWithBrowserWallet", {
-      account,
-      chainId,
-      signer,
-    });
+    if (chainId === SEPOLIA_NETWORK_ID) {
+      setLocalStorage({ account, chainId });
+      setDappData({ account, chainId, signer });
 
-    setLocalStorage({ account, chainId });
-    setDappData({ account, chainId, signer });
+      console.log("connectWithBrowserWallet", {
+        account,
+        chainId,
+        signer,
+      });
+    } else {
+      setChainSwitchModalOpen(true);
+    }
   };
 
   const handleAccountsChanged = (accounts: string[]) => {
@@ -71,11 +74,6 @@ export const useWallet = () => {
     const chainId = parseInt(hexChainId);
     console.log("ChainChanged: ", chainId, "hex: ", hexChainId);
     if (chainId === SEPOLIA_NETWORK_ID) {
-      const data = {
-        ...dappData,
-        chainId,
-      };
-
       setDappData((prevData) => ({
         ...prevData,
         chainId,

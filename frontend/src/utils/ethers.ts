@@ -1,11 +1,5 @@
-import { WalletType, WalletProviders } from "@types";
 import { ethers } from "ethers";
-import { parseWalletError } from "./parse";
-
-type Provider = ethers.providers.Web3Provider | null;
-type Signer = ethers.Signer | null;
-type Account = string | null;
-type Network = ethers.providers.Network | null;
+import { Network, Provider, Signer } from "@types";
 
 export const getProvider = (/*wallet: WalletType*/): Provider => {
   if (typeof window !== "undefined" && window.ethereum) {
@@ -27,7 +21,6 @@ export const getProvider = (/*wallet: WalletType*/): Provider => {
 
 export const getSigner = (): Signer => {
   const provider = getProvider();
-
   if (provider) {
     const signer = provider.getSigner();
     return signer;
@@ -35,7 +28,7 @@ export const getSigner = (): Signer => {
   return null;
 };
 
-export const getCurrentAccount = async (): Promise<Account> => {
+export const getCurrentAccount = async (): Promise<string | null> => {
   const provider = getProvider();
   if (provider) {
     const accounts: string[] = await provider.send("eth_requestAccounts", []);
@@ -53,13 +46,12 @@ export const getNetwork = async (): Promise<Network> => {
   return null;
 };
 
-export const switchToChain = async (chainId:string): Promise<Network> => {
+export const connectToSepoliaNetwork = async (): Promise<Network> => {
   const provider = getProvider();
   if (provider) {
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: ethers.utils.hexValue(chainId) }],
-    });
+    await provider.send("wallet_switchEthereumChain", [
+      { chainId: "0xaa36a7" },
+    ]);
   }
   return null;
 };

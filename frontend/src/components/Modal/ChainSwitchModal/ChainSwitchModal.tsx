@@ -1,27 +1,28 @@
-import React from "react";
 import { Modal } from "..";
-import { GOERLI_NETWORK_ID, SEPOLIA_NETWORK_ID } from "@constants";
 import { useModalContext } from "@context/modals";
-import { switchToChain } from "@utils/ethers";
-import { Button } from "@components/Button";
+import { connectToSepoliaNetwork } from "@utils/ethers";
+import { AnimatedButton } from "@components/Buttons";
 
 export const ChainSwitchModal = () => {
-  const { isChainSwitchOpen, setChainSwitchOpen } = useModalContext();
+  const { isChainSwitchModalOpen, setChainSwitchModalOpen } = useModalContext();
 
-  const closeModal = () => setChainSwitchOpen(false);
+  const closeModal = () => setChainSwitchModalOpen(false);
 
   return (
-    <Modal isOpen={isChainSwitchOpen} onClose={closeModal} disableOutsideClick>
-      <div className="center border-2 border-white">
-        <h3>Invalid Chain Detected</h3>
-        <h5>To access all app features, please connect to either Sepolia or Goerli network.</h5>
-        <Button onClick={() => switchToChain(SEPOLIA_NETWORK_ID)}>
+    <Modal
+      isOpen={isChainSwitchModalOpen}
+      onClose={closeModal}
+      className="bg-[rgba(255,0,0,0.5)]"
+      bodyClassName="border-2 border-[rgba(255,0,0,0.7)] bg-black"
+      disableOutsideClick
+    >
+        <h3 className="text-3xl font-semibold">Invalid chain detected</h3>
+        <h5 className="text-lg">
+        This application only works on the <a target="_blank" rel="noreferrer" href="https://sepolia.dev/" className="underline text-blue-400">Sepolia Test Network</a>. To utilize its features, please ensure you are connected to this network.
+        </h5>
+        <AnimatedButton onClick={connectToSepoliaNetwork}>
           Connect to Sepolia Network
-        </Button>
-        <Button onClick={() => switchToChain(GOERLI_NETWORK_ID)}>
-          Connect to Goerli Network
-        </Button>
-      </div>
+        </AnimatedButton>
     </Modal>
   );
 };

@@ -1,7 +1,7 @@
  
 import { useState, ChangeEvent } from "react";
 
-import { Button } from "@components/Button";
+import { Button } from "@components/Buttons";
 
 type CreateAccountProps = {
   currentAccount: string | object;

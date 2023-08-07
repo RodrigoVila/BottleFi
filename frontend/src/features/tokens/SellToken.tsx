@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button } from "@components/Button";
+import { Button } from "@components/Buttons";
 
 export const SellToken = () => {
   const [tokenID, setTokenID] = useState("");

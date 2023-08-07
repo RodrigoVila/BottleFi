@@ -3,6 +3,9 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      animation: {
+        background: "background 4s ease infinite",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -24,6 +27,12 @@ module.exports = {
         montserrat: ["Montserrat", "sans-serif"],
         cormorant: ["Cormorant Garamond", "serif"],
         lato: ["Lato", "sans-serif"],
+      },
+      keyframes: {
+        background: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
       },
     },
   },

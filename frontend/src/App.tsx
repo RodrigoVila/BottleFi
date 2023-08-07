@@ -8,23 +8,26 @@ import { AddToken } from "@features/tokens";
 import { Login } from "@features/login";
 import { ModalProvider } from "@context/modals";
 import { Modals } from "@components/Modal";
+import { DappProvider } from "@context/dapp";
 
 function App() {
   return (
-    <ModalProvider>
-      <Modals />
-      <StylesProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            {/* <Route path="/dashboard" element={<Layout />}>
+    <DappProvider>
+      <ModalProvider>
+        <StylesProvider>
+          <BrowserRouter>
+            <Modals />
+            <Routes>
+              <Route path="/" element={<Login />} />
+              {/* <Route path="/dashboard" element={<Layout />}>
               <Route path="" element={<Dashboard />} />
               <Route path="add" element={<AddToken />} />
             </Route> */}
-          </Routes>
-        </BrowserRouter>
-      </StylesProvider>
-    </ModalProvider>
+            </Routes>
+          </BrowserRouter>
+        </StylesProvider>
+      </ModalProvider>
+    </DappProvider>
   );
 }
 

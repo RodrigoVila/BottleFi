@@ -7,12 +7,14 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon?: any;
   loading?: boolean;
   children: ReactNode;
+  className?:string
 };
 
 export const Button = ({
   icon = null,
   loading = false,
   children,
+  className,
   ...rest
 }: ButtonProps) => {
   const baseStyles =
@@ -29,7 +31,7 @@ export const Button = ({
         baseStyles,
         loadingStyles,
         withIconStyles,
-        rest.className
+        className
       )}
       disabled={rest.disabled || loading}
       {...rest}

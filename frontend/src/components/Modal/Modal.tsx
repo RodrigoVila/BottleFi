@@ -8,6 +8,7 @@ type ModalProps = {
   onClose: () => void;
   children: ReactNode;
   className?: string;
+  bodyClassName?: string;
   disableOutsideClick?: boolean;
 };
 
@@ -16,6 +17,7 @@ export const Modal = ({
   onClose,
   children,
   className,
+  bodyClassName,
   disableOutsideClick = false,
 }: ModalProps) => {
   useEffect(() => {
@@ -27,14 +29,14 @@ export const Modal = ({
   return isOpen ? (
     <Portal>
       <div
-        className="absolute inset-0 z-0 flex items-center justify-center text-center bg-darkOverlay"
+        className={twMerge("absolute inset-0 z-0 flex items-center justify-center text-center bg-darkOverlay", className)}
         onClick={disableOutsideClick ? undefined : onClose}
       >
         <div
-          className={twMerge("z-[1] relative", className)}
+          className={twMerge("z-[1] relative center flex-col w-full py-5 px-2 rounded-xl gap-5 mx-2", bodyClassName)}
           onClick={(e) => e.stopPropagation()}
         >
-          <button className="absolute top-3 right-3" onClick={onClose}>
+          <button className="absolute top-2 right-2" onClick={onClose}>
             <AiOutlineClose size={24} />
           </button>
           {children}

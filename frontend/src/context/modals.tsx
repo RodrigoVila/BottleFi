@@ -8,8 +8,8 @@ import {
 } from "react";
 
 type ModalContextType = {
-  isChainSwitchOpen: boolean;
-  setChainSwitchOpen: Dispatch<SetStateAction<boolean>>;
+  isChainSwitchModalOpen: boolean;
+  setChainSwitchModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 type ModalProviderProps = {
@@ -17,20 +17,20 @@ type ModalProviderProps = {
 };
 
 const initialValue = {
-  isChainSwitchOpen: false,
-  setChainSwitchOpen: () => {},
+  isChainSwitchModalOpen: false,
+  setChainSwitchModalOpen: () => {},
 };
 
 const ModalContext = createContext<ModalContextType>(initialValue);
 
 export const ModalProvider = ({ children }: ModalProviderProps) => {
-  const [isChainSwitchOpen, setChainSwitchOpen] = useState(
-    initialValue.isChainSwitchOpen
+  const [isChainSwitchModalOpen, setChainSwitchModalOpen] = useState(
+    initialValue.isChainSwitchModalOpen
   );
 
   const value = {
-    isChainSwitchOpen,
-    setChainSwitchOpen,
+    isChainSwitchModalOpen,
+    setChainSwitchModalOpen,
   };
 
   return (

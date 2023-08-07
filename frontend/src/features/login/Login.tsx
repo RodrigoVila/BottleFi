@@ -1,16 +1,46 @@
 import { Logo } from "@components/Logo";
-import { GradientButton } from "@components/GradientButton";
+import { AnimatedButton } from "@components/Buttons";
 import { Icon } from "@components/Icon";
-import { useWallet } from "@hooks";
+import { useLocalStorage, useWallet } from "@hooks";
+import { useDappContext } from "@context/dapp";
+import { useEffect } from "react";
+import { DAPP_INITIAL_DATA, LOCAL_STORAGE_KEY } from "@constants";
+import { getProvider } from "@utils/ethers";
 
 export const Login = () => {
+  const [localStorageData] = useLocalStorage(
+    LOCAL_STORAGE_KEY,
+    DAPP_INITIAL_DATA
+  );
+
+  const { setDappData } = useDappContext();
   const { connectWithBrowserWallet } = useWallet();
+
   // const navigate = useNavigate();
   // const { account } = useDappContext();
 
-  // useEffect(() => {
-  //   account && navigate("/dashboard");
-  // }, [account]);
+  useEffect(() => {
+    const isBrowserWalletConnected = async () => {
+      const provider = getProvider();
+      const accounts = await provider?.listAccounts();
+      if (accounts && accounts.length > 0) {
+        const account = accounts[0];
+        const data = {
+          ...localStorageData,
+          account: {
+            ...localStorage.account,
+            address: account,
+          },
+        };
+        setDappData(data);
+      }
+    };
+    isBrowserWalletConnected();
+  }, []);
+
+  useEffect(() => {
+    localStorageData.account ?? setDappData(localStorageData);
+  }, [localStorageData, setDappData]);
 
   return (
     <div className="w-full h-screen bg-[url('./src/assets/bg.jpeg')] bg-center bg-no-repeat bg-cover">
@@ -25,30 +55,11 @@ export const Login = () => {
             Avoid counterfeit and bring trust to your customers.
           </p>
           <div className="flex flex-col items-center justify-center gap-2">
-            {/* <GradientButton onClick={toggleModal}>Web3 Login</GradientButton> */}
-            <GradientButton
-              icon={
-                <Icon src="/src/assets/metamaskLogo.png" alt="Metamask Logo" />
-              }
-              onClick={() => connectWithBrowserWallet("metamask")}
-            >
-              Metamask
-            </GradientButton>
-            <GradientButton
-              icon={
-                <Icon src="/src/assets/coinbaseLogo.png" alt="Coinbase Logo" />
-              }
-              onClick={() => connectWithBrowserWallet("coinbase")}
-            >
-              Coinbase
-            </GradientButton>
-            <GradientButton>Login with Google*</GradientButton>
+            {/* <AnimatedButton onClick={toggleModal}>Web3 Login</AnimatedButton> */}
+            <AnimatedButton onClick={connectWithBrowserWallet}>
+              Connect with Browser Wallet
+            </AnimatedButton>
           </div>
-          <p className="text-sm font-semibold text-center">
-            *Operation will be simulated as if interacting with a Blockchain.
-            But transactions won't be registered.
-          </p>
-          {/* <Button onClick={toggleModal}>Connect Wallet</Button> */}
         </div>
       </div>
     </div>

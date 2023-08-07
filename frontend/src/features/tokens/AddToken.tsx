@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useIPFS } from "@hooks";
 
-import { Button } from "@components/Button";
+import { Button } from "@components/Buttons";
 
 export const AddToken = () => {
   const [name, setName] = useState("");

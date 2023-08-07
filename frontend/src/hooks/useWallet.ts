@@ -1,83 +1,102 @@
 import { useEffect } from "react";
 
-import { allowedNetworkIds } from "@constants";
-import { getCurrentAccount, getNetwork } from "@utils/ethers";
-import { WalletType, UserStorageType } from "@types";
+import {
+  DAPP_INITIAL_DATA,
+  LOCAL_STORAGE_KEY,
+  SEPOLIA_NETWORK_ID,
+} from "@constants";
+import { getCurrentAccount, getNetwork, getSigner } from "@utils/ethers";
+import { Account } from "@types";
 
 import { useLocalStorage } from "./useLocalStorage";
 import { useModalContext } from "@context/modals";
-
-const initialState: UserStorageType = {
-  account: null,
-  chainId: null,
-  chainName: null,
-};
+import { useDappContext } from "@context/dapp";
 
 export const useWallet = () => {
   const [localStorage, setLocalStorage, clearLocalStorage] = useLocalStorage(
-    "@BF_DATA",
-    initialState
+    LOCAL_STORAGE_KEY,
+    DAPP_INITIAL_DATA
   );
 
-  const { setChainSwitchOpen } = useModalContext();
+  const { dappData, setDappData } = useDappContext();
+  const { setChainSwitchModalOpen } = useModalContext();
 
-  const openChainSwitchModal = () => setChainSwitchOpen(true);
-
-  const connectWithBrowserWallet = async (wallet: WalletType) => {
+  const connectWithBrowserWallet = async () => {
+    const signer = getSigner();
     const address = await getCurrentAccount();
     const network = await getNetwork();
 
-    const chainId = network?.chainId.toString();
-    const chainName = network?.name;
+    const chainId = network?.chainId || null;
+    const account: Account = {
+      address,
+      name: "",
+      type: "",
+    };
 
-    setLocalStorage({
-      account: {
-        address,
-        name: "",
-        type: "",
-      },
+    console.log("connectWithBrowserWallet", {
+      account,
       chainId,
-      chainName,
+      signer,
     });
 
-    chainId && !allowedNetworkIds.includes(chainId) && openChainSwitchModal();
-
-    console.log("Object stored: ", {
-      account: {
-        address,
-        name: "",
-        type: "",
-      },
-      chainId: network?.chainId,
-      chainName: network?.name,
-    });
+    setLocalStorage({ account, chainId });
+    setDappData({ account, chainId, signer });
   };
 
   const handleAccountsChanged = (accounts: string[]) => {
     if (accounts.length > 0) {
-      setLocalStorage({
+      const address = accounts[0];
+
+      // console.log("AccountChanged: ", data);
+
+      setDappData((prevData) => ({
+        ...prevData,
+        account: { ...prevData.account, address },
+      }));
+
+      const updatedLocalStorageData = {
         ...localStorage,
         account: {
           ...localStorage.account,
-          address: accounts[0],
+          address,
         },
-      });
+      };
+      setLocalStorage(updatedLocalStorageData);
     } else {
       clearLocalStorage();
     }
   };
 
-  const handleChainChanged = (chainId: string) => {
-    if (allowedNetworkIds.includes(chainId)) {
-      setLocalStorage({
+  const handleChainChanged = (hexChainId: string) => {
+    const chainId = parseInt(hexChainId);
+    console.log("ChainChanged: ", chainId, "hex: ", hexChainId);
+    if (chainId === SEPOLIA_NETWORK_ID) {
+      const data = {
+        ...dappData,
+        chainId,
+      };
+
+      setDappData((prevData) => ({
+        ...prevData,
+        chainId,
+      }));
+
+      const updatedLocalStorageData = {
         ...localStorage,
         chainId,
-      });
+      };
+      setLocalStorage(updatedLocalStorageData);
+
       window.location.reload();
     } else {
-      console.log(chainId)
-      openChainSwitchModal();
+      setChainSwitchModalOpen(true);
     }
+  };
+
+  const handleDisconnect = () => {
+    console.log("Disconnect!");
+    setDappData(DAPP_INITIAL_DATA);
+    clearLocalStorage();
   };
 
   // Events Listener
@@ -89,7 +108,7 @@ export const useWallet = () => {
       window.ethereum.on("accountsChanged", handleAccountsChanged);
       window.ethereum.on("chainChanged", handleChainChanged);
       window.ethereum.on("connect", () => console.log("connect!!!"));
-      window.ethereum.on("disconnect", () => console.log("disconnect!!!"));
+      window.ethereum.on("disconnect", () => handleDisconnect);
       // !ethereum.isConnected() && clearLocalStorage();
     }
 
@@ -98,7 +117,7 @@ export const useWallet = () => {
         window.ethereum.off("accountsChanged", handleAccountsChanged);
         window.ethereum.off("chainChanged", handleChainChanged);
         window.ethereum.off("connect", () => console.log("connect!!!"));
-        window.ethereum.off("disconnect", () => console.log("disconnect!!!"));
+        window.ethereum.off("disconnect", () => handleDisconnect);
       }
     };
     //eslint-disable-next-line

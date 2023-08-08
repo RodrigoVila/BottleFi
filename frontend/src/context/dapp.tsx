@@ -28,12 +28,11 @@ const DappContext = createContext<DappContextType>(initialValue);
 export const DappProvider = ({ children }: DappProviderProps) => {
   const [dappData, setDappData] = useState(initialValue.dappData);
 
-  const value = {
-    dappData,
-    setDappData,
-  };
-
-  return <DappContext.Provider value={value}>{children}</DappContext.Provider>;
+  return (
+    <DappContext.Provider value={{ dappData, setDappData }}>
+      {children}
+    </DappContext.Provider>
+  );
 };
 
 export const useDappContext = () => {

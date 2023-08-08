@@ -28,13 +28,12 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     initialValue.isChainSwitchModalOpen
   );
 
-  const value = {
-    isChainSwitchModalOpen,
-    setChainSwitchModalOpen,
-  };
-
   return (
-    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
+    <ModalContext.Provider
+      value={{ isChainSwitchModalOpen, setChainSwitchModalOpen }}
+    >
+      {children}
+    </ModalContext.Provider>
   );
 };
 

@@ -1,7 +1,6 @@
-import { MouseEvent, useState } from "react";
-import { DashboardItem } from "./components/DashboardItem";
-import { DashboardActions } from "./components/DashboardActions";
-import { DashboardOverview } from "./components/DashboardOverview";
+import { useState } from "react";
+import { DashboardProvider } from "@context/dashboard";
+import { DashboardActions, DashboardOverview } from "./components";
 
 export const Dashboard = () => {
   const [isQRModalShown, setShowQRModal] = useState(false);
@@ -22,10 +21,12 @@ export const Dashboard = () => {
   };
 
   return (
-    <section className="w-full h-full flex flex-col justify-between">
-      <DashboardActions />
-      <DashboardOverview />
-    </section>
+    <DashboardProvider>
+      <div className="w-full h-full flex flex-col justify-between gap-16">
+        <DashboardActions />
+        <DashboardOverview />
+      </div>
+    </DashboardProvider>
   );
 };
 

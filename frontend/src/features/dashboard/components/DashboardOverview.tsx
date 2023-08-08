@@ -1,7 +1,5 @@
-import React from 'react'
+import { AnimatedContainer } from "@components/AnimatedContainer/AnimatedContainer";
 
 export const DashboardOverview = () => {
-  return (
-    <div className='w-full h-full max-h-96 center bg-lightOverlay rounded-2xl text-xl font-bold'>DashboardOverview</div>
-  )
-}
+  return <AnimatedContainer>DashboardOverview</AnimatedContainer>;
+};

@@ -18,7 +18,7 @@
   }
 
   .gradient-text {
-    background: linear-gradient(to right, #9F00C5, #E6007E, #E6007E);
+    background: linear-gradient(to right, #9f00c5, #e6007e, #e6007e);
     background-clip: text;
     -webkit-background-clip: text; /* For Safari support */
     color: transparent;
@@ -39,4 +39,42 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+.dashboardBg {
+  background-color: rgba(0,0,0);
+
+  background-image: radial-gradient(
+      rgba(0,0,0) 0px,
+      transparent 40%
+    ),
+    radial-gradient(at 10% 29%, #7e22ce 0px, transparent 20%),
+    radial-gradient(at 56% 17%, #b91c1c 0px, transparent 20%),
+    radial-gradient(at 94% 19%, #701a75 0px, transparent 20%),
+    radial-gradient(at 81% 57%, #9f1239 0px, transparent 20%),
+    radial-gradient(at 94% 94%, #ec4899 0px, transparent 20%);
+
+  animation: gradient 50s ease infinite;
+
+  background-size: 200% 200%;
+
+  background-attachment: fixed;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 20%;
+  }
+
+  25% {
+    background-position: 100% 50%;
+  }
+
+  50% {
+    background-position: 50% 70%;
+  }
+
+  100% {
+    background-position: 0% 20%;
+  }
 }

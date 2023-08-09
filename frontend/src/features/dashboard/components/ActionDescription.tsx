@@ -6,16 +6,16 @@ import { Navigate } from "react-router-dom";
 export const ActionDescription = () => {
   const [isNavigationActivate, setNavigationActive] = useState(false);
 
-  const { activeAction } = useDashboardContext();
+  const { selectedAction } = useDashboardContext();
 
   const goToThisComponentURL = () => setNavigationActive(true);
 
-  return activeAction ? (
+  return selectedAction ? (
     <>
-      {isNavigationActivate && <Navigate to={activeAction.goToUrl} />}
+      {isNavigationActivate && <Navigate to={selectedAction.goToUrl} />}
       <AnimatedContainer onClick={goToThisComponentURL} bodyClassName="flex-col items-start p-6">
-        <h1 className="text-xl">{activeAction.label}</h1>
-        <p className=" text-base font-normal">{activeAction.description}</p>
+        <h1 className="text-xl">{selectedAction.label}</h1>
+        <p className=" text-base font-normal">{selectedAction.description}</p>
       </AnimatedContainer>
     </>
   ) : null;

@@ -1,10 +1,10 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import { useDashboardContext, ActiveAction } from "@context/dashboard";
+import { useDashboardContext, selectedAction } from "@context/dashboard";
 
 type ActionItemProps = {
-  action: ActiveAction;
+  action: selectedAction;
   children: ReactNode;
   className?: string;
 };
@@ -14,24 +14,25 @@ export const ActionItem = ({
   children,
   className,
 }: ActionItemProps) => {
-  const { activeAction, setActiveAction } = useDashboardContext();
+  const { hoveredAction, setSelectedAction, setHoveredAction } =
+    useDashboardContext();
 
-  const activeStyles = !activeAction
-    ? "center" //If no item at all is selected
-    : activeAction === action
-    ? "" // It this item is selected
-    : "hidden"; // If any other item is selected
+  const hoverBorderColor = hoveredAction && hoveredAction.hoverColor;
 
-  const handleClick = () => setActiveAction(action);
+  const handleClick = () => setSelectedAction(action);
+  const handleMouseEnter = () => setHoveredAction(action);
+  const handleMouseLeave = () => setHoveredAction(null);
 
   return (
     <button
       className={twMerge(
-        "h-full w-full rounded-2xl text-white glass text-xl font-semibold border-2 border-transparent hover:border-glass",
-        activeStyles,
+        "h-full w-full rounded-2xl text-white glass text-xl font-semibold border-2 border-transparent transition-all duration-500",
+        hoverBorderColor,
         className
       )}
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {children}
     </button>

@@ -2,7 +2,11 @@ import { useState } from "react";
 
 import { useIPFS } from "@hooks";
 
-import { Button } from "@components/Buttons";
+import { Button, GradientButton } from "@components/Buttons";
+import { Input } from "@components/Inputs";
+import { FileInput } from "@components/Inputs/FileInput/FileInput";
+import { TokenTitle } from "./Layout/TokenTitle";
+import { TokenLayout } from "./Layout/TokenLayout";
 
 export const AddToken = () => {
   const [name, setName] = useState("");
@@ -29,16 +33,16 @@ export const AddToken = () => {
   };
 
   const handleSubmit = async (tokenURI: string) => {
-    await mint(tokenURI)
-      .then(() => {
-        setSuccessMessage("Success!");
-        setIsLoading(false);
-        clearInputs();
-      })
-      .catch((e) => {
-        setErrorMessage(`Error: ${e}`);
-        setIsLoading(false);
-      });
+    // await mint(tokenURI)
+    //   .then(() => {
+    //     setSuccessMessage("Success!");
+    //     setIsLoading(false);
+    //     clearInputs();
+    //   })
+    //   .catch((e) => {
+    //     setErrorMessage(`Error: ${e}`);
+    //     setIsLoading(false);
+    //   });
   };
 
   const uploadData = async (e) => {
@@ -62,59 +66,38 @@ export const AddToken = () => {
   };
 
   return (
-    <>
-      ADD TOKEN
-      {/* <Navbar />
-            {!chainError && (
-                <div className="flex items-center justify-center w-full h-full text-white flec-col">
-                    <div className="bg-[rgba(0,0,0,0.9)] w-1/5 min-w-[260px] flex flex-col border-2 border-white p-5 pt-0 rounded-lg">
-                        <label className="px-0 py-2 text-center text-white">Add Bottle</label>
-                        <label className="mb-1 text-white">Name</label>
-                        <input
-                            required
-                            type="text"
-                            className="p-1 pr-0 mb-4 border-2 border-white rounded-sm"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                        <label className="mb-1 text-white">Description</label>
-                        <input
-                            required
-                            type="text"
-                            className="p-1 pr-0 mb-4 border-2 border-white rounded-sm"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                        <label className="mb-1 text-white">Select NFT Image</label>
-                        <input
-                            required
-                            type="file"
-                            className="p-1 pr-0 mb-4 border-2 border-white rounded-sm"
-                            onChange={(e) => handleFileInput(e)}
-                        />
+    <TokenLayout>
+      <TokenTitle>Add Token</TokenTitle>
+      <Input
+        label="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      <Input
+        label="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        required
+      />
+      <FileInput
+        label="Select token image"
+        onChange={(e) => handleFileInput(e)}
+      />
 
-                        {isLoading ? (
-                            <Button label="Loading..." onClick={() => { }} />
-                        ) : (
-                            <Button label="Add" onClick={uploadData} />
-                        )}
-                    </div>
-                    {errorMessage && (
-                        <p
-                            className="m-0 mt-1 font-semibold text-center text-red-300"
-                        >
-                            {errorMessage}
-                        </p>
-                    )}
-                    {successMessage && (
-                        <p
-                            className="m-0 mt-1 font-semibold text-center text-green-300"
-                        >
-                            {successMessage}
-                        </p>
-                    )}
-                </div>
-            )} */}
-    </>
+      <GradientButton loading={isLoading} onClick={uploadData}>
+        Add
+      </GradientButton>
+      {errorMessage && (
+        <p className="m-0 mt-1 font-semibold text-center text-red-300">
+          {errorMessage}
+        </p>
+      )}
+      {successMessage && (
+        <p className="m-0 mt-1 font-semibold text-center text-green-300">
+          {successMessage}
+        </p>
+      )}
+    </TokenLayout>
   );
 };

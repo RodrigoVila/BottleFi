@@ -1,5 +1,5 @@
 import { AnimatedContainer } from "@components/AnimatedContainer/AnimatedContainer";
 
 export const DashboardOverview = () => {
-  return <AnimatedContainer>DashboardOverview</AnimatedContainer>;
+  return <AnimatedContainer>No tokens listed. Click on "Add Token" add them here.</AnimatedContainer>;
 };

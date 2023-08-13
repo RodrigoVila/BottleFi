@@ -23,6 +23,25 @@
     -webkit-background-clip: text; /* For Safari support */
     color: transparent;
   }
+
+  .bg-gradient {
+    background: linear-gradient(to right, #9f00c5, #e6007e, #e6007e);
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .custom-file-upload {
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-bottom: 16px;
+    border-radius: 6px;
+  }
 }
 
 :root {
@@ -42,12 +61,9 @@
 }
 
 .dashboardBg {
-  background-color: rgba(0,0,0);
+  background-color: rgba(0, 0, 0);
 
-  background-image: radial-gradient(
-      rgba(0,0,0) 0px,
-      transparent 40%
-    ),
+  background-image: radial-gradient(rgba(0, 0, 0) 0px, transparent 40%),
     radial-gradient(at 10% 29%, #7e22ce 0px, transparent 20%),
     radial-gradient(at 56% 17%, #b91c1c 0px, transparent 20%),
     radial-gradient(at 94% 19%, #701a75 0px, transparent 20%),

@@ -1,7 +1,9 @@
 import { useState } from "react";
 
-import { Button } from "@components/Buttons";
-import styles from "./TransferToken.module.css";
+import { GradientButton } from "@components/Buttons";
+import { TextInput, SelectInput } from "@components/Inputs";
+
+import { TokenLayout, TokenTitle } from "./TokenLayout";
 
 export const TransferToken = () => {
   const [tokenID, setTokenID] = useState("");
@@ -9,8 +11,6 @@ export const TransferToken = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const tokens = [{id: 1, name: "token"}]
 
   const clearInputs = () => {
     setSuccessMessage("");
@@ -42,52 +42,36 @@ export const TransferToken = () => {
     //   });
   };
 
+  const tokens = [{ id: "1", name: "asf" }];
+
   return (
-    true && (
-      <div className={styles.container}>
-        <div className={styles.form}>
-          <label className={styles.title}>Transfer Bottle</label>
-          <label className={styles.label}>Select Token</label>
-          <select
-            // value={destinationAddress}
-            className={styles.dropdown}
-            onChange={(e) => setTokenID(e.target.value)}
-            placeholder="Select an option"
-          >
-            <option selected={true} disabled={true}>
-              Select an option
-            </option>
-            {tokens.length > 0 &&
-              tokens.map((token, index) => (
-                <option key={index} value={token.id}>
-                  {token.name}
-                </option>
-              ))}
-          </select>
-          <label className={styles.label}>Address</label>
-          <input
-            required
-            type="text"
-            className={styles.input}
-            onChange={(e) => setDestinationAddress(e.target.value)}
-          />
-          {isLoading ? (
-            <Button>Loading...</Button>
-          ) : (
-            <Button onClick={handleSubmit}>Submit</Button>
-          )}
-        </div>
-        {errorMessage && (
-          <p className={`${styles.message} ${styles.errorMessage}`}>
-            {errorMessage}
-          </p>
-        )}
-        {successMessage && (
-          <p className={`${styles.message} ${styles.successMessage}`}>
-            {successMessage}
-          </p>
-        )}
-      </div>
-    )
+    <TokenLayout>
+      <TokenTitle>Transfer Token</TokenTitle>
+      <SelectInput
+        label="Token to transfer"
+        options={tokens}
+        onChange={(e) => setTokenID(e.target.value)}
+        required
+      />
+      <TextInput
+        label="Address"
+        value={destinationAddress}
+        onChange={(e) => setDestinationAddress(e.target.value)}
+        required
+      />
+      <GradientButton loading={isLoading} onClick={() => {}}>
+        Transfer
+      </GradientButton>
+      {errorMessage && (
+        <p className="m-0 mt-1 font-semibold text-center text-red-300">
+          {errorMessage}
+        </p>
+      )}
+      {successMessage && (
+        <p className="m-0 mt-1 font-semibold text-center text-green-300">
+          {successMessage}
+        </p>
+      )}
+    </TokenLayout>
   );
 };

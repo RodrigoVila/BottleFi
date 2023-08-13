@@ -8,7 +8,7 @@ export const TokenLayout = ({  children }: TokenLayoutProps) => {
   return (
     <div className="flex items-center justify-center w-full h-full text-white flex-col">
       <div className="bg-gradient min-w-[260px] flex flex-col p-px rounded-lg">
-        <div className="bg-black w-full h-full p-5 rounded-lg">
+        <div className="bg-black w-full h-full p-5 rounded-lg flex flex-col gap-4">
           {children}
         </div>
       </div>

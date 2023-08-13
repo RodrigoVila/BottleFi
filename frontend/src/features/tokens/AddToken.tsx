@@ -2,11 +2,10 @@ import { useState } from "react";
 
 import { useIPFS } from "@hooks";
 
-import { Button, GradientButton } from "@components/Buttons";
-import { Input } from "@components/Inputs";
-import { FileInput } from "@components/Inputs/FileInput/FileInput";
-import { TokenTitle } from "./Layout/TokenTitle";
-import { TokenLayout } from "./Layout/TokenLayout";
+import { GradientButton } from "@components/Buttons";
+import { TextInput, FileInput } from "@components/Inputs";
+
+import { TokenTitle, TokenLayout } from "./TokenLayout";
 
 export const AddToken = () => {
   const [name, setName] = useState("");
@@ -68,13 +67,13 @@ export const AddToken = () => {
   return (
     <TokenLayout>
       <TokenTitle>Add Token</TokenTitle>
-      <Input
+      <TextInput
         label="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
       />
-      <Input
+      <TextInput
         label="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}

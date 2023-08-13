@@ -1,32 +1,9 @@
-import { useState } from "react";
-import { DashboardProvider } from "@context/dashboard";
-import { DashboardActions, DashboardOverview } from "./components";
-
 export const Dashboard = () => {
-  const [isQRModalShown, setShowQRModal] = useState(false);
-  const [tokenURI, setTokenURI] = useState("");
-
-  const parseDate = (epoch: string) => {
-    const date = new Date(parseInt(epoch) * 1000).toString();
-    const sliced = date.slice(4, 15);
-    return sliced;
-  };
-
-  const toggleShowQRModal = () => setShowQRModal(!isQRModalShown);
-
-  const handleModal = (tokenID: string) => {
-    const url = `/token/${tokenID}`;
-    setTokenURI(url);
-    toggleShowQRModal();
-  };
-
   return (
-    <DashboardProvider>
-      <div className="w-full h-full flex flex-col justify-between gap-16">
-        <DashboardActions />
-        <DashboardOverview />
-      </div>
-    </DashboardProvider>
+    <div className="flex items-center justify-center w-full h-full text-white">
+      {" "}
+      No tokens listed. Click on "Add Token" add them here.
+    </div>
   );
 };
 

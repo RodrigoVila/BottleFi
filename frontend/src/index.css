@@ -37,7 +37,6 @@
     cursor: pointer;
     margin-bottom: 16px;
     border-radius: 6px;
-    background: linear-gradient(to right, #9f00c5, #e6007e, #e6007e);
   }
 }
 
@@ -58,9 +57,9 @@
 }
 
 .dashboardBg {
-  background-color: rgba(0, 0, 0);
+  background-color: rgb(15 23 42);
 
-  background-image: radial-gradient(rgba(0, 0, 0) 0px, transparent 40%),
+  background-image: radial-gradient(rgb(15 23 42) 0px, transparent 40%),
     radial-gradient(at 10% 29%, #7e22ce 0px, transparent 20%),
     radial-gradient(at 56% 17%, #b91c1c 0px, transparent 20%),
     radial-gradient(at 94% 19%, #701a75 0px, transparent 20%),

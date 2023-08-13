@@ -7,7 +7,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon?: any;
   loading?: boolean;
   children: ReactNode;
-  className?:string
+  className?: string;
 };
 
 export const Button = ({
@@ -18,30 +18,16 @@ export const Button = ({
   ...rest
 }: ButtonProps) => {
   const baseStyles =
-    "flex justify-between items-center border-none bg-[#722f37] rounded-md my-1 mx-0 p-2 text-white cursor-pointer text-base hover:bg-white transition-all duration-300 hover:text-black";
+    "flex justify-between items-center w-full bg-black border border-white my-1 mx-0 p-2 text-white cursor-pointer text-base hover:bg-white transition-all duration-300 hover:text-black";
   const loadingStyles = loading && "bg-slate-500";
-  const withIconStyles = icon ? "w-full" : "w-1/2";
-  const withIconLabelContainerStyles = icon
-    ? "justify-between"
-    : "justify-center";
 
   return (
     <button
-      className={twMerge(
-        baseStyles,
-        loadingStyles,
-        withIconStyles,
-        className
-      )}
+      className={twMerge(baseStyles, loadingStyles, className)}
       disabled={rest.disabled || loading}
       {...rest}
     >
-      <div
-        className={twMerge(
-          "w-full flex items-center",
-          withIconLabelContainerStyles
-        )}
-      >
+      <div className="flex items-center w-full">
         <p>{loading ? "Loading" : children}</p>
         <div className="ml-5">{loading ? <Spinner /> : icon}</div>
       </div>

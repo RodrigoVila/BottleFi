@@ -18,9 +18,9 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="" element={<Layout />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/add" element={<AddToken />} />
-              <Route path="/sell" element={<SellToken />} />
-              <Route path="/transfer" element={<TransferToken />} />
+              <Route path="/tokens/add" element={<AddToken />} />
+              <Route path="/tokens/sell" element={<SellToken />} />
+              <Route path="/tokens/transfer" element={<TransferToken />} />
             </Route>
           </Routes>
         </BrowserRouter>

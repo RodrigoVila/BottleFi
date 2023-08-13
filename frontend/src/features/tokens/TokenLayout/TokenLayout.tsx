@@ -4,13 +4,11 @@ type TokenLayoutProps = {
   children: ReactNode;
 };
 
-export const TokenLayout = ({  children }: TokenLayoutProps) => {
+export const TokenLayout = ({ children }: TokenLayoutProps) => {
   return (
-    <div className="flex items-center justify-center w-full h-full text-white flex-col">
-      <div className="bg-gradient min-w-[260px] flex flex-col p-px rounded-lg">
-        <div className="bg-black w-full h-full p-5 rounded-lg flex flex-col gap-4">
-          {children}
-        </div>
+    <div className="flex flex-col items-center justify-center w-full h-full text-white">
+      <div className="relative flex flex-col gap-4 p-5 border-2 rounded-lg bg-slate-900 border-slate-500">
+        {children}
       </div>
     </div>
   );

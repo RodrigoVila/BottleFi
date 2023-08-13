@@ -16,21 +16,19 @@ export const TextInput = ({
   return (
     <div className="flex flex-col gap-2">
       {label && (
-        <label htmlFor={label} className="text-white font-semibold">
+        <label htmlFor={label} className="font-semibold text-white">
           {label}
         </label>
       )}
-      <div className="p-px rounded-md bg-gradient">
       <input
         id={label}
         type={type}
         className={twMerge(
-          "bg-black w-full p-1 rounded-md",
+          "border-slate-500 border-2 bg-slate-900 w-full p-1 rounded-md",
           className
         )}
         {...rest}
       />
-      </div>
     </div>
   );
 };

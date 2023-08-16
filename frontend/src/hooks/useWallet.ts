@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import {
-  DAPP_INITIAL_DATA,
+  USER_INITIAL_DATA,
   LOCAL_STORAGE_KEY,
   SEPOLIA_NETWORK_ID,
 } from "@constants";
@@ -10,18 +10,18 @@ import { Account } from "@types";
 
 import { useLocalStorage } from "./useLocalStorage";
 import { useModalContext } from "@context/modals";
-import { useDappContext } from "@context/dapp";
+import { useAuthContext } from "@context/auth";
 
 export const useWallet = () => {
   const [localStorage, setLocalStorage, clearLocalStorage] = useLocalStorage(
     LOCAL_STORAGE_KEY,
-    DAPP_INITIAL_DATA
+    USER_INITIAL_DATA
   );
 
-  const { dappData, setDappData } = useDappContext();
+  const { user, setUser } = useAuthContext();
   const { setChainSwitchModalOpen } = useModalContext();
 
-  const connectWithBrowserWallet = async () => {
+  const handleConnect = async () => {
     const signer = getSigner();
     const address = await getCurrentAccount();
     const account: Account = {
@@ -34,9 +34,9 @@ export const useWallet = () => {
 
     if (chainId === SEPOLIA_NETWORK_ID) {
       setLocalStorage({ account, chainId });
-      setDappData({ account, chainId, signer });
+      setUser({ account, chainId, signer });
 
-      console.log("connectWithBrowserWallet", {
+      console.log("handleConnect", {
         account,
         chainId,
         signer,
@@ -46,13 +46,19 @@ export const useWallet = () => {
     }
   };
 
+  const handleDisconnect = () => {
+    console.log("Disconnect!");
+    setUser(null)
+    clearLocalStorage()
+  };
+
   const handleAccountsChanged = (accounts: string[]) => {
     if (accounts.length > 0) {
       const address = accounts[0];
 
       // console.log("AccountChanged: ", data);
 
-      setDappData((prevData) => ({
+      setUser((prevData) => ({
         ...prevData,
         account: { ...prevData.account, address },
       }));
@@ -66,7 +72,7 @@ export const useWallet = () => {
       };
       setLocalStorage(updatedLocalStorageData);
     } else {
-      clearLocalStorage();
+      handleDisconnect()
     }
   };
 
@@ -74,7 +80,7 @@ export const useWallet = () => {
     const chainId = parseInt(hexChainId);
     console.log("ChainChanged: ", chainId, "hex: ", hexChainId);
     if (chainId === SEPOLIA_NETWORK_ID) {
-      setDappData((prevData) => ({
+      setUser((prevData) => ({
         ...prevData,
         chainId,
       }));
@@ -89,12 +95,6 @@ export const useWallet = () => {
     } else {
       setChainSwitchModalOpen(true);
     }
-  };
-
-  const handleDisconnect = () => {
-    console.log("Disconnect!");
-    setDappData(DAPP_INITIAL_DATA);
-    clearLocalStorage();
   };
 
   // Events Listener
@@ -121,5 +121,5 @@ export const useWallet = () => {
     //eslint-disable-next-line
   }, []);
 
-  return { connectWithBrowserWallet };
+  return { handleConnect };
 };

@@ -1,23 +1,23 @@
 import { Logo } from "@components/Logo";
 import { AnimatedButton } from "@components/Buttons";
-import { Icon } from "@components/Icon";
 import { useLocalStorage, useWallet } from "@hooks";
-import { useDappContext } from "@context/dapp";
+import { useAuthContext } from "@context/auth";
 import { useEffect } from "react";
-import { DAPP_INITIAL_DATA, LOCAL_STORAGE_KEY } from "@constants";
+import { USER_INITIAL_DATA, LOCAL_STORAGE_KEY } from "@constants";
 import { getProvider } from "@utils/ethers";
+import { UserDataType } from "@types";
 
 export const Login = () => {
   const [localStorageData] = useLocalStorage(
     LOCAL_STORAGE_KEY,
-    DAPP_INITIAL_DATA
+    USER_INITIAL_DATA
   );
 
-  const { setDappData } = useDappContext();
+  const { setUser } = useAuthContext();
   const { connectWithBrowserWallet } = useWallet();
 
   // const navigate = useNavigate();
-  // const { account } = useDappContext();
+  // const { account } = useAuthContext();
 
   useEffect(() => {
     const isBrowserWalletConnected = async () => {
@@ -25,22 +25,22 @@ export const Login = () => {
       const accounts = await provider?.listAccounts();
       if (accounts && accounts.length > 0) {
         const account = accounts[0];
-        const data = {
+        const user: UserDataType = {
           ...localStorageData,
           account: {
             ...localStorage.account,
             address: account,
           },
         };
-        setDappData(data);
+        setUser(user);
       }
     };
     isBrowserWalletConnected();
   }, []);
 
   useEffect(() => {
-    localStorageData.account ?? setDappData(localStorageData);
-  }, [localStorageData, setDappData]);
+    localStorageData.account ?? setUser(localStorageData);
+  }, [localStorageData, setUser]);
 
   return (
     <div className="w-full h-screen bg-[url('./src/assets/bg.jpeg')] bg-center bg-no-repeat bg-cover">

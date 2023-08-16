@@ -1,31 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 
-import { Layout } from "@layout";
-import { Dashboard } from "@features/dashboard";
-import { AddToken, SellToken, TransferToken } from "@features/tokens";
-import { Login } from "@features/login";
+import { AuthProvider } from "@context/auth";
 import { ModalProvider } from "@context/modals";
 import { Modals } from "@components/Modal";
-import { DappProvider } from "@context/dapp";
+
+import { router } from "./router";
 
 function App() {
   return (
-    <DappProvider>
+    <AuthProvider>
       <ModalProvider>
-        <BrowserRouter>
-          <Modals />
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="" element={<Layout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/tokens/add" element={<AddToken />} />
-              <Route path="/tokens/sell" element={<SellToken />} />
-              <Route path="/tokens/transfer" element={<TransferToken />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <Modals />
+        <RouterProvider router={router} />
       </ModalProvider>
-    </DappProvider>
+    </AuthProvider>
   );
 }
 

@@ -4,9 +4,8 @@ pragma solidity 0.8.19;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract MainContract is AccessControl {
-
-     /*** Data Types ***/
+contract Roles is AccessControl {
+    /*** Data Types ***/
 
     struct Supplier {
         string name;
@@ -38,37 +37,52 @@ contract MainContract is AccessControl {
         _;
     }
 
+    modifier onlyDataCompleted(
+        string memory _name,
+        string memory _description
+    ) {
+        require(
+            bytes(_name).length > 0 && bytes(_description).length > 0,
+            "Name and desc cant be empty"
+        );
+        _;
+    }
+
     /*** Methods ***/
-    
-    function addNewSupplier(string memory _name, string memory _description)
-        public
-        returns (Supplier memory)
-    {
-        require(bytes(_name).length >0 && bytes(_description).length >0 , "Name and desc cant be empty");
+
+    function addNewSupplier(
+        string memory _name,
+        string memory _description
+    ) public onlyDataCompleted(_name, _description) returns (Supplier memory) {
         require(!checkIfSupplierExist(), "Supplier already exist");
-        suppliers[msg.sender].name = _name;
-        suppliers[msg.sender].description = _description;
+        require(
+            !checkIfVendorExist(),
+            "Account already registered as a vendor"
+        );
+        suppliers[msg.sender] = Supplier(_name, _description);
         _setupRole(SUPPLIER_ROLE, msg.sender);
         return getCurrentSupplier();
     }
 
-    function addNewVendor(string memory _name, string memory _description)
-        public
-        returns (Vendor memory)
-    {
-        require(bytes(_name).length >0 && bytes(_description).length >0 , "Name and desc cant be empty");
+    function addNewVendor(
+        string memory _name,
+        string memory _description
+    ) public onlyDataCompleted(_name, _description) returns (Vendor memory) {
         require(!checkIfVendorExist(), "Vendor already exist");
-        vendors[msg.sender].name = _name;
-        vendors[msg.sender].description = _description;
+        require(
+            !checkIfSupplierExist(),
+            "Account already registered as a supplier"
+        );
+        vendors[msg.sender] = Vendor(_name, _description);
         _setupRole(VENDOR_ROLE, msg.sender);
         return getCurrentVendor();
     }
 
-    function getCurrentSupplier() public view returns (Supplier memory) {
+    function getCurrentSupplier() internal view returns (Supplier memory) {
         return suppliers[msg.sender];
     }
 
-    function getCurrentVendor() public view returns (Vendor memory) {
+    function getCurrentVendor() internal view returns (Vendor memory) {
         return vendors[msg.sender];
     }
 

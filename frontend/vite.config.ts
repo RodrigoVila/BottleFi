@@ -18,4 +18,11 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: "globalThis"
+      }
+    }
+  }
 });

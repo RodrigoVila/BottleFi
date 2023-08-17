@@ -11,8 +11,14 @@ export const parseWalletError = (errorMessage: string) => {
   if (errorMessage.includes("user rejected action")) {
     alert("User rejected wallet request, please try again.");
   } else if (errorMessage.includes("already pending for origin")) {
-    alert("Already sent a login permission to wallet. Please go to your selected wallet and accept the request.");
+    alert(
+      "Already sent a login permission to wallet. Please go to your selected wallet and accept the request."
+    );
   } else {
     alert("Error trying to connect to wallet.");
   }
+};
+
+export const parseCatchError = (error: unknown): string => {
+  return error instanceof Error ? error.message : (error as string);
 };

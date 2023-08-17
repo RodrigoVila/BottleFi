@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, MouseEvent, ChangeEvent, useEffect } from "react";
 
 import { useIPFS } from "@hooks";
 
@@ -6,32 +6,32 @@ import { GradientButton } from "@components/Buttons";
 import { TextInput, FileInput } from "@components/Inputs";
 
 import { TokenTitle, TokenLayout } from "./TokenLayout";
+import { useToastNotifications } from "@hooks";
+import { parseCatchError } from "@utils/parse";
+import { UPLOAD_FILE_MESSAGES, UPLOAD_METADATA_MESSAGES } from "@constants";
+
+const initialState = { name: "", description: "" };
 
 export const AddToken = () => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [userData, setUserData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { name, description } = userData;
+
   const {
-    fileBuffer,
     handleFileInput,
+    fileBuffer,
     uploadFileToIPFS,
     uploadMetadataToIPFS,
   } = useIPFS();
 
-  const clearMessages = () => {
-    setSuccessMessage("");
-    setErrorMessage("");
-  };
+  const {
+    showErrorNotification,
+    showSuccessNotification,
+    promiseWithNotifications,
+  } = useToastNotifications();
 
-  const clearInputs = () => {
-    setName("");
-    setDescription("");
-  };
-
-  const handleSubmit = async (tokenURI: string) => {
+  const mintToken = async (tokenURI: string) => {
     // await mint(tokenURI)
     //   .then(() => {
     //     setSuccessMessage("Success!");
@@ -44,59 +44,85 @@ export const AddToken = () => {
     //   });
   };
 
-  const uploadData = async (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const name = e?.target.name;
+    const value = e?.target?.value;
+
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     if (!name || !description || !fileBuffer) {
-      alert("Every input is mandatory");
+      showErrorNotification("Every input is mandatory");
       return;
     }
+
     setIsLoading(true);
 
-    clearMessages();
+    try {
+      const filePromise = uploadFileToIPFS();
+      const fileURI = (await promiseWithNotifications(
+        filePromise,
+        UPLOAD_FILE_MESSAGES
+      )) as string;
 
-    await uploadFileToIPFS().then((fileURI) => {
-      fileURI !== undefined &&
-        uploadMetadataToIPFS(name, description, fileURI.toString()).then(
-          (tokenURI) => {
-            tokenURI && handleSubmit(tokenURI);
-          }
+      if (fileURI) {
+        console.log("SUCCESS UPLOAD FILE. FileURI: ", fileURI);
+        const metadataPromise = uploadMetadataToIPFS(
+          name,
+          description,
+          fileURI
         );
-    });
+        const tokenURI = (await promiseWithNotifications(
+          metadataPromise,
+          UPLOAD_METADATA_MESSAGES
+        )) as string;
+
+        if (tokenURI) {
+          console.log("SUCCESS UPLOAD METADATA. TokenURI: ", tokenURI);
+          mintToken(tokenURI);
+          showSuccessNotification(
+            "Token minted successfully. Go to dashboard to see it!"
+          );
+        }
+      }
+    } catch (err) {
+      //Error messages are being handled by the "promiseWithNotifications" fn
+      console.error(err)
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    console.log("use", { ...userData, fileBuffer });
+  }, [userData, fileBuffer]);
 
   return (
     <TokenLayout>
       <TokenTitle>Add Token</TokenTitle>
+
       <TextInput
         label="Name"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={handleInputChange}
         required
       />
+
       <TextInput
         label="Description"
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={handleInputChange}
         required
       />
-      <FileInput
-        label="Select token image"
-        onChange={(e) => handleFileInput(e)}
-      />
 
-      <GradientButton loading={isLoading} onClick={uploadData}>
+      <FileInput label="Select token image" onChange={handleFileInput} />
+
+      <GradientButton loading={isLoading} onClick={handleSubmit}>
         Add
       </GradientButton>
-      {errorMessage && (
-        <p className="m-0 mt-1 font-semibold text-center text-red-300">
-          {errorMessage}
-        </p>
-      )}
-      {successMessage && (
-        <p className="m-0 mt-1 font-semibold text-center text-green-300">
-          {successMessage}
-        </p>
-      )}
     </TokenLayout>
   );
 };

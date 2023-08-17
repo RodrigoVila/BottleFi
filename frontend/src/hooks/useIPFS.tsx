@@ -1,71 +1,90 @@
-import { useEffect, useState } from 'react';
-import { create } from 'ipfs-http-client';
+import { ChangeEvent, useEffect, useState } from "react";
+import { IPFSHTTPClient, create } from "ipfs-http-client";
+import { useToastNotifications } from "./useToastNotifications";
+import { readFileAsArrayBuffer } from "@utils/file";
+import { parseCatchError } from "@utils/parse";
 
 export const useIPFS = () => {
-    const [IPFS, setIPFS] = useState<any>();
-    const [fileBuffer, setFileBuffer] = useState<any>(null);
-    const [tokenURI, setTokenURI] = useState('');
+  const [IPFS, setIPFS] = useState<IPFSHTTPClient | null>(null);
+  const [fileBuffer, setFileBuffer] = useState<Uint8Array | null>(null);
+  const [tokenURI, setTokenURI] = useState<string | null>(null);
 
-    const handleFileInput = (e) => {
-        e.preventDefault();
-        const data = e.target.files[0];
-        const fileReader: FileReader = new window.FileReader();
-        fileReader.readAsArrayBuffer(data);
-        //@ts-ignore-next-line
-        fileReader.onloadend = () => setFileBuffer(Buffer.from(fileReader.result));
+  const { showErrorNotification } = useToastNotifications();
+
+  const handleFileInput = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const arrayBuffer = await readFileAsArrayBuffer(file);
+      const uint8Array = new Uint8Array(arrayBuffer);
+      setFileBuffer(uint8Array);
+    } catch (err) {
+      const error = parseCatchError(err);
+      showErrorNotification(`Error reading file: ${error}`);
+    }
+  };
+
+  const uploadFileToIPFS = async (): Promise<string> => {
+    if (!IPFS || !fileBuffer) {
+      throw new Error("IPFS or file buffer not available");
+    }
+
+    try {
+      const created = await IPFS.add(fileBuffer);
+      const fileURI = `https://ipfs.infura.io/ipfs/${created.path}`;
+      return fileURI;
+    } catch (error) {
+      throw new Error("An error occurred while uploading to IPFS");
+    }
+  };
+
+  const uploadMetadataToIPFS = async (
+    name: string,
+    description: string,
+    fileURI: string
+  ): Promise<string> => {
+    if (!IPFS) {
+      throw new Error("IPFS not available");
+    }
+
+    const metaObj = { name, description, fileURI };
+    const strObj = JSON.stringify(metaObj);
+
+    try {
+      const created = await IPFS.add(strObj);
+      const tokenURI = `https://ipfs.infura.io/ipfs/${created.path}`;
+      setTokenURI(tokenURI);
+      return tokenURI;
+    } catch (error) {
+      throw new Error("An error occurred while uploading to IPFS");
+    }
+  };
+
+  useEffect(() => {
+    const projectId = import.meta.env.VITE_INFURA_API_KEY;
+    const projectSecret = import.meta.env.VITE_INFURA_API_KEY_SECRET;
+    const auth = "Basic " + btoa(projectId + ":" + projectSecret);
+
+    const init = async () => {
+      const instance = create({
+        url: "https://ipfs.infura.io:5001",
+        protocol: "https",
+        headers: { authorization: auth },
+      });
+      setIPFS(instance);
     };
+    init();
+    //eslint-disable-next-line
+  }, []);
 
-    const uploadFileToIPFS = async () => {
-        try {
-            const created = await IPFS.add(fileBuffer);
-            const url = `https://ipfs.infura.io/ipfs/${created.path}`;
-            return url;
-        } catch (error) {
-            return false;
-        }
-    };
-
-    const uploadMetadataToIPFS = async (
-        name: string,
-        description: string,
-        fileURI: string
-    ) => {
-        if (fileURI) {
-            const metaObj = {
-                name,
-                description,
-                fileURI,
-            };
-            const strObj = JSON.stringify(metaObj);
-
-            try {
-                const created = await IPFS.add(strObj);
-                const url = `https://ipfs.infura.io/ipfs/${created.path}`;
-                setTokenURI(url);
-                return url;
-            } catch (error) {
-                console.error('Error on uploadMetadataToIPFS: ', error);
-                return false;
-            }
-        }
-    };
-
-    useEffect(() => {
-        const init = async () => {
-            const instance = create({
-                url: 'https://ipfs.infura.io:5001',
-            });
-            setIPFS(instance);
-        };
-        init();
-        //eslint-disable-next-line
-    }, []);
-
-    return {
-        fileBuffer,
-        tokenURI,
-        handleFileInput,
-        uploadFileToIPFS,
-        uploadMetadataToIPFS,
-    };
+  return {
+    fileBuffer,
+    tokenURI,
+    handleFileInput,
+    uploadFileToIPFS,
+    uploadMetadataToIPFS,
+  };
 };

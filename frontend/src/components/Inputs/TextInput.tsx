@@ -23,6 +23,7 @@ export const TextInput = ({
       <input
         id={label}
         type={type}
+        name={label?.toLowerCase()}
         className={twMerge(
           "border-slate-500 border-2 bg-slate-900 w-full p-1 rounded-md",
           className

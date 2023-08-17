@@ -7,6 +7,8 @@ export const RequireAuth = ({ children }: { children: ReactNode }) => {
   const { user } = useAuthContext();
   const location = useLocation();
 
+  console.log("RequireAuth User", user)
+
   if (!user) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them

@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 
-export const useLocalStorage = (key: string, initialValue: string | object) => {
+export const useLocalStorage = (key: string, initialValue?: string | object) => {
   const [storedValue, setStoredValue] = useState(() => {
     if (typeof window !== "undefined") {
       try {

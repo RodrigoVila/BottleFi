@@ -1,46 +1,26 @@
-export const Sidebar = () => {
-  const itemStyle = "text-base cursor-pointer hover:font-bold transition-all duration-300"
-  return (
-    <nav
-      className="pl-1 pr-4 min-w-[180px]"
-    >
-      <ul className="flex flex-col w-full gap-10 p-4 m-0 list-none">
-      <li
-          className={itemStyle}
-        >
-          <a href="/howitworks">
-            How it works
-          </a>
-        </li>
-        <li
-          className={itemStyle}
-        >
-          <a href="/dashboard">
-            Dashboard
-          </a>
-        </li>
-        <li
-          className={itemStyle}
-        >
-          <a href="/tokens/add">
-            Add Token
-          </a>
-        </li>
-        <li
-          className={itemStyle}
-        >
-          <a href="/tokens/transfer">
-            Transfer Token
-          </a>
-        </li>
-        <li
-          className={itemStyle}
-        >
-          <a href="/tokens/sell">
-            Sell Token
-          </a>
-        </li>
+import { Link } from "react-router-dom";
 
+export const Sidebar = () => {
+  const itemStyle =
+    "text-base cursor-pointer hover:font-bold transition-all duration-300";
+  return (
+    <nav className="pl-1 pr-4 min-w-[180px]">
+      <ul className="flex flex-col w-full p-4 m-0 list-none gap-7">
+        <li className={itemStyle}>
+          <Link to="/how">How it works</Link>
+        </li>
+        <li className={itemStyle}>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+        <li className={itemStyle}>
+          <Link to="/tokens/add">Add Token</Link>
+        </li>
+        <li className={itemStyle}>
+          <Link to="/tokens/transfer">Transfer Token</Link>
+        </li>
+        <li className={itemStyle}>
+          <Link to="/tokens/sell">Sell Token</Link>
+        </li>
       </ul>
     </nav>
   );

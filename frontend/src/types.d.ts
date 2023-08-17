@@ -1,11 +1,10 @@
 import { ethers } from "ethers";
 
-//TODO For future reference
-// export type WalletType = "coinbase" | "metamask";
+export type WalletType = "coinbase" | "metamask";
 
-// export type WalletProviders = {
-//   [key in WalletType]: any;
-// };
+export type WalletProviders = {
+  [key in WalletType]: any;
+};
 
 export type UserDataType = {
   account: Account;

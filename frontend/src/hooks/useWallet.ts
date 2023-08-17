@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 
-import {
-  USER_INITIAL_DATA,
-  LOCAL_STORAGE_KEY,
-  SEPOLIA_NETWORK_ID,
-} from "@constants";
+import { LOCAL_STORAGE_KEY, SEPOLIA_NETWORK_ID } from "@constants";
 import { getCurrentAccount, getNetwork, getSigner } from "@utils/ethers";
 import { Account } from "@types";
 
@@ -13,12 +9,10 @@ import { useModalContext } from "@context/modals";
 import { useAuthContext } from "@context/auth";
 
 export const useWallet = () => {
-  const [localStorage, setLocalStorage, clearLocalStorage] = useLocalStorage(
-    LOCAL_STORAGE_KEY,
-    USER_INITIAL_DATA
-  );
+  const [localStorage, setLocalStorage, clearLocalStorage] =
+    useLocalStorage(LOCAL_STORAGE_KEY);
 
-  const { user, setUser } = useAuthContext();
+  const { setUser } = useAuthContext();
   const { setChainSwitchModalOpen } = useModalContext();
 
   const handleConnect = async () => {
@@ -36,20 +30,21 @@ export const useWallet = () => {
       setLocalStorage({ account, chainId });
       setUser({ account, chainId, signer });
 
-      console.log("handleConnect", {
+      console.log("handleConnect OK", {
         account,
         chainId,
         signer,
       });
     } else {
+      console.log("ChainID !== sepolia");
       setChainSwitchModalOpen(true);
     }
   };
 
   const handleDisconnect = () => {
     console.log("Disconnect!");
-    setUser(null)
-    clearLocalStorage()
+    setUser(null);
+    clearLocalStorage();
   };
 
   const handleAccountsChanged = (accounts: string[]) => {
@@ -72,7 +67,7 @@ export const useWallet = () => {
       };
       setLocalStorage(updatedLocalStorageData);
     } else {
-      handleDisconnect()
+      handleDisconnect();
     }
   };
 
@@ -121,5 +116,5 @@ export const useWallet = () => {
     //eslint-disable-next-line
   }, []);
 
-  return { handleConnect };
+  return { localStorage, handleConnect };
 };

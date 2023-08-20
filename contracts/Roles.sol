@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: GPL-3.0
-
-pragma solidity 0.8.19;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
@@ -27,16 +26,6 @@ contract Roles is AccessControl {
 
     /*** Modifiers ***/
 
-    modifier onlySupplier() {
-        require(hasRole(SUPPLIER_ROLE, msg.sender), "Only Suppliers");
-        _;
-    }
-
-    modifier onlyVendor() {
-        require(hasRole(VENDOR_ROLE, msg.sender), "Only Vendors");
-        _;
-    }
-
     modifier onlyDataCompleted(
         string memory _name,
         string memory _description
@@ -54,13 +43,13 @@ contract Roles is AccessControl {
         string memory _name,
         string memory _description
     ) public onlyDataCompleted(_name, _description) returns (Supplier memory) {
-        require(!checkIfSupplierExist(), "Supplier already exist");
-        require(
-            !checkIfVendorExist(),
-            "Account already registered as a vendor"
-        );
+        require(!supplierExist(), "Supplier already exist");
+        require(!vendorExist(), "Account is already a vendor");
+
         suppliers[msg.sender] = Supplier(_name, _description);
-        _setupRole(SUPPLIER_ROLE, msg.sender);
+
+        _grantRole(SUPPLIER_ROLE, msg.sender);
+
         return getCurrentSupplier();
     }
 
@@ -68,13 +57,13 @@ contract Roles is AccessControl {
         string memory _name,
         string memory _description
     ) public onlyDataCompleted(_name, _description) returns (Vendor memory) {
-        require(!checkIfVendorExist(), "Vendor already exist");
-        require(
-            !checkIfSupplierExist(),
-            "Account already registered as a supplier"
-        );
+        require(!vendorExist(), "Vendor already exist");
+        require(!supplierExist(), "Account is already a supplier");
+
         vendors[msg.sender] = Vendor(_name, _description);
-        _setupRole(VENDOR_ROLE, msg.sender);
+
+        _grantRole(VENDOR_ROLE, msg.sender);
+
         return getCurrentVendor();
     }
 
@@ -86,15 +75,11 @@ contract Roles is AccessControl {
         return vendors[msg.sender];
     }
 
-    function checkIfSupplierExist() public view returns (bool) {
+    function supplierExist() public view returns (bool) {
         return bytes(suppliers[msg.sender].name).length > 0;
     }
 
-    function checkIfVendorExist() public view returns (bool) {
+    function vendorExist() public view returns (bool) {
         return bytes(vendors[msg.sender].name).length > 0;
-    }
-
-    function getSenderAddress() public view returns (address) {
-        return msg.sender;
     }
 }

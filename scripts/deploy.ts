@@ -1,24 +1,22 @@
 import { ethers } from "hardhat";
 
+// TODO: Check this deploy function. It was from a 2021 post.
+// I think Hardhat has new ways to do this
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
 
-  const lockedAmount = ethers.parseEther("0.001");
+  // We get the contract to deploy
+  const RolesContract = await ethers.getContractFactory('Roles');
+  const rolescontract = await RolesContract.deploy();
 
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
+  await rolescontract.deployed();
 
-  await lock.waitForDeployment();
+  console.log('RolesContract deployed to:', rolescontract.address);
 
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-  );
+  const NFTContract = await ethers.getContractFactory('NFT');
+  const nftcontract = await NFTContract.deploy(rolescontract.address);
+
+  console.log('NFT deployed to:', nftcontract.address);
 }
-
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {

@@ -13,7 +13,7 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
 
     /*** Roles contract instance ***/
 
-    Roles public rolesContractInstance;
+    Roles private rolesContractInstance;
 
     /*** Data Types ***/
 
@@ -48,7 +48,7 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
 
     modifier onlySupplier() {
         require(
-            hasRole(rolesContractInstance.SUPPLIER_ROLE, msg.sender),
+            hasRole(rolesContractInstance.SUPPLIER_ROLE(), msg.sender),
             "Only Suppliers"
         );
         _;
@@ -56,7 +56,7 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
 
     modifier onlyVendor() {
         require(
-            hasRole(rolesContractInstance.VENDOR_ROLE, msg.sender),
+            hasRole(rolesContractInstance.VENDOR_ROLE(), msg.sender),
             "Only Vendors"
         );
         _;
@@ -76,7 +76,7 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
 
     /*** Methods ***/
 
-    function safeMint(address _to, string memory _uri) public onlySupplier {
+    function safeMint(address _to, string memory _uri) external onlySupplier {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
 
@@ -102,7 +102,7 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
     function transfer(
         uint256 _tokenId,
         address _to
-    ) public onlySupplier returns (uint256) {
+    ) external onlySupplier returns (uint256) {
         address seller = ownerOf(_tokenId);
         require(seller == msg.sender, "Only owner of this token can transfer");
 
@@ -118,7 +118,7 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
     function sell(
         uint256 _tokenId,
         address _to
-    ) public onlySupplier onlyVendor returns (uint256) {
+    ) external onlySupplier onlyVendor returns (uint256) {
         address seller = ownerOf(_tokenId);
         require(seller == msg.sender, "Only owner of this token can sell");
 
@@ -146,21 +146,21 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
     }
 
     //Return token validity (Sold bottle = Invalid token)
-    function isValidToken(uint256 _tokenId) public view returns (bool) {
+    function isValidToken(uint256 _tokenId) external view returns (bool) {
         return tokenIndexIsValid[_tokenId];
     }
 
     //Return array of token owned IDs
     function tokensOfOwner(
         address _owner
-    ) public view returns (uint256[] memory) {
+    ) external view returns (uint256[] memory) {
         return tokensOwnedBy[_owner];
     }
 
     // Given an id, returns token data
     function getTokenById(
         uint256 _tokenId
-    ) public view returns (uint256, string memory, uint256, bool) {
+    ) external view returns (uint256, string memory, uint256, bool) {
         uint256 id = indexToToken[_tokenId].id;
         string memory uri = indexToToken[_tokenId].uri;
         uint256 mintedAt = indexToToken[_tokenId].mintedAt;

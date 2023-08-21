@@ -6,80 +6,61 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 contract Roles is AccessControl {
     /*** Data Types ***/
 
-    struct Supplier {
+    struct Profile {
         string name;
         string description;
     }
 
-    struct Vendor {
-        string name;
-        string description;
-    }
+    /*** Roles ***/
 
     bytes32 public constant SUPPLIER_ROLE = keccak256("SUPPLIER_ROLE");
     bytes32 public constant VENDOR_ROLE = keccak256("VENDOR_ROLE");
 
     /*** Storage ***/
 
-    mapping(address => Supplier) public suppliers;
-    mapping(address => Vendor) public vendors;
+    mapping(address => Profile) public suppliers;
+    mapping(address => Profile) public vendors;
 
-    /*** Modifiers ***/
+    /*** Events ***/
 
-    modifier onlyDataCompleted(
+    event ProfileRegistered(address indexed account, string role, string name);
+
+    /*** Methods ***/
+
+    function register(
+        string memory _role,
         string memory _name,
         string memory _description
-    ) {
+    ) public returns (bool) {
+        bytes32 parsedRole = keccak256(abi.encodePacked(_role));
+        require(
+            !hasRole(parsedRole, msg.sender),
+            "Already registered as this role"
+        );
         require(
             bytes(_name).length > 0 && bytes(_description).length > 0,
             "Name and desc cant be empty"
         );
-        _;
+
+        if (parsedRole == SUPPLIER_ROLE) {
+            suppliers[msg.sender] = Profile(_name, _description);
+        } else {
+            vendors[msg.sender] = Profile(_name, _description);
+        }
+
+        _grantRole(parsedRole, msg.sender);
+
+        emit ProfileRegistered(msg.sender, _role, _name);
+
+        return true;
     }
 
-    /*** Methods ***/
+    // TODO: Delete if not needed
+    // function supplierExist() public view returns (bool) {
+    //     return bytes(suppliers[msg.sender].name).length > 0;
+    // }
 
-    function addNewSupplier(
-        string memory _name,
-        string memory _description
-    ) public onlyDataCompleted(_name, _description) returns (Supplier memory) {
-        require(!supplierExist(), "Supplier already exist");
-        require(!vendorExist(), "Account is already a vendor");
-
-        suppliers[msg.sender] = Supplier(_name, _description);
-
-        _grantRole(SUPPLIER_ROLE, msg.sender);
-
-        return getCurrentSupplier();
-    }
-
-    function addNewVendor(
-        string memory _name,
-        string memory _description
-    ) public onlyDataCompleted(_name, _description) returns (Vendor memory) {
-        require(!vendorExist(), "Vendor already exist");
-        require(!supplierExist(), "Account is already a supplier");
-
-        vendors[msg.sender] = Vendor(_name, _description);
-
-        _grantRole(VENDOR_ROLE, msg.sender);
-
-        return getCurrentVendor();
-    }
-
-    function getCurrentSupplier() internal view returns (Supplier memory) {
-        return suppliers[msg.sender];
-    }
-
-    function getCurrentVendor() internal view returns (Vendor memory) {
-        return vendors[msg.sender];
-    }
-
-    function supplierExist() public view returns (bool) {
-        return bytes(suppliers[msg.sender].name).length > 0;
-    }
-
-    function vendorExist() public view returns (bool) {
-        return bytes(vendors[msg.sender].name).length > 0;
-    }
+    // function vendorExist() public view returns (bool) {
+    //     return bytes(vendors[msg.sender].name).length > 0;
+    // }
 }

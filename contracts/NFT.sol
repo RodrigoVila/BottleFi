@@ -1,194 +1,183 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "./Roles.sol";
+import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
+import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
+import '@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol';
+import '@openzeppelin/contracts/utils/Counters.sol';
+import './Roles.sol';
 
-contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
-    using Counters for Counters.Counter;
+contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
+	using Counters for Counters.Counter;
 
-    /*** Roles contract instance ***/
+	/*** Roles contract instance ***/
 
-    Roles private rolesContractInstance;
+	Roles private rolesContractInstance;
 
-    /*** Data Types ***/
+	/*** Data Types ***/
 
-    struct Token {
-        uint256 id;
-        string uri;
-        uint256 mintedAt;
-        address mintedBy; //This could be cellar name inherited from main contract
-    }
+	struct Token {
+		uint256 id;
+		string uri;
+		uint256 mintedAt;
+		address mintedBy; //This could be cellar name inherited from main contract
+	}
 
-    /*** Storage ***/
+	/*** Storage ***/
 
-    //Token ID count
-    Counters.Counter private _tokenIdCounter;
+	//Token ID count
+	Counters.Counter private _tokenIdCounter;
 
-    //Tracks tokens
-    mapping(uint256 => Token) private indexToToken;
+	//Tracks tokens
+	mapping(uint256 => Token) private indexToToken;
 
-    //Ownership by token id
-    mapping(uint256 => address) private tokenIndexToOwner;
+	//Ownership by token id
+	mapping(uint256 => address) private tokenIndexToOwner;
 
-    //How many tokens owner has
-    mapping(address => uint256) ownershipTokenCount;
+	//How many tokens owner has
+	mapping(address => uint256) ownershipTokenCount;
 
-    // Which tokens owner has
-    mapping(address => uint256[]) private tokensOwnedBy;
+	// Which tokens owner has
+	mapping(address => uint256[]) private tokensOwnedBy;
 
-    //Token validity (Used to know if bottle is authentic or not).
-    mapping(uint256 => bool) public tokenIndexIsValid;
+	//Token validity (Used to know if bottle is authentic or not).
+	mapping(uint256 => bool) public tokenIndexIsValid;
 
-    /*** Modifiers ***/
+	/*** Modifiers ***/
 
-    modifier onlySupplier() {
-        require(
-            hasRole(rolesContractInstance.SUPPLIER_ROLE(), msg.sender),
-            "Only Suppliers"
-        );
-        _;
-    }
+	modifier onlySupplier() {
+		require(rolesContractInstance.hasRole(rolesContractInstance.SUPPLIER_ROLE(), msg.sender), 'Only Suppliers');
+		_;
+	}
 
-    modifier onlyVendor() {
-        require(
-            hasRole(rolesContractInstance.VENDOR_ROLE(), msg.sender),
-            "Only Vendors"
-        );
-        _;
-    }
+	modifier onlyVendor() {
+		require(rolesContractInstance.hasRole(rolesContractInstance.VENDOR_ROLE(), msg.sender), 'Only Vendors');
+		_;
+	}
 
-    /*** Events ***/
+	modifier onlySupplierOrVendor() {
+		require(
+			rolesContractInstance.hasRole(rolesContractInstance.SUPPLIER_ROLE(), msg.sender) ||
+				rolesContractInstance.hasRole(rolesContractInstance.VENDOR_ROLE(), msg.sender),
+			'Only Suppliers or Vendors'
+		);
+		_;
+	}
 
-    event Mint(uint256 id, string tokenURI, uint256 mintedAt, address mintedBy);
-    event Sell(address seller, address to, uint256 id);
+	/*** Events ***/
 
-    /*** Constructor ***/
+	event Mint(uint256 id, string tokenURI, uint256 mintedAt, address mintedBy);
+	event Sell(address seller, address to, uint256 id);
 
-    constructor(address _rolesContractAddress) ERC721("BottleFi", "BTF") {
-        rolesContractInstance = Roles(_rolesContractAddress);
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    }
+	/*** Constructor ***/
 
-    /*** Methods ***/
+	constructor(address _rolesContractAddress) ERC721('BottleFi', 'BTF') {
+		rolesContractInstance = Roles(_rolesContractAddress);
+	}
 
-    function safeMint(address _to, string memory _uri) external onlySupplier {
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
+	/*** Methods ***/
 
-        Token memory token = Token({
-            id: tokenId,
-            uri: _uri,
-            mintedAt: block.timestamp,
-            mintedBy: msg.sender
-        });
+	function mint(string memory _uri) external onlySupplier {
+		uint256 tokenId = _tokenIdCounter.current();
+		_tokenIdCounter.increment();
 
-        indexToToken[tokenId] = token;
-        tokenIndexToOwner[tokenId] = msg.sender;
-        tokenIndexIsValid[tokenId] = true;
-        tokensOwnedBy[_to].push(tokenId);
-        ownershipTokenCount[msg.sender]++;
+		Token memory token = Token({ id: tokenId, uri: _uri, mintedAt: block.timestamp, mintedBy: msg.sender });
 
-        _safeMint(_to, tokenId);
-        _setTokenURI(tokenId, _uri);
+		indexToToken[tokenId] = token;
+		tokenIndexToOwner[tokenId] = msg.sender;
+		tokenIndexIsValid[tokenId] = true;
+		tokensOwnedBy[msg.sender].push(tokenId);
+		ownershipTokenCount[msg.sender]++;
 
-        emit Mint(tokenId, _uri, block.timestamp, msg.sender);
-    }
+		_safeMint(msg.sender, tokenId);
+		_setTokenURI(tokenId, _uri);
 
-    function transfer(
-        uint256 _tokenId,
-        address _to
-    ) external onlySupplier returns (uint256) {
-        address seller = ownerOf(_tokenId);
-        require(seller == msg.sender, "Only owner of this token can transfer");
+		emit Mint(tokenId, _uri, block.timestamp, msg.sender);
+	}
 
-        ownershipTokenCount[_to]++;
-        ownershipTokenCount[seller]--;
-        tokenIndexToOwner[_tokenId] = _to;
+	function transfer(uint256 _tokenId, address _to) external onlySupplier returns (uint256) {
+		address seller = ownerOf(_tokenId);
+		require(seller == msg.sender, 'Only owner of this token can transfer');
 
-        transferFrom(seller, _to, _tokenId);
+		ownershipTokenCount[_to]++;
+		ownershipTokenCount[seller]--;
+		tokenIndexToOwner[_tokenId] = _to;
 
-        return _tokenId;
-    }
+		transferFrom(seller, _to, _tokenId);
 
-    function sell(
-        uint256 _tokenId,
-        address _to
-    ) external onlySupplier onlyVendor returns (uint256) {
-        address seller = ownerOf(_tokenId);
-        require(seller == msg.sender, "Only owner of this token can sell");
+		return _tokenId;
+	}
 
-        ownershipTokenCount[_to]++;
-        ownershipTokenCount[seller]--;
-        tokenIndexToOwner[_tokenId] = _to;
-        tokenIndexIsValid[_tokenId] = false;
+	function sell(uint256 _tokenId, address _to) external onlySupplierOrVendor returns (uint256) {
+		address seller = ownerOf(_tokenId);
+		require(seller == msg.sender, 'Only owner of this token can sell');
 
-        transferFrom(seller, _to, _tokenId);
+		ownershipTokenCount[_to]++;
+		ownershipTokenCount[seller]--;
+		tokenIndexToOwner[_tokenId] = _to;
+		tokenIndexIsValid[_tokenId] = false;
 
-        emit Sell(seller, _to, _tokenId);
+		transferFrom(seller, _to, _tokenId);
 
-        return _tokenId;
-    }
+		emit Sell(seller, _to, _tokenId);
 
-    function supportsInterface(
-        bytes4 interfaceId
-    )
-        public
-        view
-        override(ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl)
-        returns (bool)
-    {
-        return super.supportsInterface(interfaceId);
-    }
+		return _tokenId;
+	}
 
-    //Return token validity (Sold bottle = Invalid token)
-    function isValidToken(uint256 _tokenId) external view returns (bool) {
-        return tokenIndexIsValid[_tokenId];
-    }
+	//Return token validity (Sold bottle = Invalid token)
+	function isValidToken(uint256 _tokenId) external view returns (bool) {
+		return tokenIndexIsValid[_tokenId];
+	}
 
-    //Return array of token owned IDs
-    function tokensOfOwner(
-        address _owner
-    ) external view returns (uint256[] memory) {
-        return tokensOwnedBy[_owner];
-    }
+	//Return array of token owned IDs
+	function tokensOfOwner(address _owner) external view returns (uint256[] memory) {
+		return tokensOwnedBy[_owner];
+	}
 
-    // Given an id, returns token data
-    function getTokenById(
-        uint256 _tokenId
-    ) external view returns (uint256, string memory, uint256, bool) {
-        uint256 id = indexToToken[_tokenId].id;
-        string memory uri = indexToToken[_tokenId].uri;
-        uint256 mintedAt = indexToToken[_tokenId].mintedAt;
-        bool isValid = tokenIndexIsValid[_tokenId];
+	// Given an id, returns token data
+	function getTokenById(uint256 _tokenId)
+		public
+		view
+		returns (
+			uint256,
+			string memory,
+			uint256,
+			bool
+		)
+	{
+		uint256 id = indexToToken[_tokenId].id;
+		string memory uri = indexToToken[_tokenId].uri;
+		uint256 mintedAt = indexToToken[_tokenId].mintedAt;
+		bool isValid = tokenIndexIsValid[_tokenId];
 
-        return (id, uri, mintedAt, isValid);
-    }
+		return (id, uri, mintedAt, isValid);
+	}
 
-    // The following functions are overrides required by Solidity.
+	// The following functions are overrides required by Solidity.
 
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId,
-        uint256 batchSize
-    ) internal override(ERC721, ERC721Enumerable) {
-        super._beforeTokenTransfer(from, to, tokenId, batchSize);
-    }
+	function supportsInterface(bytes4 interfaceId)
+		public
+		view
+		override(ERC721, ERC721Enumerable, ERC721URIStorage)
+		returns (bool)
+	{
+		return super.supportsInterface(interfaceId);
+	}
 
-    function _burn(
-        uint256 tokenId
-    ) internal override(ERC721, ERC721URIStorage) {
-        super._burn(tokenId);
-    }
+	function _beforeTokenTransfer(
+		address from,
+		address to,
+		uint256 tokenId,
+		uint256 batchSize
+	) internal override(ERC721, ERC721Enumerable) {
+		super._beforeTokenTransfer(from, to, tokenId, batchSize);
+	}
 
-    function tokenURI(
-        uint256 tokenId
-    ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
-        return super.tokenURI(tokenId);
-    }
+	function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+		super._burn(tokenId);
+	}
+
+	function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
+		return super.tokenURI(tokenId);
+	}
 }

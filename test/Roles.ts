@@ -11,7 +11,7 @@ describe("Roles contract", function () {
   });
 });
 
-const renderSut = async (type: "supplier" | "vendor") => {
+export const renderSut = async (type: "supplier" | "vendor") => {
   const [owner] = await ethers.getSigners();
 
   const rolesContract = await ethers.deployContract("Roles");
@@ -49,4 +49,6 @@ const renderSut = async (type: "supplier" | "vendor") => {
       : rolesContract.registerVendor(name, desc);
 
   await expect(register2).to.be.revertedWith(`Already registered as a ${type}`);
+
+  return { rolesContract }; //Used for NFT contract test
 };

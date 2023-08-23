@@ -9,18 +9,8 @@ import { UserDataType } from "@types";
 import { Navigate } from "react-router-dom";
 
 export const Login = () => {
-  const [localStorageData] = useLocalStorage(LOCAL_STORAGE_KEY);
-
-  const { user, setUser } = useAuthContext();
+  const { user } = useAuthContext();
   const { handleConnect } = useWallet();
-
-  useEffect(() => {
-    localStorageData && setUser(localStorageData);
-  }, [localStorageData]);
-
-  useEffect(() => {
-    console.log("Login user", user);
-  }, [user]);
 
   return (
     <>

@@ -1,4 +1,5 @@
 export const SEPOLIA_NETWORK_ID = 11155111;
+export const HARDHAT_LOCALHOST_ID = 31337;
 
 export const LOCAL_STORAGE_KEY = "@BF_DATA";
 

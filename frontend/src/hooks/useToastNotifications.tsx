@@ -24,7 +24,7 @@ export const useToastNotifications = () => {
     toast.info(message, options);
   };
 
-  const promiseWithNotifications = (
+  const notifyPromise = (
     promise: Promise<unknown>,
     messages: ToastPromiseParams
   ) => {
@@ -35,6 +35,6 @@ export const useToastNotifications = () => {
     showSuccessNotification,
     showErrorNotification,
     showInfoNotification,
-    promiseWithNotifications,
+    notifyPromise,
   };
 };

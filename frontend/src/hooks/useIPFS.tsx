@@ -44,13 +44,13 @@ export const useIPFS = () => {
   const uploadMetadataToIPFS = async (
     name: string,
     description: string,
-    fileURI: string
+    image: string
   ): Promise<string> => {
     if (!IPFS) {
       throw new Error("IPFS not available");
     }
 
-    const metaObj = { name, description, fileURI };
+    const metaObj = { name, description, image };
     const strObj = JSON.stringify(metaObj);
 
     try {

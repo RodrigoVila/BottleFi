@@ -31,12 +31,6 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
 	//Tracks tokens
 	mapping(uint256 => Token) private indexToToken;
 
-	//Ownership by token id
-	mapping(uint256 => address) private tokenIndexToOwner;
-
-	//How many tokens owner has
-	mapping(address => uint256) ownershipTokenCount;
-
 	// Which tokens owner has
 	mapping(address => uint256[]) private tokensOwnedBy;
 
@@ -84,10 +78,8 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
 		Token memory token = Token({ id: tokenId, uri: _uri, mintedAt: block.timestamp, mintedBy: msg.sender });
 
 		indexToToken[tokenId] = token;
-		tokenIndexToOwner[tokenId] = msg.sender;
 		tokenIndexIsValid[tokenId] = true;
 		tokensOwnedBy[msg.sender].push(tokenId);
-		ownershipTokenCount[msg.sender]++;
 
 		_safeMint(msg.sender, tokenId);
 		_setTokenURI(tokenId, _uri);
@@ -95,26 +87,19 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
 		emit Mint(tokenId, _uri, block.timestamp, msg.sender);
 	}
 
-	function transfer(uint256 _tokenId, address _to) external onlySupplier returns (uint256) {
+	function transfer(address _to, uint256 _tokenId) external onlySupplier returns (uint256) {
 		address seller = ownerOf(_tokenId);
 		require(seller == msg.sender, 'Only owner of this token can transfer');
-
-		ownershipTokenCount[_to]++;
-		ownershipTokenCount[seller]--;
-		tokenIndexToOwner[_tokenId] = _to;
 
 		transferFrom(seller, _to, _tokenId);
 
 		return _tokenId;
 	}
 
-	function sell(uint256 _tokenId, address _to) external onlySupplierOrVendor returns (uint256) {
+	function sell(address _to, uint256 _tokenId) external onlySupplierOrVendor returns (uint256) {
 		address seller = ownerOf(_tokenId);
 		require(seller == msg.sender, 'Only owner of this token can sell');
 
-		ownershipTokenCount[_to]++;
-		ownershipTokenCount[seller]--;
-		tokenIndexToOwner[_tokenId] = _to;
 		tokenIndexIsValid[_tokenId] = false;
 
 		transferFrom(seller, _to, _tokenId);
@@ -130,8 +115,8 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
 	}
 
 	//Return array of token owned IDs
-	function tokensOfOwner(address _owner) external view returns (uint256[] memory) {
-		return tokensOwnedBy[_owner];
+	function tokensOfOwner() external view returns (uint256[] memory) {
+		return tokensOwnedBy[msg.sender];
 	}
 
 	// Given an id, returns token data

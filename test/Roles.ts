@@ -2,11 +2,11 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 describe("Roles contract", function () {
-  it("Should register supplier only once", async function () {
+  it("Should register supplier (only once)", async function () {
     await renderSut("supplier");
   });
 
-  it("Should register vendor only once", async function () {
+  it("Should register vendor (only once)", async function () {
     await renderSut("vendor");
   });
 });
@@ -49,6 +49,4 @@ export const renderSut = async (type: "supplier" | "vendor") => {
       : rolesContract.registerVendor(name, desc);
 
   await expect(register2).to.be.revertedWith(`Already registered as a ${type}`);
-
-  return { rolesContract }; //Used for NFT contract test
 };

@@ -24,6 +24,10 @@ export const useToastNotifications = () => {
     toast.info(message, options);
   };
 
+  const showWarningNotification = (message: string) => {
+    toast.warning(message, options);
+  };
+
   const notifyPromise = (
     promise: Promise<unknown>,
     messages: ToastPromiseParams
@@ -35,6 +39,7 @@ export const useToastNotifications = () => {
     showSuccessNotification,
     showErrorNotification,
     showInfoNotification,
+    showWarningNotification,
     notifyPromise,
   };
 };

@@ -1,6 +1,7 @@
-export { useContract } from "./useContract";
-export { useLocalStorage } from "./useLocalStorage";
 export { useIPFS } from "./useIPFS";
+export { useLocalStorage } from "./useLocalStorage";
+export { useRolesContract } from "./useRolesContract";
 export { useToastNotifications } from "./useToastNotifications";
-export { useWalletConnect } from "./useWalletConnect";
 export { useWallet } from "./useWallet";
+export { useWalletConnect } from "./useWalletConnect";
+

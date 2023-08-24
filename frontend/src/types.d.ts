@@ -32,3 +32,5 @@ type Account = {
 type Provider = ethers.providers.Web3Provider | null;
 type Signer = ethers.Signer | null;
 type Network = ethers.providers.Network | null;
+
+type Roles = "Supplier" | "Vendor";

@@ -1,13 +1,17 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 import { useAuthContext } from "@context/auth";
+import { useWallet } from "@hooks";
 
 export const RequireAuth = ({ children }: { children: ReactNode }) => {
-  const { user } = useAuthContext();
   const location = useLocation();
+  const { user } = useAuthContext();
+  const { handleConnect } = useWallet();
 
-  console.log("RequireAuth User", user)
+ useEffect(() => {
+ console.log("Require Auth effect")
+ }, [])
 
   if (!user) {
     // Redirect them to the /login page, but save the current location they were

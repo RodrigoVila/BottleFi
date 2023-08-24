@@ -22,3 +22,24 @@ export const parseWalletError = (errorMessage: string) => {
 export const parseCatchError = (error: unknown): string => {
   return error instanceof Error ? error.message : (error as string);
 };
+
+//TODO: Test this in different cases
+export const parseRevertErrorMessage = (error: unknown) => {
+  try {
+    const errorMessage = error.message;
+    const startIndex = errorMessage.indexOf("reverted with reason string '");
+    if (startIndex !== -1) {
+      const searchStringLength = "reverted with reason string '".length;
+      const endIndex = errorMessage.indexOf("'", startIndex + searchStringLength);
+      if (endIndex !== -1) {
+        const revertReason = errorMessage.substring(startIndex + searchStringLength, endIndex);
+        return revertReason;
+      }
+    }
+  } catch (e) {
+    console.error("Error extracting revert reason:", e);
+  }
+  
+  return null;
+
+};

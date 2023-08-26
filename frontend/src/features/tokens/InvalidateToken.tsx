@@ -2,7 +2,13 @@ import { useState } from "react";
 
 import { GradientButton } from "@components/Buttons";
 import { TextInput, SelectInput } from "@components/Inputs";
-import { TokenLayout, TokenTitle } from "./Layout";
+import {
+  Divider,
+  TokenColumn,
+  TokenDescription,
+  TokenLayout,
+  TokenTitle,
+} from "./layout";
 
 export const InvalidateToken = () => {
   const [tokenID, setTokenID] = useState("");
@@ -45,31 +51,37 @@ export const InvalidateToken = () => {
 
   return (
     <TokenLayout>
-      <TokenTitle>Transfer and Invalidate Token</TokenTitle>
-      <SelectInput
-        options={tokens}
-        onChange={(e) => setTokenID(e.target.value)}
-        required
-      />
-      <TextInput
-        label="Address"
-        value={destinationAddress}
-        onChange={(e) => setDestinationAddress(e.target.value)}
-        required
-      />
-      <GradientButton loading={isLoading} onClick={() => {}}>
-        Transfer and Invalidate
-      </GradientButton>
-      {errorMessage && (
-        <p className="m-0 mt-1 font-semibold text-center text-red-300">
-          {errorMessage}
-        </p>
-      )}
-      {successMessage && (
-        <p className="m-0 mt-1 font-semibold text-center text-green-300">
-          {successMessage}
-        </p>
-      )}
+      <TokenColumn>
+        <TokenTitle>
+          Sell: Passes ownership, invalidating token
+        </TokenTitle>
+        <TokenDescription>
+          Selling works like transfer but the token becomes invalidated. If the
+          user attempts to verify the bottle's authenticity after a selling,
+          they will encounter a clear indicator advising them to reconsider
+          their purchase due to its questionable status.
+        </TokenDescription>
+      </TokenColumn>
+
+      <Divider />
+
+      <TokenColumn className="gap-8">
+        <SelectInput
+          label="Token to sell"
+          options={tokens}
+          onChange={(e) => setTokenID(e.target.value)}
+          required
+        />
+        <TextInput
+          label="Address"
+          value={destinationAddress}
+          onChange={(e) => setDestinationAddress(e.target.value)}
+          required
+        />
+        <GradientButton loading={isLoading} onClick={() => {}}>
+          Sell
+        </GradientButton>
+      </TokenColumn>
     </TokenLayout>
   );
 };

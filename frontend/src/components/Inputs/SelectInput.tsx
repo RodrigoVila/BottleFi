@@ -17,7 +17,7 @@ export const SelectInput = ({ options, label }: SelectInputProps) => {
         </label>
       )}
         <select
-          className="w-full p-1 py-2 pr-0 border-2 rounded-md bg-slate-900 border-slate-500"
+          className="w-full p-1 py-2 pr-0 bg-transparent border-2 rounded-md border-glass"
           placeholder="Select an option"
         >
           <option selected disabled>

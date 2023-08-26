@@ -11,10 +11,7 @@ export const useIPFS = () => {
 
   const { showErrorNotification } = useToastNotifications();
 
-  const handleFileInput = async (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-
-    const file = e.target.files?.[0];
+  const handleFileSelect = async (file:File) => {
     if (!file) return;
 
     try {
@@ -80,10 +77,15 @@ export const useIPFS = () => {
     //eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+  console.log("fff",fileBuffer)
+  }, [fileBuffer])
+  
+
   return {
     fileBuffer,
     tokenURI,
-    handleFileInput,
+    handleFileSelect,
     uploadFileToIPFS,
     uploadMetadataToIPFS,
   };

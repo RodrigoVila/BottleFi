@@ -9,7 +9,7 @@ import {
   TokenDescription,
   TokenLayout,
   TokenTitle,
-} from "./Layout";
+} from "./layout";
 
 export const TransferToken = () => {
   const [tokenID, setTokenID] = useState("");
@@ -54,11 +54,11 @@ export const TransferToken = () => {
     <TokenLayout>
       <TokenColumn>
         <TokenTitle>
-          Transfer: Passing Ownership, Preserving Authenticity
+          Transfer: Passes ownership, keeping authenticity
         </TokenTitle>
         <TokenDescription>
-          Transfer enables you to easily exchange ownership of a token, while
-          keeping it's validity. For example, a cellar transfering products to a
+          Transfer enables you to exchange ownership of a token while
+          keeping it's validity. For example, a supplier transfering products to a
           vendor who later will sell (invalidate) the token for the final
           consumer.
         </TokenDescription>
@@ -66,7 +66,7 @@ export const TransferToken = () => {
 
       <Divider />
 
-      <TokenColumn>
+      <TokenColumn className="gap-8">
         <SelectInput
           label="Token to transfer"
           options={tokens}

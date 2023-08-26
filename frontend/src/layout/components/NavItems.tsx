@@ -16,12 +16,6 @@ const links: Link[] = [
     hoverColor: "hover:border-b-red-400",
   },
   {
-    title: "How it works",
-    to: "/how",
-    borderColor: "border-b-orange-400",
-    hoverColor: "hover:border-b-orange-400",
-  },
-  {
     title: "Mint",
     to: "/mint",
     borderColor: "border-b-yellow-400",
@@ -39,6 +33,12 @@ const links: Link[] = [
     borderColor: "border-b-blue-400",
     hoverColor: "hover:border-b-blue-400",
   },
+  {
+    title: "Verify",
+    to: "/verify",
+    borderColor: "border-b-purple-400",
+    hoverColor: "hover:border-b-purple-400",
+  },
 ];
 
 export const NavItems = () => {
@@ -50,7 +50,7 @@ export const NavItems = () => {
   return (
     <ul className="flex justify-center w-full gap-6 m-0 list-none">
       {links.map((link) => (
-        <li className={twMerge(itemStyle, link.hoverColor, pathname === link.to && link.borderColor)}>
+        <li key={link.title} className={twMerge(itemStyle, link.hoverColor, pathname === link.to && link.borderColor)}>
           <Link to={link.to}>{link.title}</Link>
         </li>
       ))}

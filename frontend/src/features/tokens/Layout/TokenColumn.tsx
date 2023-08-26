@@ -1,9 +1,13 @@
 import { ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
-export const TokenColumn = ({ children }: { children: ReactNode }) => {
+type TokenColumnProps = { 
+  children: ReactNode; 
+  className?: string 
+};
+
+export const TokenColumn = ({ children, className }: TokenColumnProps) => {
   return (
-    <article className="flex flex-col flex-1 gap-4 px-2">
-      {children}
-    </article>
+    <article className={twMerge("flex flex-col flex-1 gap-4 px-2", className)}>{children}</article>
   );
 };

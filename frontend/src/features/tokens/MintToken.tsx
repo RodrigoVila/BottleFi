@@ -5,11 +5,12 @@ import { useIPFS } from "@hooks";
 import { GradientButton } from "@components/Buttons";
 import { TextInput, FileInput } from "@components/Inputs";
 
-import { TokenTitle, TokenLayout, Divider } from "./Layout";
+import { TokenTitle, TokenLayout, Divider } from "./layout";
 import { useToastNotifications } from "@hooks";
 import { UPLOAD_FILE_MESSAGES, UPLOAD_METADATA_MESSAGES } from "@constants";
-import { TokenDescription } from "./Layout/TokenDescription";
-import { TokenColumn } from "./Layout/TokenColumn";
+import { TokenDescription } from "./layout/TokenDescription";
+import { TokenColumn } from "./layout/TokenColumn";
+import { FileInputModalButton } from "@components/Buttons/FileInputModalButton/FileInputModalButton";
 
 const initialState = { name: "", description: "" };
 
@@ -20,7 +21,7 @@ export const MintToken = () => {
   const { name, description } = userData;
 
   const {
-    handleFileInput,
+    handleFileSelect,
     fileBuffer,
     uploadFileToIPFS,
     uploadMetadataToIPFS,
@@ -91,7 +92,7 @@ export const MintToken = () => {
   return (
     <TokenLayout>
       <TokenColumn>
-        <TokenTitle>Mint: Generates an authentic Token</TokenTitle>
+        <TokenTitle>Mint: Generates an authentic token</TokenTitle>
         <TokenDescription>
           Minting involves creating a one-of-a-kind digital certificate on the
           blockchain. As the initiator, you hold the exclusive ability to ensure
@@ -102,7 +103,7 @@ export const MintToken = () => {
 
       <Divider />
 
-      <TokenColumn>
+      <TokenColumn className="justify-between">
         <TextInput
           label="Name"
           value={name}
@@ -117,7 +118,7 @@ export const MintToken = () => {
           required
         />
 
-        <FileInput label="Select token image" onChange={handleFileInput} />
+        <FileInputModalButton onFileSelect={handleFileSelect} />
 
         <GradientButton loading={isLoading} onClick={handleSubmit}>
           Add

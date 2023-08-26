@@ -1,4 +1,5 @@
 import { twMerge } from "tailwind-merge";
+import { AiOutlineSafetyCertificate } from "react-icons/ai"
 
 type LogoProps = {
   type?: "login" | "navbar";
@@ -17,11 +18,12 @@ export const Logo = ({ type = "login" }: LogoProps) => {
         containerStyles
       )}
     >
-      <img
+      <AiOutlineSafetyCertificate size={isLogin ? 72 : 30} className="text-pink-600" />
+      {/* <img
         src={"./src/assets/guaranteeIcon.png"}
         className={imageStyles}
         alt="BottleFi"
-      />
+      /> */}
       <h1
         className={twMerge(
           "m-0 font-semibold leading-none font-fondamento",

@@ -15,7 +15,7 @@ export const Login = () => {
   return (
     <>
       {user && <Navigate to="/dashboard" />}
-      <div className="w-full h-screen bg-[url('./src/assets/bg.jpeg')] bg-center bg-no-repeat bg-cover">
+      <div className="w-full h-screen bg-[url('./src/assets/login-bg.jpeg')] bg-center bg-no-repeat bg-cover">
         <div className="w-full h-full center bg-overlay">
           <div className="flex-col max-w-xl gap-5 center">
             <Logo />

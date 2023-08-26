@@ -12,15 +12,15 @@ export const Layout = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-cover dashboardBg">
+    <div className="w-full h-screen bg-[url('./src/assets/sky-bg.jpeg')] bg-center bg-no-repeat bg-cover">
       <div className="flex flex-col h-screen overflow-hidden text-white">
         <Navbar />
-        <div className="flex h-full mb-2 mr-2 xl:mr-4 xl:mb-4">
-          <Sidebar />
-          <MainContainer>
-            <Outlet />
-          </MainContainer>
-        </div>
+        {/* <div className="flex h-full mb-2 mr-2 xl:mr-4 xl:mb-4">
+          <Sidebar /> */}
+        <MainContainer>
+          <Outlet />
+        </MainContainer>
+        {/* </div> */}
       </div>
     </div>
   );

@@ -3,7 +3,13 @@ import { useState } from "react";
 import { GradientButton } from "@components/Buttons";
 import { TextInput, SelectInput } from "@components/Inputs";
 
-import { TokenLayout, TokenTitle } from "./TokenLayout";
+import {
+  Divider,
+  TokenColumn,
+  TokenDescription,
+  TokenLayout,
+  TokenTitle,
+} from "./Layout";
 
 export const TransferToken = () => {
   const [tokenID, setTokenID] = useState("");
@@ -46,32 +52,37 @@ export const TransferToken = () => {
 
   return (
     <TokenLayout>
-      <TokenTitle>Transfer Token</TokenTitle>
-      <SelectInput
-        label="Token to transfer"
-        options={tokens}
-        onChange={(e) => setTokenID(e.target.value)}
-        required
-      />
-      <TextInput
-        label="Address"
-        value={destinationAddress}
-        onChange={(e) => setDestinationAddress(e.target.value)}
-        required
-      />
-      <GradientButton loading={isLoading} onClick={() => {}}>
-        Transfer
-      </GradientButton>
-      {errorMessage && (
-        <p className="m-0 mt-1 font-semibold text-center text-red-300">
-          {errorMessage}
-        </p>
-      )}
-      {successMessage && (
-        <p className="m-0 mt-1 font-semibold text-center text-green-300">
-          {successMessage}
-        </p>
-      )}
+      <TokenColumn>
+        <TokenTitle>
+          Transfer: Passing Ownership, Preserving Authenticity
+        </TokenTitle>
+        <TokenDescription>
+          Transfer enables you to easily exchange ownership of a token, while
+          keeping it's validity. For example, a cellar transfering products to a
+          vendor who later will sell (invalidate) the token for the final
+          consumer.
+        </TokenDescription>
+      </TokenColumn>
+
+      <Divider />
+
+      <TokenColumn>
+        <SelectInput
+          label="Token to transfer"
+          options={tokens}
+          onChange={(e) => setTokenID(e.target.value)}
+          required
+        />
+        <TextInput
+          label="Address"
+          value={destinationAddress}
+          onChange={(e) => setDestinationAddress(e.target.value)}
+          required
+        />
+        <GradientButton loading={isLoading} onClick={() => {}}>
+          Transfer
+        </GradientButton>
+      </TokenColumn>
     </TokenLayout>
   );
 };

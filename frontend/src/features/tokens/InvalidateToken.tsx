@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import { GradientButton } from "@components/Buttons";
 import { TextInput, SelectInput } from "@components/Inputs";
-import { TokenLayout, TokenTitle } from "./TokenLayout";
+import { TokenLayout, TokenTitle } from "./Layout";
 
-export const SellToken = () => {
+export const InvalidateToken = () => {
   const [tokenID, setTokenID] = useState("");
   const [destinationAddress, setDestinationAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);

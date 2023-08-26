@@ -1,4 +1,4 @@
-export { AddToken } from "./AddToken";
-export { SellToken } from "./SellToken";
+export { MintToken } from "./MintToken";
+export { InvalidateToken } from "./InvalidateToken";
 export { TransferToken } from "./TransferToken";
 export { VerifyToken } from "./VerifyToken";

@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 
-import { LOCAL_STORAGE_KEY, SEPOLIA_NETWORK_ID } from "@constants";
+import {
+  HARDHAT_LOCALHOST_ID,
+  LOCAL_STORAGE_KEY,
+  SEPOLIA_NETWORK_ID,
+} from "@constants";
 import { getCurrentAccount, getNetwork, getSigner } from "@utils/ethers";
 import { Account } from "@types";
 
@@ -26,7 +30,7 @@ export const useWallet = () => {
     const network = await getNetwork();
     const chainId = network?.chainId || null;
 
-    if (chainId === SEPOLIA_NETWORK_ID) {
+    if (chainId === SEPOLIA_NETWORK_ID || chainId === HARDHAT_LOCALHOST_ID) {
       setLocalStorage({ account, chainId });
       setUser({ account, chainId, signer });
 

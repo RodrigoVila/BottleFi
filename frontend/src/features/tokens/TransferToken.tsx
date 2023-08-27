@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { GradientButton } from "@components/Buttons";
-import { TextInput, SelectInput } from "@components/Inputs";
+import { SelectInput, TextInput } from "@components/Inputs";
 
 import {
   Divider,
@@ -12,41 +12,37 @@ import {
 } from "./layout";
 
 export const TransferToken = () => {
-  const [tokenID, setTokenID] = useState("");
+  const [, setTokenID] = useState("");
   const [destinationAddress, setDestinationAddress] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading] = useState(false);
 
-  const clearInputs = () => {
-    setSuccessMessage("");
-    setErrorMessage("");
-    setDestinationAddress("");
-    setTokenID("");
-  };
+  // const clearInputs = () => {
+  //   setDestinationAddress("");
+  //   setTokenID("");
+  // };
 
-  const handleSubmit = async () => {
-    if (!tokenID) {
-      alert("Please select token");
-      return;
-    }
-    if (!destinationAddress) {
-      alert("Please write a destination address");
-      return;
-    }
-    setIsLoading(true);
-    // await transfer(tokenID, destinationAddress)
-    //   .then(() => {
-    //     setIsLoading(false);
-    //     setSuccessMessage("Success!");
-    //     clearInputs();
-    //   })
-    //   .catch((e) => {
-    //     setErrorMessage(`Error: ${e}`);
-    //     setIsLoading(false);
-    //     clearInputs();
-    //   });
-  };
+  // const handleSubmit = async () => {
+  //   if (!tokenID) {
+  //     alert("Please select token");
+  //     return;
+  //   }
+  //   if (!destinationAddress) {
+  //     alert("Please write a destination address");
+  //     return;
+  //   }
+  //   setIsLoading(true);
+  //   // await transfer(tokenID, destinationAddress)
+  //   //   .then(() => {
+  //   //     setIsLoading(false);
+  //   //     setSuccessMessage("Success!");
+  //   //     clearInputs();
+  //   //   })
+  //   //   .catch((e) => {
+  //   //     setErrorMessage(`Error: ${e}`);
+  //   //     setIsLoading(false);
+  //   //     clearInputs();
+  //   //   });
+  // };
 
   const tokens = [{ id: "1", name: "asf" }];
 
@@ -57,8 +53,8 @@ export const TransferToken = () => {
           Transfer: Passes ownership, keeping authenticity
         </TokenTitle>
         <TokenDescription>
-          Transfer enables you to exchange ownership of a token while
-          keeping it's validity. For example, a supplier transfering products to a
+          Transfer enables you to exchange ownership of a token while keeping
+          it's validity. For example, a supplier transfering products to a
           vendor who later will sell (invalidate) the token for the final
           consumer.
         </TokenDescription>

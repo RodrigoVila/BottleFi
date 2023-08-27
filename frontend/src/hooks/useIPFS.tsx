@@ -1,8 +1,10 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { IPFSHTTPClient, create } from "ipfs-http-client";
-import { useToastNotifications } from "./useToastNotifications";
+import { useEffect, useState } from "react";
+import { create,IPFSHTTPClient } from "ipfs-http-client";
+
 import { readFileAsArrayBuffer } from "@utils/file";
 import { parseCatchError } from "@utils/parse";
+
+import { useToastNotifications } from "./useToastNotifications";
 
 export const useIPFS = () => {
   const [IPFS, setIPFS] = useState<IPFSHTTPClient | null>(null);
@@ -74,13 +76,8 @@ export const useIPFS = () => {
       setIPFS(instance);
     };
     init();
-    //eslint-disable-next-line
+     
   }, []);
-
-  useEffect(() => {
-  console.log("fff",fileBuffer)
-  }, [fileBuffer])
-  
 
   return {
     fileBuffer,

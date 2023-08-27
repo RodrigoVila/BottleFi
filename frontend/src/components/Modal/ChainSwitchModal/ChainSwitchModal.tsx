@@ -1,7 +1,8 @@
-import { Modal } from "..";
 import { useModalContext } from "@context/modals";
-import { connectToSepoliaNetwork } from "@utils/ethers";
 import { AnimatedButton } from "@components/Buttons";
+import { connectToSepoliaNetwork } from "@utils/ethers";
+
+import { Modal } from "..";
 
 export const ChainSwitchModal = () => {
   const { isChainSwitchModalOpen, setChainSwitchModalOpen } = useModalContext();

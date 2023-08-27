@@ -1,4 +1,5 @@
 import { Logo } from "@components/Logo";
+
 import { AccountData, NavItems } from "./";
 
 export const Navbar = () => {

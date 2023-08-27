@@ -1,16 +1,16 @@
-import { useState, MouseEvent, ChangeEvent } from "react";
+import { ChangeEvent,MouseEvent, useState } from "react";
 
-import { useIPFS } from "@hooks";
+import { useIPFS,useNFTContract, useToastNotifications } from "@hooks";
+import { FileInputModalButton, GradientButton } from "@components/Buttons";
+import { TextInput } from "@components/Inputs";
 
-import { GradientButton } from "@components/Buttons";
-import { TextInput, FileInput } from "@components/Inputs";
-
-import { TokenTitle, TokenLayout, Divider } from "./layout";
-import { useToastNotifications } from "@hooks";
-import { UPLOAD_FILE_MESSAGES, UPLOAD_METADATA_MESSAGES } from "@constants";
-import { TokenDescription } from "./layout/TokenDescription";
-import { TokenColumn } from "./layout/TokenColumn";
-import { FileInputModalButton } from "@components/Buttons/FileInputModalButton/FileInputModalButton";
+import {
+  Divider,
+  TokenColumn,
+  TokenDescription,
+  TokenLayout,
+  TokenTitle,
+} from "./layout";
 
 const initialState = { name: "", description: "" };
 
@@ -27,21 +27,10 @@ export const MintToken = () => {
     uploadMetadataToIPFS,
   } = useIPFS();
 
-  const { showErrorNotification, showSuccessNotification, notifyPromise } =
-    useToastNotifications();
+  const { mintToken, getTokens } = useNFTContract();
 
-  const mintToken = async (tokenURI: string) => {
-    await mint(tokenURI)
-      .then(() => {
-        setSuccessMessage("Success!");
-        setIsLoading(false);
-        clearInputs();
-      })
-      .catch((e) => {
-        setErrorMessage(`Error: ${e}`);
-        setIsLoading(false);
-      });
-  };
+  const { showErrorNotification, showSuccessNotification } =
+    useToastNotifications();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e?.target.name;
@@ -61,29 +50,21 @@ export const MintToken = () => {
     setIsLoading(true);
 
     try {
-      const image = (await notifyPromise(
-        uploadFileToIPFS(),
-        UPLOAD_FILE_MESSAGES
-      )) as string;
-
+      const image = await uploadFileToIPFS();
       if (image) {
-        console.log("SUCCESS UPLOAD image. FileURI: ", image);
-        const tokenURI = (await notifyPromise(
-          uploadMetadataToIPFS(name, description, image),
-          UPLOAD_METADATA_MESSAGES
-        )) as string;
-
+        const tokenURI = await uploadMetadataToIPFS(name, description, image);
         if (tokenURI) {
-          console.log("SUCCESS UPLOAD METADATA. TokenURI: ", tokenURI);
-          // mintToken(tokenURI);
-          showSuccessNotification(
-            "Token minted successfully. Go to dashboard to see it!"
-          );
+          const minted = await mintToken(tokenURI);
+          if (minted) {
+            showSuccessNotification(
+              "Token minted successfully. Go to dashboard to see it!"
+            );
+          }
         }
       }
     } catch (err) {
       //Error messages are being handled by the "notifyPromise" fn
-      console.error(err);
+      console.error("Err at MintToken component", err);
     } finally {
       setIsLoading(false);
     }
@@ -122,6 +103,9 @@ export const MintToken = () => {
 
         <GradientButton loading={isLoading} onClick={handleSubmit}>
           Add
+        </GradientButton>
+        <GradientButton loading={isLoading} onClick={getTokens}>
+          Get
         </GradientButton>
       </TokenColumn>
     </TokenLayout>

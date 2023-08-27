@@ -7,9 +7,12 @@ export type WalletProviders = {
 };
 
 export type UserDataType = {
-  account: Account;
-  chainId: number | null;
-  signer: Signer
+  address?: string;
+  name?: string;
+  role?: string;
+  chainId?: number;
+  chainName?: string;
+  signer?: Signer;
 };
 
 export type ChangeNetworkType = {
@@ -24,13 +27,8 @@ export type ChangeNetworkType = {
   blockExplorerUrls: string[];
 };
 
-type Account = {
-  address: string | null;
-  name: string | null;
-  type: string | null;
-};
-type Provider = ethers.providers.Web3Provider | null;
-type Signer = ethers.Signer | null;
-type Network = ethers.providers.Network | null;
+type Provider = ethers.providers.Web3Provider | undefined;
+type Signer = ethers.Signer | undefined;
+type Network = ethers.providers.Network | undefined;
 
 type Roles = "Supplier" | "Vendor";

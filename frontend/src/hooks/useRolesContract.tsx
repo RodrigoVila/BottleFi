@@ -1,12 +1,12 @@
-import { Contract, ContractTransaction } from "ethers";
+import { Contract } from "ethers";
 
 import { getCurrentAccount, getSigner } from "@utils/ethers";
 import { Roles as RolesType } from "@types";
 
 import rolesContractArtifact from "../../../artifacts/contracts/Roles.sol/Roles.json";
 import { Roles } from "../../../typechain-types/contracts/Roles";
+
 import { useErrors } from "./useErrors";
-import { useToastNotifications } from "./useToastNotifications";
 
 type useRolesContractReturn = {
   register: (
@@ -25,7 +25,6 @@ type useRolesContractReturn = {
 
 export const useRolesContract = (): useRolesContractReturn => {
   const { notifyCatchErrors } = useErrors();
-  const { showSuccessNotification } = useToastNotifications();
 
   const address = import.meta.env.VITE_ROLES_CONTRACT_ADDRESS;
   const abi = rolesContractArtifact["abi"];
@@ -37,7 +36,7 @@ export const useRolesContract = (): useRolesContractReturn => {
     role: RolesType,
     name: string,
     description: string
-  ): Promise<void> => {
+  ): Promise<RolesType | undefined> => {
     try {
       let response;
       if (role === "Supplier") {
@@ -47,11 +46,12 @@ export const useRolesContract = (): useRolesContractReturn => {
       }
 
       const receipt = await response.wait();
-      if(receipt) showSuccessNotification(`${role} registered successfully!`)
-      console.log({ response, receipt });
+      if (receipt) return role;
     } catch (err) {
       notifyCatchErrors(err);
+      return undefined;
     }
+    return undefined;
   };
 
   const getSupplier = async (): Promise<

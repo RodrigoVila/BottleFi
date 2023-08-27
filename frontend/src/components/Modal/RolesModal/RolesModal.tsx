@@ -1,12 +1,19 @@
-import { Modal } from "..";
-import { useModalContext } from "@context/modals";
-import { AnimatedButton } from "@components/Buttons";
+
 import { ChangeEvent, useState } from "react";
-import { useToastNotifications } from "@hooks";
-import { useRolesContract } from "@hooks";
+
+import { useModalContext } from "@context/modals";
+import {
+  useDataStorage,
+  useRolesContract,
+  useToastNotifications,
+} from "@hooks";
+import { AnimatedButton } from "@components/Buttons";
 import { TextInput } from "@components/Inputs";
 import { RadioInput } from "@components/Inputs/RadioInput";
 import { Roles } from "@types";
+
+import { Modal } from "..";
+
 
 export const RolesModal = () => {
   const [selectedRole, setSelectedRole] = useState<Roles | "">("");
@@ -14,9 +21,11 @@ export const RolesModal = () => {
 
   const { name, description } = roleData;
 
+  const { setData } = useDataStorage();
   const { register, getSupplier, getVendor } = useRolesContract();
   const { isRolesModalOpen, setRolesModalOpen } = useModalContext();
-  const { showWarningNotification } = useToastNotifications();
+  const { showWarningNotification, showSuccessNotification } =
+    useToastNotifications();
 
   const closeModal = () => setRolesModalOpen(false);
 
@@ -39,7 +48,12 @@ export const RolesModal = () => {
       showWarningNotification("Please select a role");
       return;
     }
-    await register(selectedRole, name, description);
+    const role = await register(selectedRole, name, description);
+    if (role !== undefined) {
+      showSuccessNotification(`${role} registered successfully!`);
+      setData((prev) => ({ ...prev, role, name }));
+      closeModal();
+    }
   };
 
   const getRole = async () => {

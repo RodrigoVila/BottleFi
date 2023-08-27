@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from "react";
-import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill, BsArrowLeft } from "react-icons/bs";
+import {BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from "react-icons/bs";
 import { twMerge } from "tailwind-merge";
 
 type GoButtonProps = Omit<

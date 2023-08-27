@@ -1,12 +1,11 @@
-import { Modal } from "@components/Modal";
 import {
   ButtonHTMLAttributes,
-  ChangeEventHandler,
-  FormEvent,
   useState,
 } from "react";
 import { BsFillCloudUploadFill } from "react-icons/bs";
 import { twMerge } from "tailwind-merge";
+
+import { Modal } from "@components/Modal";
 
 import img0 from "../../../assets/bottle 0.jpeg";
 import img1 from "../../../assets/bottle 1.jpeg";

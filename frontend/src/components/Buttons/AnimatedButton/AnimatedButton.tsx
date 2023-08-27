@@ -1,5 +1,4 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
 
 type AnimatedButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;

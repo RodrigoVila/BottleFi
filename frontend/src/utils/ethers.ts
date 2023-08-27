@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+
 import { Network, Provider, Signer, WalletProviders } from "@types";
 
 export const getProvider = (/*wallet: WalletType*/): Provider => {
@@ -17,7 +18,7 @@ export const getProvider = (/*wallet: WalletType*/): Provider => {
     // const provider = new ethers.providers.Web3Provider(window.ethereum);
     return provider;
   }
-  return null;
+  return undefined;
 };
 
 export const getSigner = (): Signer => {
@@ -26,17 +27,16 @@ export const getSigner = (): Signer => {
     const signer = provider.getSigner();
     return signer;
   }
-  return null;
+  return undefined;
 };
 
-export const getCurrentAccount = async (): Promise<string | null> => {
+export const getCurrentAccount = async (): Promise<string | undefined> => {
   const provider = getProvider();
   if (provider) {
-    console.log("PROVIDER ACCOUNTS", provider)
     const accounts: string[] = await provider.send("eth_requestAccounts", []);
     return accounts[0];
   }
-  return null;
+  return undefined;
 };
 
 export const getNetwork = async (): Promise<Network> => {
@@ -45,7 +45,7 @@ export const getNetwork = async (): Promise<Network> => {
     const network = await provider.getNetwork();
     return network;
   }
-  return null;
+  return undefined;
 };
 
 export const connectToSepoliaNetwork = async (): Promise<Network> => {
@@ -55,5 +55,5 @@ export const connectToSepoliaNetwork = async (): Promise<Network> => {
       { chainId: "0xaa36a7" },
     ]);
   }
-  return null;
+  return undefined;
 };

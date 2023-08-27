@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-
 import { Layout } from "@layout";
+
 import { Dashboard } from "@features/dashboard";
-import { MintToken, InvalidateToken, TransferToken } from "@features/tokens";
 import { Login } from "@features/login";
-import { RequireAuth } from "@components/Require";
+import { InvalidateToken, MintToken, TransferToken } from "@features/tokens";
 import { NotFound } from "@components/NotFound";
+import { RequireAuthAndRole } from "@components/RequireAuthAndRole";
 
 export const router = createBrowserRouter([
   {
@@ -15,9 +15,9 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <RequireAuth>
+      <RequireAuthAndRole>
         <Layout />
-      </RequireAuth>
+      </RequireAuthAndRole>
     ),
     children: [
       {
@@ -44,10 +44,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: (
-      <RequireAuth>
-        <NotFound />
-      </RequireAuth>
-    ),
+    element: <NotFound />,
   },
 ]);

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+
 import MainContract from "../build/contracts/MainContract.json";
 import TokenContract from "../build/contracts/NFT.json";
-import useLocalStorage from "./useLocalStorage";
-import getWeb3 from "../utils/getWeb3";
 import { getMetadata } from "../services";
-import { Web3 } from "web3";
+import getWeb3 from "../utils/getWeb3";
+
+import useLocalStorage from "./useLocalStorage";
 
 //TODO: If network is NOT ropsten (or localhost for testing) then connect button must change
 

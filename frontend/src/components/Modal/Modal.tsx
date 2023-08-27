@@ -1,6 +1,7 @@
-import { useEffect, ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
+import { ReactNode,useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { twMerge } from "tailwind-merge";
+
 import { Portal } from "@utils/Portal";
 
 type ModalProps = {

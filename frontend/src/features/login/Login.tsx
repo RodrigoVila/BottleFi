@@ -1,12 +1,9 @@
-import { Logo } from "@components/Logo";
-import { AnimatedButton } from "@components/Buttons";
-import { useLocalStorage, useWallet } from "@hooks";
-import { useAuthContext } from "@context/auth";
-import { useEffect } from "react";
-import { LOCAL_STORAGE_KEY } from "@constants";
-import { getProvider } from "@utils/ethers";
-import { UserDataType } from "@types";
 import { Navigate } from "react-router-dom";
+
+import { useAuthContext } from "@context/auth";
+import { useWallet } from "@hooks";
+import { AnimatedButton } from "@components/Buttons";
+import { Logo } from "@components/Logo";
 
 export const Login = () => {
   const { user } = useAuthContext();

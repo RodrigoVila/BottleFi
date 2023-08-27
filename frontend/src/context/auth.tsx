@@ -1,12 +1,13 @@
-import { UserDataType } from "@types";
 import {
   createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
   useContext,
   useState,
-  Dispatch,
-  SetStateAction,
-  ReactNode,
 } from "react";
+
+import { UserDataType } from "@types";
 
 type AuthProviderProps = {
   children: ReactNode;

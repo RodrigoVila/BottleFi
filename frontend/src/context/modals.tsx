@@ -1,10 +1,10 @@
 import {
   createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
   useContext,
   useState,
-  Dispatch,
-  SetStateAction,
-  ReactNode,
 } from "react";
 
 type ModalContextType = {

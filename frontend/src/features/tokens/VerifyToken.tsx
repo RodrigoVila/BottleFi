@@ -1,12 +1,11 @@
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Modal } from "@components/Modal";
 import { SuccessError } from "@components/SuccessError";
 
 export const VerifyToken = ({ params }: { params: { id: string } }) => {
-  const [isValid, setIsValid] = useState(null);
-  const [tokenInfo, setTokenInfo] = useState({});
+  const [isValid] = useState(null);
+  // const [tokenInfo, setTokenInfo] = useState({});
 
   const { id } = params;
 

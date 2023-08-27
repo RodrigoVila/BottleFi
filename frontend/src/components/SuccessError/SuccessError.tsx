@@ -1,8 +1,8 @@
+import { GoVerified } from "react-icons/go";
+import { ImSad2 } from "react-icons/im";
+import { IoMdArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-import { GoVerified } from "react-icons/go";
-import { IoMdArrowBack } from "react-icons/io";
-import { ImSad2 } from "react-icons/im";
 import styles from "./SuccessErrorScreen.module.css";
 
 type SuccesErrorProps = {

@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 import { GradientButton } from "@components/Buttons";
-import { TextInput, SelectInput } from "@components/Inputs";
+import { SelectInput, TextInput } from "@components/Inputs";
+
 import {
   Divider,
   TokenColumn,
@@ -11,36 +12,34 @@ import {
 } from "./layout";
 
 export const InvalidateToken = () => {
-  const [tokenID, setTokenID] = useState("");
+  const [, setTokenID] = useState("");
   const [destinationAddress, setDestinationAddress] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    // if (!tokenID) {
-    //   alert("Please select token");
-    //   return;
-    // }
-    // if (!destinationAddress) {
-    //   alert("Please write a destination address");
-    //   return;
-    // }
-    // await sell(tokenID, destinationAddress)
-    //   .then(() => {
-    //     setIsLoading(false);
-    //     setSuccessMessage("Success!");
-    //   })
-    //   .catch((e) => {
-    //     setIsLoading(false);
-    //     setErrorMessage(`Error: ${e}`);
-    //   });
-  };
+  // const handleSubmit = async () => {
+  //   if (!tokenID) {
+  //     alert("Please select token");
+  //     return;
+  //   }
+  //   if (!destinationAddress) {
+  //     alert("Please write a destination address");
+  //     return;
+  //   }
+  //   await sell(tokenID, destinationAddress)
+  //     .then(() => {
+  //       setIsLoading(false);
+  //       setSuccessMessage("Success!");
+  //     })
+  //     .catch((e) => {
+  //       setIsLoading(false);
+  //       setErrorMessage(`Error: ${e}`);
+  //     });
+  // };
 
-  const handleData = (data) => {};
-  const handleError = (error) => {
-    error && alert(`Error pulling data: ${error}`);
-  };
+  // const handleData = (data) => {};
+  // const handleError = (error) => {
+  //   error && alert(`Error pulling data: ${error}`);
+  // };
 
   const tokens = [
     {
@@ -52,9 +51,7 @@ export const InvalidateToken = () => {
   return (
     <TokenLayout>
       <TokenColumn>
-        <TokenTitle>
-          Sell: Passes ownership, invalidating token
-        </TokenTitle>
+        <TokenTitle>Sell: Passes ownership, invalidating token</TokenTitle>
         <TokenDescription>
           Selling works like transfer but the token becomes invalidated. If the
           user attempts to verify the bottle's authenticity after a selling,

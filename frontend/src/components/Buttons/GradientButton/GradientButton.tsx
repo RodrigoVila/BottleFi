@@ -23,7 +23,8 @@ export const GradientButton = ({
         className={twMerge(
           "flex items-center gap-6 bg-black m-px font-semibold py-2 px-16 hover:bg-transparent transition-all duration-300",
           rest.className,
-          icon ? "justify-start" : "justify-center"
+          icon ? "justify-start" : "justify-center",
+          "disabled:bg-slate-300 disabled:text-slate-400"
         )}
       >
         {icon && <span>{icon}</span>}

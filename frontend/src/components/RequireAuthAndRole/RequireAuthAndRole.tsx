@@ -2,16 +2,17 @@ import { ReactNode, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 import { useAuthContext } from "@context/auth";
-import { useWallet } from "@hooks";
+import { useModalContext } from "@context/modals";
 
-export const RequireAuth = ({ children }: { children: ReactNode }) => {
+export const RequireAuthAndRole = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
   const { user } = useAuthContext();
-  const { handleConnect } = useWallet();
+  const { setRolesModalOpen } = useModalContext();
 
- useEffect(() => {
- console.log("Require Auth effect")
- }, [])
+  useEffect(() => {
+    if (!user) return;
+    if (!user.role) setRolesModalOpen(true);
+  }, [user, setRolesModalOpen]);
 
   if (!user) {
     // Redirect them to the /login page, but save the current location they were

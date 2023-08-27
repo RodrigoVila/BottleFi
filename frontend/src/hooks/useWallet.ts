@@ -1,75 +1,48 @@
 import { useEffect } from "react";
 
-import {
-  HARDHAT_LOCALHOST_ID,
-  LOCAL_STORAGE_KEY,
-  SEPOLIA_NETWORK_ID,
-} from "@constants";
-import { getCurrentAccount, getNetwork, getSigner } from "@utils/ethers";
-import { Account } from "@types";
-
-import { useLocalStorage } from "./useLocalStorage";
 import { useModalContext } from "@context/modals";
-import { useAuthContext } from "@context/auth";
+import { getCurrentAccount, getNetwork, getSigner } from "@utils/ethers";
+import { HARDHAT_LOCALHOST_ID, SEPOLIA_NETWORK_ID } from "@constants";
+
+import { useDataStorage } from "./useDataStorage";
 
 export const useWallet = () => {
-  const [localStorage, setLocalStorage, clearLocalStorage] =
-    useLocalStorage(LOCAL_STORAGE_KEY);
-
-  const { setUser } = useAuthContext();
   const { setChainSwitchModalOpen } = useModalContext();
+  const { setData } = useDataStorage();
 
   const handleConnect = async () => {
     const signer = getSigner();
     const address = await getCurrentAccount();
-    const account: Account = {
-      address,
-      name: "",
-      type: "",
-    };
     const network = await getNetwork();
-    const chainId = network?.chainId || null;
+    const chainId = network?.chainId;
 
     if (chainId === SEPOLIA_NETWORK_ID || chainId === HARDHAT_LOCALHOST_ID) {
-      setLocalStorage({ account, chainId });
-      setUser({ account, chainId, signer });
-
-      console.log("handleConnect OK", {
-        account,
-        chainId,
+      const chainName =
+        chainId === SEPOLIA_NETWORK_ID ? "Sepolia" : "Hardhat Localhost";
+      setData((prev) => ({
+        ...prev,
         signer,
-      });
+        chainId,
+        chainName,
+        address,
+        name: "",
+        role: "",
+      }));
     } else {
-      console.log("ChainID !== sepolia");
       setChainSwitchModalOpen(true);
     }
   };
 
   const handleDisconnect = () => {
     console.log("Disconnect!");
-    setUser(null);
-    clearLocalStorage();
+    setData(null);
   };
 
   const handleAccountsChanged = (accounts: string[]) => {
     if (accounts.length > 0) {
       const address = accounts[0];
 
-      // console.log("AccountChanged: ", data);
-
-      setUser((prevData) => ({
-        ...prevData,
-        account: { ...prevData.account, address },
-      }));
-
-      const updatedLocalStorageData = {
-        ...localStorage,
-        account: {
-          ...localStorage.account,
-          address,
-        },
-      };
-      setLocalStorage(updatedLocalStorageData);
+      setData((prev) => ({ ...prev, address }));
     } else {
       handleDisconnect();
     }
@@ -77,20 +50,10 @@ export const useWallet = () => {
 
   const handleChainChanged = (hexChainId: string) => {
     const chainId = parseInt(hexChainId);
-    console.log("ChainChanged: ", chainId, "hex: ", hexChainId);
     if (chainId === SEPOLIA_NETWORK_ID) {
-      setUser((prevData) => ({
-        ...prevData,
-        chainId,
-      }));
-
-      const updatedLocalStorageData = {
-        ...localStorage,
-        chainId,
-      };
-      setLocalStorage(updatedLocalStorageData);
-
-      window.location.reload();
+      setData((prev) => ({ ...prev, chainId }));
+      // TODO Reloading the page after chain change is recommended. Test if data is being updated and persisted without reloading
+      // window.location.reload();
     } else {
       setChainSwitchModalOpen(true);
     }
@@ -106,7 +69,6 @@ export const useWallet = () => {
       window.ethereum.on("chainChanged", handleChainChanged);
       window.ethereum.on("connect", () => console.log("connect!!!"));
       window.ethereum.on("disconnect", () => handleDisconnect);
-      // !ethereum.isConnected() && clearLocalStorage();
     }
 
     return () => {
@@ -120,5 +82,5 @@ export const useWallet = () => {
     //eslint-disable-next-line
   }, []);
 
-  return { localStorage, handleConnect };
+  return { handleConnect };
 };

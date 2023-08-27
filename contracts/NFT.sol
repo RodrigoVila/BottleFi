@@ -40,12 +40,12 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
 	/*** Modifiers ***/
 
 	modifier onlySupplier() {
-		require(rolesContractInstance.hasRole(rolesContractInstance.SUPPLIER_ROLE(), msg.sender), 'Only Suppliers');
+		require(rolesContractInstance.hasRole(rolesContractInstance.SUPPLIER_ROLE(), msg.sender), 'Only supplier roles can perform this task');
 		_;
 	}
 
 	modifier onlyVendor() {
-		require(rolesContractInstance.hasRole(rolesContractInstance.VENDOR_ROLE(), msg.sender), 'Only Vendors');
+		require(rolesContractInstance.hasRole(rolesContractInstance.VENDOR_ROLE(), msg.sender), 'Only vendor roles can perform this task');
 		_;
 	}
 
@@ -53,7 +53,7 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
 		require(
 			rolesContractInstance.hasRole(rolesContractInstance.SUPPLIER_ROLE(), msg.sender) ||
 				rolesContractInstance.hasRole(rolesContractInstance.VENDOR_ROLE(), msg.sender),
-			'Only Suppliers or Vendors'
+			'Only suppliers or vendors can perform this task'
 		);
 		_;
 	}

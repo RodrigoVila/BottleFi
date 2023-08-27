@@ -1,28 +1,32 @@
-
 import { ChangeEvent, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { useModalContext } from "@context/modals";
 import {
   useDataStorage,
+  useLocalStorage,
   useRolesContract,
   useToastNotifications,
 } from "@hooks";
-import { AnimatedButton } from "@components/Buttons";
+import { GradientButton } from "@components/Buttons";
 import { TextInput } from "@components/Inputs";
 import { RadioInput } from "@components/Inputs/RadioInput";
+import { LOCAL_STORAGE_KEY } from "@constants";
 import { Roles } from "@types";
 
 import { Modal } from "..";
 
-
 export const RolesModal = () => {
   const [selectedRole, setSelectedRole] = useState<Roles | "">("");
   const [roleData, setRoleData] = useState({ name: "", description: "" });
+  const [isRadioFocus, setRadioFocus] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const { name, description } = roleData;
 
+  const [localStorageData] = useLocalStorage(LOCAL_STORAGE_KEY);
   const { setData } = useDataStorage();
-  const { register, getSupplier, getVendor } = useRolesContract();
+  const { register, getRoleData } = useRolesContract();
   const { isRolesModalOpen, setRolesModalOpen } = useModalContext();
   const { showWarningNotification, showSuccessNotification } =
     useToastNotifications();
@@ -48,37 +52,44 @@ export const RolesModal = () => {
       showWarningNotification("Please select a role");
       return;
     }
+
+    setLoading(true);
+
     const role = await register(selectedRole, name, description);
     if (role !== undefined) {
       showSuccessNotification(`${role} registered successfully!`);
-      setData((prev) => ({ ...prev, role, name }));
+      setData({ ...localStorageData, role, name });
       closeModal();
     }
+    setLoading(false);  
   };
 
-  const getRole = async () => {
-    const supplier = await getSupplier();
-    const vendor = await getVendor();
-    console.log({ supplier, vendor });
-  };
+  const onRadioFocus = () => setRadioFocus(true);
+  const onRadioBlur = () => setRadioFocus(false);
+  const radioStyles = isRadioFocus ? "border-white" : "border-glass";
 
   return (
     <Modal
       isOpen={isRolesModalOpen}
       onClose={closeModal}
-      className="bg-overlay"
-      bodyClassName="border-2 border-darkOverlay bg-black max-w-md text-left bg-blue-400"
       disableOutsideClick
+      bodyClassName="text-left p-8"
     >
-      <h3 className="text-3xl font-semibold text-center">
-        Select a role to interact with this app
-      </h3>
-      <div className="flex flex-col items-center justify-center gap-2 text-center">
+      <h3 className="mx-4 text-3xl font-semibold text-center">Create a role</h3>
+      <label className="self-start -mb-4 font-semibold text-white">Role</label>
+      <div
+        className={twMerge(
+          "flex flex-col gap-3 px-2 py-3 border-2 max-w-fit rounded-md",
+          radioStyles
+        )}
+      >
         <RadioInput
           name="role"
           value="Supplier"
           checked={selectedRole === "Supplier"}
           onChange={handleSelectRole}
+          onFocus={onRadioFocus}
+          onBlur={onRadioBlur}
         >
           <b className="text-lg">Supplier</b> (Can create/transfer/sell tokens)
           *Recommended for testing the app
@@ -89,6 +100,8 @@ export const RolesModal = () => {
           value="Vendor"
           checked={selectedRole === "Vendor"}
           onChange={handleSelectRole}
+          onFocus={onRadioFocus}
+          onBlur={onRadioBlur}
         >
           <b className="text-lg">Vendor</b> (Only can sell tokens)
         </RadioInput>
@@ -107,8 +120,10 @@ export const RolesModal = () => {
         onChange={handleDataChange}
       />
 
-      <AnimatedButton onClick={handleSubmit}>Submit</AnimatedButton>
-      <AnimatedButton onClick={getRole}>getRole</AnimatedButton>
+      <GradientButton onClick={handleSubmit} loading={isLoading}>
+        Sign
+      </GradientButton>
+      <GradientButton onClick={getRoleData}>getRole</GradientButton>
     </Modal>
   );
 };

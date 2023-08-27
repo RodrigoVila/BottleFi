@@ -1,13 +1,14 @@
 import { Navigate } from "react-router-dom";
 
 import { useAuthContext } from "@context/auth";
-import { useWallet } from "@hooks";
+import { useRolesContract, useWallet } from "@hooks";
 import { AnimatedButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
 
 export const Login = () => {
   const { user } = useAuthContext();
   const { handleConnect } = useWallet();
+  const { getRoleData } = useRolesContract();
 
   return (
     <>
@@ -27,6 +28,9 @@ export const Login = () => {
               {/* <AnimatedButton onClick={toggleModal}>Web3 Login</AnimatedButton> */}
               <AnimatedButton onClick={handleConnect}>
                 Connect with Browser Wallet
+              </AnimatedButton>
+              <AnimatedButton onClick={getRoleData}>
+                GetRole
               </AnimatedButton>
             </div>
           </div>

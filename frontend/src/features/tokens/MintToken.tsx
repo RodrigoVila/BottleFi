@@ -104,7 +104,7 @@ export const MintToken = () => {
         <GradientButton loading={isLoading} onClick={handleSubmit}>
           Add
         </GradientButton>
-        <GradientButton loading={isLoading} onClick={getTokens}>
+        <GradientButton onClick={getTokens}>
           Get
         </GradientButton>
       </TokenColumn>

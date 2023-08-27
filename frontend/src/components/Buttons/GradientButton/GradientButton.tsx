@@ -1,18 +1,26 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { Spinner } from "@components/Spinner";
+
 type GradientButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
   icon?: ReactNode;
-  loading?: boolean
+  loading?: boolean;
+  className?: string;
 };
 
 export const GradientButton = ({
   children,
   icon,
   loading,
+  className,
   ...rest
 }: GradientButtonProps) => {
+  const loadingStyles = loading
+    ? "bg-slate-500 pointer-events-none"
+    : "bg-black";
+  const iconStyles = icon ? "justify-start" : "justify-center";
   return (
     <button
       className="w-full bg-gradient"
@@ -21,14 +29,14 @@ export const GradientButton = ({
     >
       <div
         className={twMerge(
-          "flex items-center gap-6 bg-black m-px font-semibold py-2 px-16 hover:bg-transparent transition-all duration-300",
-          rest.className,
-          icon ? "justify-start" : "justify-center",
-          "disabled:bg-slate-300 disabled:text-slate-400"
+          "flex items-center gap-6 bg-black m-px font-semibold h-12 px-16 hover:bg-transparent transition-all duration-300",
+          iconStyles,
+          className,
+          loadingStyles
         )}
       >
-        {icon && <span>{icon}</span>}
-        <span>{children}</span>
+        {!loading && icon && <span>{icon}</span>}
+        {loading ? <Spinner /> : <span>{children}</span>}
       </div>
     </button>
   );

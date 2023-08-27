@@ -80,10 +80,11 @@ export const FileInputModalButton = ({
         isOpen={openModal}
         onClose={toggleModal}
         className="bg-overlay"
-        bodyClassName="border-2 glass-border bg-black max-w-fit p-8"
+        bodyClassName="p-8"
+        disableOutsideClick
       >
         <h3 className="text-3xl font-semibold">Please select an image</h3>
-        <div className="flex flex-wrap gap-5">
+        <div className="flex flex-wrap items-center justify-center gap-5">
           {Images.map((img, index) => (
             <button
               key={`bottleimg-${index}`}

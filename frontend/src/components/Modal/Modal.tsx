@@ -1,7 +1,8 @@
-import { ReactNode,useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { twMerge } from "tailwind-merge";
 
+import { AnimatedContainer } from "@components/AnimatedContainer/AnimatedContainer";
 import { Portal } from "@utils/Portal";
 
 type ModalProps = {
@@ -30,18 +31,19 @@ export const Modal = ({
   return isOpen ? (
     <Portal>
       <div
-        className={twMerge("absolute inset-0 z-0 flex items-center justify-center text-center bg-darkOverlay", className)}
+        className="absolute inset-0 z-0 flex items-center justify-center text-center bg-darkOverlay"
         onClick={disableOutsideClick ? undefined : onClose}
       >
-        <div
-          className={twMerge("z-[1] relative center flex-col w-full py-5 px-2 rounded-xl gap-5 mx-2", bodyClassName)}
-          onClick={(e) => e.stopPropagation()}
+        <AnimatedContainer
+          className={twMerge("max-w-xl h-fit", className)}
+          bodyClassName={twMerge("relative flex-col gap-6", bodyClassName)}
+          onClick={(e)=>e.preventDefault()}
         >
-          <button className="absolute top-2 right-2" onClick={onClose}>
-            <AiOutlineClose size={24} />
+          <button className="absolute top-2 right-2 z-[1]" onClick={onClose}>
+            <AiOutlineClose size={28} />
           </button>
           {children}
-        </div>
+        </AnimatedContainer>
       </div>
     </Portal>
   ) : null;

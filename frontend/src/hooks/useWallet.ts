@@ -5,28 +5,32 @@ import { getCurrentAccount, getNetwork, getSigner } from "@utils/ethers";
 import { HARDHAT_LOCALHOST_ID, SEPOLIA_NETWORK_ID } from "@constants";
 
 import { useDataStorage } from "./useDataStorage";
+import { useRolesContract } from "./useRolesContract";
 
 export const useWallet = () => {
   const { setChainSwitchModalOpen } = useModalContext();
   const { setData } = useDataStorage();
+  const { getRoleData } = useRolesContract();
 
   const handleConnect = async () => {
     const signer = getSigner();
     const address = await getCurrentAccount();
     const network = await getNetwork();
     const chainId = network?.chainId;
+    const { name, role } = await getRoleData();
 
     if (chainId === SEPOLIA_NETWORK_ID || chainId === HARDHAT_LOCALHOST_ID) {
       const chainName =
         chainId === SEPOLIA_NETWORK_ID ? "Sepolia" : "Hardhat Localhost";
+        console.log("handleConnect");
       setData((prev) => ({
         ...prev,
         signer,
         chainId,
         chainName,
         address,
-        name: "",
-        role: "",
+        name,
+        role,
       }));
     } else {
       setChainSwitchModalOpen(true);
@@ -41,7 +45,7 @@ export const useWallet = () => {
   const handleAccountsChanged = (accounts: string[]) => {
     if (accounts.length > 0) {
       const address = accounts[0];
-
+      console.log("handleAccountsChanged");
       setData((prev) => ({ ...prev, address }));
     } else {
       handleDisconnect();
@@ -51,6 +55,7 @@ export const useWallet = () => {
   const handleChainChanged = (hexChainId: string) => {
     const chainId = parseInt(hexChainId);
     if (chainId === SEPOLIA_NETWORK_ID) {
+      console.log("handleChainChanged");
       setData((prev) => ({ ...prev, chainId }));
       // TODO Reloading the page after chain change is recommended. Test if data is being updated and persisted without reloading
       // window.location.reload();

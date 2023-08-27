@@ -2,24 +2,10 @@ import { Contract } from "ethers";
 
 import nftContractArtifact from "@artifacts/contracts/NFT.sol/NFT.json";
 import { getCurrentAccount, getSigner } from "@utils/ethers";
+import { parseBigInt, parseTokenResponse } from "@utils/parse";
 import { NFT } from "@typechain-types/contracts/NFT";
 
 import { useErrors } from "./useErrors";
-
-// type useNFTContractReturn = {
-//   register: (
-//     role: RolesType,
-//     name: string,
-//     description: string
-//   ) => Promise<void>;
-//   getSupplier: () => Promise<
-//     ([string, string] & { name: string; description: string }) | undefined
-//   >;
-//   getVendor: () => Promise<
-//     ([string, string] & { name: string; description: string }) | undefined
-//   >; // Define the return type for getVendor
-//   // Define other functions as needed
-// };
 
 export const useNFTContract = () => {
   const { notifyCatchErrors } = useErrors();
@@ -41,13 +27,23 @@ export const useNFTContract = () => {
     }
   };
 
-  const getTokens = async (): Promise<boolean | null> => {
+  const getTokens = async () => {
     const address = await getCurrentAccount();
     if (!address) return null;
-    
-    const isValid = await nft.isValidToken(0);
-    console.log("Is valid token 0: ", isValid);
-    return isValid;
+
+    const tokensOfOwner = await nft.tokensOfOwner();
+    const parsedTokens = tokensOfOwner.map((t) => parseBigInt(t));
+
+    const getTokenById = async (tokenId: number) => {
+      return await nft.getTokenById(tokenId);
+    };
+
+    const parsedTokenResponses = await Promise.all(
+      parsedTokens.map(getTokenById)
+    );
+    const parsedTokensInfo = parsedTokenResponses.map(parseTokenResponse);
+    console.log({ parsedTokensInfo });
+    return parsedTokensInfo;
   };
 
   return { mintToken, getTokens };

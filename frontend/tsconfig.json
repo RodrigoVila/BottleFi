@@ -23,14 +23,14 @@
     /* Paths */
     "baseUrl": "./src",
     "paths": {
-      "@artifacts/*": ["../artifacts/*"],
+      "@artifacts/*": ["../../artifacts/*"],
       "@components/*": ["./components/*"],
       "@context/*": ["./context/*"],
       "@constants": ["./constants/index.ts"],
       "@features/*": ["./features/*"],
       "@hooks": ["./hooks/index.ts"],
       "@layout": ["./layout/index.ts"],
-      "@typechain-types/*": ["../typechain-types/*"],
+      "@typechain-types/*": ["../../typechain-types/*"],
       "@types": ["./types.d.ts"],
       "@utils/*": ["./utils/*"]
     },

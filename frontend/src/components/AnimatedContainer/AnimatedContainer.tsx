@@ -21,14 +21,14 @@ export const AnimatedContainer = ({
       )}
       {...rest}
     >
-      <span
+      <div
         className={twMerge(
           "rounded-2xl bg-slate-900 center p-2 font-bold text-white h-full w-full",
           bodyClassName
         )}
       >
         {children}
-      </span>
+      </div>
     </div>
   );
 };

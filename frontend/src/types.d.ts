@@ -32,3 +32,7 @@ type Signer = ethers.Signer | undefined;
 type Network = ethers.providers.Network | undefined;
 
 type Roles = "Supplier" | "Vendor";
+
+type BigNumber = { _hex: string; _isBigNumber: boolean };
+
+type TokenResponse = [bigint, string, bigint, boolean];

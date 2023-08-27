@@ -1,29 +1,13 @@
 import { Contract } from "ethers";
 
+import rolesContractArtifact from "@artifacts/contracts/Roles.sol/Roles.json";
 import { getCurrentAccount, getSigner } from "@utils/ethers";
 import { Roles as RolesType } from "@types";
-
-import rolesContractArtifact from "../../../artifacts/contracts/Roles.sol/Roles.json";
-import { Roles } from "../../../typechain-types/contracts/Roles";
+import { Roles } from "@typechain-types/contracts/Roles";
 
 import { useErrors } from "./useErrors";
 
-type useRolesContractReturn = {
-  register: (
-    role: RolesType,
-    name: string,
-    description: string
-  ) => Promise<void>;
-  getSupplier: () => Promise<
-    ([string, string] & { name: string; description: string }) | undefined
-  >;
-  getVendor: () => Promise<
-    ([string, string] & { name: string; description: string }) | undefined
-  >; // Define the return type for getVendor
-  // Define other functions as needed
-};
-
-export const useRolesContract = (): useRolesContractReturn => {
+export const useRolesContract = () => {
   const { notifyCatchErrors } = useErrors();
 
   const address = import.meta.env.VITE_ROLES_CONTRACT_ADDRESS;
@@ -54,21 +38,33 @@ export const useRolesContract = (): useRolesContractReturn => {
     return undefined;
   };
 
-  const getSupplier = async (): Promise<
-    ([string, string] & { name: string; description: string }) | undefined
-  > => {
+  const getRoleData = async (): Promise<{
+    name: string | undefined;
+    role: RolesType | undefined;
+  }> => {
+    const emptyData = { name: undefined, role: undefined };
     const address = await getCurrentAccount();
-    if (!address) return;
-    return await roles.suppliers(address);
+    if (!address) return emptyData;
+
+    try {
+      const supplierProfile = await roles.suppliers(address);
+      if (supplierProfile?.name) {
+        console.log({ name: supplierProfile.name, role: "Supplier" });
+        return { name: supplierProfile.name, role: "Supplier" };
+      }
+
+      const vendorProfile = await roles.vendors(address);
+      if (vendorProfile?.name) {
+        console.log({ name: vendorProfile.name, role: "Vendor" });
+        return { name: vendorProfile.name, role: "Vendor" };
+      }
+      console.log(emptyData);
+      return emptyData;
+    } catch (error) {
+      console.error("Error fetching role:", error);
+      return emptyData;
+    }
   };
 
-  const getVendor = async (): Promise<
-    ([string, string] & { name: string; description: string }) | undefined
-  > => {
-    const address = await getCurrentAccount();
-    if (!address) return;
-    return await roles.vendors(address);
-  };
-
-  return { register, getSupplier, getVendor };
+  return { register, getRoleData };
 };

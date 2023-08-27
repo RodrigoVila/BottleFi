@@ -14,13 +14,16 @@ export const useDataStorage = () => {
 
   useEffect(() => {
     if (data) {
+      console.log("useDatStorage: ", data);
       const dataToStorage = { ...data };
       delete dataToStorage.signer;
 
       setUser(data);
       setLocalStorage(dataToStorage);
     }
-  }, [data, setUser, setLocalStorage]);
+    //If I add setters as a dependencies, they re render the component infinite times.
+    //eslint-disable-next-line
+  }, [data]);
 
-  return { setData };
+  return { data, setData };
 };

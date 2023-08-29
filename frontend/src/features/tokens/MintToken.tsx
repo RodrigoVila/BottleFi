@@ -1,8 +1,9 @@
-import { ChangeEvent,MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 
-import { useIPFS,useNFTContract, useToastNotifications } from "@hooks";
-import { FileInputModalButton, GradientButton } from "@components/Buttons";
-import { TextInput } from "@components/Inputs";
+import { useIPFS, useNFTContract, useToastNotifications } from "@hooks";
+import { GradientButton } from "@components/Buttons";
+import { FileInput, TextInput } from "@components/Inputs";
+import { IPFSStorageData } from "@types";
 
 import {
   Divider,
@@ -12,22 +13,17 @@ import {
   TokenTitle,
 } from "./layout";
 
-const initialState = { name: "", description: "" };
-
 export const MintToken = () => {
-  const [userData, setUserData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [userData, setUserData] = useState<IPFSStorageData>({
+    name: "",
+    description: "",
+  });
 
-  const { name, description } = userData;
+  const { uploadFileToIPFS, uploadMetadataToIPFS } = useIPFS();
 
-  const {
-    handleFileSelect,
-    fileBuffer,
-    uploadFileToIPFS,
-    uploadMetadataToIPFS,
-  } = useIPFS();
-
-  const { mintToken, getTokens } = useNFTContract();
+  const { mintToken } = useNFTContract();
 
   const { showErrorNotification, showSuccessNotification } =
     useToastNotifications();
@@ -39,10 +35,16 @@ export const MintToken = () => {
     setUserData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    setFile(file);
+  };
+
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (!name || !description || !fileBuffer) {
+    if (!userData.name || !userData.description || !file) {
       showErrorNotification("Every input is mandatory");
       return;
     }
@@ -50,12 +52,14 @@ export const MintToken = () => {
     setIsLoading(true);
 
     try {
-      const image = await uploadFileToIPFS();
-      if (image) {
-        const tokenURI = await uploadMetadataToIPFS(name, description, image);
-        if (tokenURI) {
-          const minted = await mintToken(tokenURI);
-          if (minted) {
+      // First we upload the token image in order to obtain it's ipfs path
+      const path = await uploadFileToIPFS(file);
+      if (path) {
+        // Then we upload again the metadata with the image included
+        const uri = await uploadMetadataToIPFS({ ...userData, image: path });
+        if (uri) {
+          const success = await mintToken(uri);
+          if (success) {
             showSuccessNotification(
               "Token minted successfully. Go to dashboard to see it!"
             );
@@ -63,7 +67,7 @@ export const MintToken = () => {
         }
       }
     } catch (err) {
-      //Error messages are being handled by the "notifyPromise" fn
+      // Error messages are being handled by the "notifyPromise" fn
       console.error("Err at MintToken component", err);
     } finally {
       setIsLoading(false);
@@ -87,25 +91,22 @@ export const MintToken = () => {
       <TokenColumn className="justify-between">
         <TextInput
           label="Name"
-          value={name}
+          value={userData.name}
           onChange={handleInputChange}
           required
         />
 
         <TextInput
           label="Description"
-          value={description}
+          value={userData.description}
           onChange={handleInputChange}
           required
         />
 
-        <FileInputModalButton onFileSelect={handleFileSelect} />
+        <FileInput onChange={handleFileSelect} />
 
         <GradientButton loading={isLoading} onClick={handleSubmit}>
           Add
-        </GradientButton>
-        <GradientButton onClick={getTokens}>
-          Get
         </GradientButton>
       </TokenColumn>
     </TokenLayout>

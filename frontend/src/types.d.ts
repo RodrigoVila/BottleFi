@@ -36,3 +36,18 @@ type Roles = "Supplier" | "Vendor";
 type BigNumber = { _hex: string; _isBigNumber: boolean };
 
 type TokenResponse = [bigint, string, bigint, boolean];
+
+type Token = {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  mintedAt: string;
+  isValid: boolean;
+};
+
+type IPFSStorageData = {
+  name: string;
+  description: string;
+  image?: string;
+};

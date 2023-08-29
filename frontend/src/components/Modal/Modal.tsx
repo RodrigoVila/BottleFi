@@ -12,6 +12,7 @@ type ModalProps = {
   className?: string;
   bodyClassName?: string;
   disableOutsideClick?: boolean;
+  withoutCloseButton?: boolean
 };
 
 export const Modal = ({
@@ -21,6 +22,7 @@ export const Modal = ({
   className,
   bodyClassName,
   disableOutsideClick = false,
+  withoutCloseButton = false
 }: ModalProps) => {
   useEffect(() => {
     isOpen
@@ -37,11 +39,13 @@ export const Modal = ({
         <AnimatedContainer
           className={twMerge("max-w-xl h-fit", className)}
           bodyClassName={twMerge("relative flex-col gap-6", bodyClassName)}
-          onClick={(e)=>e.preventDefault()}
+          onClick={(e) => e.preventDefault()}
         >
-          <button className="absolute top-2 right-2 z-[1]" onClick={onClose}>
-            <AiOutlineClose size={28} />
-          </button>
+          {withoutCloseButton ? null : (
+            <button className="absolute top-2 right-2 z-[1]" onClick={onClose}>
+              <AiOutlineClose size={28} />
+            </button>
+          )}
           {children}
         </AnimatedContainer>
       </div>

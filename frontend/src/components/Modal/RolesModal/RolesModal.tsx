@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useModalContext } from "@context/modals";
@@ -17,7 +17,7 @@ import { Roles } from "@types";
 import { Modal } from "..";
 
 export const RolesModal = () => {
-  const [selectedRole, setSelectedRole] = useState<Roles | "">("");
+  const [selectedRole, setSelectedRole] = useState<Roles | null>(null);
   const [roleData, setRoleData] = useState({ name: "", description: "" });
   const [isRadioFocus, setRadioFocus] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -33,8 +33,7 @@ export const RolesModal = () => {
 
   const closeModal = () => setRolesModalOpen(false);
 
-  const handleSelectRole = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value as Roles;
+  const handleRoleChange = (value: Roles) => {
     setSelectedRole(value);
   };
 
@@ -48,7 +47,7 @@ export const RolesModal = () => {
       showWarningNotification("Please complete all inputs");
       return;
     }
-    if (selectedRole === "") {
+    if (!selectedRole) {
       showWarningNotification("Please select a role");
       return;
     }
@@ -61,19 +60,18 @@ export const RolesModal = () => {
       setData({ ...localStorageData, role, name });
       closeModal();
     }
-    setLoading(false);  
+    setLoading(false);
   };
 
-  const onRadioFocus = () => setRadioFocus(true);
-  const onRadioBlur = () => setRadioFocus(false);
   const radioStyles = isRadioFocus ? "border-white" : "border-glass";
 
   return (
     <Modal
       isOpen={isRolesModalOpen}
       onClose={closeModal}
-      disableOutsideClick
       bodyClassName="text-left p-8"
+      disableOutsideClick
+      withoutCloseButton
     >
       <h3 className="mx-4 text-3xl font-semibold text-center">Create a role</h3>
       <label className="self-start -mb-4 font-semibold text-white">Role</label>
@@ -85,11 +83,10 @@ export const RolesModal = () => {
       >
         <RadioInput
           name="role"
+          id="supplier"
           value="Supplier"
           checked={selectedRole === "Supplier"}
-          onChange={handleSelectRole}
-          onFocus={onRadioFocus}
-          onBlur={onRadioBlur}
+          onChange={handleRoleChange}
         >
           <b className="text-lg">Supplier</b> (Can create/transfer/sell tokens)
           *Recommended for testing the app
@@ -97,11 +94,10 @@ export const RolesModal = () => {
 
         <RadioInput
           name="role"
+          id="supplier"
           value="Vendor"
           checked={selectedRole === "Vendor"}
-          onChange={handleSelectRole}
-          onFocus={onRadioFocus}
-          onBlur={onRadioBlur}
+          onChange={handleRoleChange}
         >
           <b className="text-lg">Vendor</b> (Only can sell tokens)
         </RadioInput>

@@ -19,7 +19,7 @@ import { Modal } from "..";
 export const RolesModal = () => {
   const [selectedRole, setSelectedRole] = useState<Roles | null>(null);
   const [roleData, setRoleData] = useState({ name: "", description: "" });
-  const [isRadioFocus, setRadioFocus] = useState(false);
+  const [isRoleFocus, setRoleFocus] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   const { name, description } = roleData;
@@ -63,7 +63,10 @@ export const RolesModal = () => {
     setLoading(false);
   };
 
-  const radioStyles = isRadioFocus ? "border-white" : "border-glass";
+  //This gives the same look n feel as when we focus/blur the other inputs
+  const onFocusRole = () => setRoleFocus(true)
+  const onBlurRole = () => setRoleFocus(false)
+  const radioStyles = isRoleFocus ? "border-white" : "border-glass";
 
   return (
     <Modal
@@ -80,6 +83,9 @@ export const RolesModal = () => {
           "flex flex-col gap-3 px-2 py-3 border-2 max-w-fit rounded-md",
           radioStyles
         )}
+        tabIndex={100}
+        onFocus={onFocusRole}
+        onBlur={onBlurRole}
       >
         <RadioInput
           name="role"

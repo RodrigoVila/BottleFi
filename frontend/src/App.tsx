@@ -2,6 +2,7 @@ import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { AuthProvider } from "@context/auth";
+import { DappProvider } from "@context/dapp";
 import { ModalProvider } from "@context/modals";
 import { Modals } from "@components/Modal";
 
@@ -12,11 +13,13 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <AuthProvider>
-      <ModalProvider>
-        <ToastContainer />
-        <Modals />
-        <RouterProvider router={router} />
-      </ModalProvider>
+      <DappProvider>
+        <ModalProvider>
+          <ToastContainer />
+          <Modals />
+          <RouterProvider router={router} />
+        </ModalProvider>
+      </DappProvider>
     </AuthProvider>
   );
 }

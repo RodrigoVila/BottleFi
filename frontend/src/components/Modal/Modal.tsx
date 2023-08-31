@@ -42,7 +42,7 @@ export const Modal = ({
           onClick={(e) => e.preventDefault()}
         >
           {withoutCloseButton ? null : (
-            <button className="absolute top-2 right-2 z-[1]" onClick={onClose}>
+            <button className="absolute top-3 right-3 z-[1]" onClick={onClose}>
               <AiOutlineClose size={28} />
             </button>
           )}

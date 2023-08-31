@@ -39,12 +39,14 @@ type TokenResponse = [bigint, string, bigint, boolean];
 
 type Token = {
   id: number;
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
   image: string;
   mintedAt: string;
   isValid: boolean;
 };
+
+type TokenList = Token[]
 
 type IPFSStorageData = {
   name: string;

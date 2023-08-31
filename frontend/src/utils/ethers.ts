@@ -2,20 +2,9 @@ import { ethers } from "ethers";
 
 import { Network, Provider, Signer, WalletProviders } from "@types";
 
-export const getProvider = (/*wallet: WalletType*/): Provider => {
+export const getProvider = (): Provider => {
   if (typeof window !== "undefined" && window.ethereum) {
-    // TODO: Implement this when its working
-    const { providers } = window.ethereum;
-
-    const supportedProviders: WalletProviders = {
-      coinbase: providers.find((p) => p.isCoinbaseWallet),
-      metamask: providers.find((p) => p.isMetaMask),
-    };
-
-    const selectedProvider = supportedProviders["metamask"];
-    // const newObj = {...window.ethereum, providers: [selectedProvider]}
-    const provider = new ethers.providers.Web3Provider(selectedProvider);
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
     return provider;
   }
   return undefined;

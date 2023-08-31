@@ -3,7 +3,13 @@ import { Layout } from "@layout";
 
 import { Dashboard } from "@features/dashboard";
 import { Login } from "@features/login";
-import { InvalidateToken, MintToken, TransferToken } from "@features/tokens";
+import {
+  InvalidateToken,
+  MintToken,
+  TokenValidity,
+  TransferToken,
+  VerifyToken,
+} from "@features/tokens";
 import { NotFound } from "@components/NotFound";
 import { RequireAuthAndRole } from "@components/RequireAuthAndRole";
 
@@ -23,10 +29,6 @@ export const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard />,
-        // loader: ({ request }) =>
-        // fetch("/api/dashboard.json", {
-        //   signal: request.signal,
-        // }),
       },
       {
         path: "mint",
@@ -39,6 +41,19 @@ export const router = createBrowserRouter([
       {
         path: "transfer",
         element: <TransferToken />,
+      },
+      {
+        path: "verify",
+        children: [
+          {
+            path: "",
+            element: <VerifyToken />,
+          },
+          {
+            path: ":tokenId",
+            element: <TokenValidity />,
+          },
+        ],
       },
     ],
   },

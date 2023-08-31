@@ -27,19 +27,11 @@ export const useToastNotifications = () => {
   const showWarningNotification = (message: string) => {
     toast.warning(message, options);
   };
-
-  const notifyPromise = (
-    promise: Promise<unknown>,
-    messages: ToastPromiseParams
-  ) => {
-    return toast.promise(promise, messages, options);
-  };
-  
+ 
   return {
     showSuccessNotification,
     showErrorNotification,
     showInfoNotification,
     showWarningNotification,
-    notifyPromise,
   };
 };

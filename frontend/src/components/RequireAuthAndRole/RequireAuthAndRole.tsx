@@ -21,6 +21,5 @@ export const RequireAuthAndRole = ({ children }: { children: ReactNode }) => {
     // than dropping them off on the home page.
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-
   return children;
 };

@@ -1,4 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, use, useLocation } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 type Link = {
@@ -42,15 +43,22 @@ const links: Link[] = [
 ];
 
 export const NavItems = () => {
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
 
   const itemStyle =
-    "text-base text-white cursor-pointer transition-colors duration-200 h-full py-4 border-b-2 border-b-transparent";
+    "text-base text-white cursor-pointer transition-colors duration-200 h-full py-4 border-b-2 border-b-transparent font-marcellus";
 
   return (
-    <ul className="flex justify-center w-full gap-6 m-0 list-none">
+    <ul className="flex justify-center flex-1 w-full gap-6 m-0 list-none">
       {links.map((link) => (
-        <li key={link.title} className={twMerge(itemStyle, link.hoverColor, pathname === link.to && link.borderColor)}>
+        <li
+          key={link.title}
+          className={twMerge(
+            itemStyle,
+            link.hoverColor,
+            pathname.includes(link.to) && link.borderColor
+          )}
+        >
           <Link to={link.to}>{link.title}</Link>
         </li>
       ))}

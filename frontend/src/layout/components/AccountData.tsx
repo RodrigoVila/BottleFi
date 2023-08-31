@@ -16,8 +16,12 @@ export const AccountData = () => {
   }, []);
 
   return address ? (
-    <div className="flex items-center justify-end flex-1 w-1/3 pr-2">
-      {parseAccount(address)}
+    <div className="justify-end flex-1 gap-3 pr-3 center w-fit">
+      {/* <div className="overflow-hidden text-xs border-2 rounded-xl border-glass center">
+        <div className="flex py-[6px] px-3 text-center bg-glass">Balance</div>
+        <div className="px-2"> 9999 <span className="text-[10px]">ETH</span></div>
+      </div> */}
+      <span className="text-base font-marcellus">{parseAccount(address)}</span>
     </div>
   ) : null;
 };

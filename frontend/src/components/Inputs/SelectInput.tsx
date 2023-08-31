@@ -1,14 +1,13 @@
-import { SelectHTMLAttributes } from "react";
+import { ChangeEventHandler, SelectHTMLAttributes } from "react";
 
-type SelectOption = {
-  id: string;
-  name: string;
-};
+import { TokenList } from "@types";
+
 type SelectInputProps = SelectHTMLAttributes<HTMLSelectElement> & {
-  options: SelectOption[];
+  options: TokenList | null;
   label?: string;
+  onChange?: ChangeEventHandler<HTMLSelectElement>
 };
-export const SelectInput = ({ options, label }: SelectInputProps) => {
+export const SelectInput = ({ options, label, onChange }: SelectInputProps) => {
   return (
     <div className="flex flex-col gap-2">
       {label && (
@@ -16,20 +15,22 @@ export const SelectInput = ({ options, label }: SelectInputProps) => {
           {label}
         </label>
       )}
-        <select
-          className="w-full p-1 py-2 pr-0 bg-transparent border-2 rounded-md border-glass"
-          placeholder="Select an option"
-        >
-          <option selected disabled>
-            Select an option
-          </option>
-          {options.length > 0 &&
-            options.map((option) => (
-              <option key={option.name} value={option.id}>
-                {option.name}
-              </option>
-            ))}
-        </select>
+      <select
+        className="w-full p-1 py-2 pr-0 bg-transparent border-2 rounded-md border-glass"
+        placeholder="Select an option"
+        onChange={onChange}
+      >
+        <option selected disabled>
+          Select an option
+        </option>
+        {options &&
+          options.length > 0 &&
+          options.map((option) => (
+            <option key={option.name} value={option.id}>
+              {option.name}
+            </option>
+          ))}
+      </select>
     </div>
   );
 };

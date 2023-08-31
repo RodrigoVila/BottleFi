@@ -23,7 +23,7 @@ export const GradientButton = ({
   const iconStyles = icon ? "justify-start" : "justify-center";
   return (
     <button
-      className="w-full bg-gradient"
+      className={twMerge("w-full", loading || rest.disabled ? "bg-slate-500" : "bg-gradient")}
       disabled={rest.disabled || loading}
       {...rest}
     >

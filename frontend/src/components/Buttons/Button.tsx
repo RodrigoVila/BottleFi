@@ -27,9 +27,8 @@ export const Button = ({
       disabled={rest.disabled || loading}
       {...rest}
     >
-      <div className="flex items-center w-full">
+      <div className="flex items-center justify-center w-full">
         <p>{loading ? "Loading" : children}</p>
-        <div className="ml-5">{loading ? <Spinner /> : icon}</div>
       </div>
     </button>
   );

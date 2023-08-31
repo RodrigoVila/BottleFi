@@ -1,19 +1,18 @@
 import { Navigate } from "react-router-dom";
 
 import { useAuthContext } from "@context/auth";
-import { useRolesContract, useWallet } from "@hooks";
+import { useWallet } from "@hooks";
 import { AnimatedButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
 
 export const Login = () => {
   const { user } = useAuthContext();
   const { handleConnect } = useWallet();
-  const { getRoleData } = useRolesContract();
 
   return (
     <>
       {user && <Navigate to="/dashboard" />}
-      <div className="w-full h-screen bg-[url('./src/assets/login-bg.jpeg')] bg-center bg-no-repeat bg-cover">
+      <div className="w-full h-screen bg-center bg-no-repeat bg-cover bg-login">
         <div className="w-full h-full center bg-overlay">
           <div className="flex-col max-w-xl gap-5 center">
             <Logo />
@@ -28,9 +27,6 @@ export const Login = () => {
               {/* <AnimatedButton onClick={toggleModal}>Web3 Login</AnimatedButton> */}
               <AnimatedButton onClick={handleConnect}>
                 Connect with Browser Wallet
-              </AnimatedButton>
-              <AnimatedButton onClick={getRoleData}>
-                GetRole
               </AnimatedButton>
             </div>
           </div>

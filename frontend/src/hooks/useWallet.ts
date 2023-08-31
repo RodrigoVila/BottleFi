@@ -45,7 +45,7 @@ export const useWallet = () => {
   const handleAccountsChanged = (accounts: string[]) => {
     if (accounts.length > 0) {
       const address = accounts[0];
-      console.log("handleAccountsChanged");
+      console.log("handleAccountsChanged", address);
       setData((prev) => ({ ...prev, address }));
     } else {
       handleDisconnect();
@@ -78,10 +78,10 @@ export const useWallet = () => {
 
     return () => {
       if (isEthereumObjectPresent) {
-        window.ethereum.off("accountsChanged", handleAccountsChanged);
-        window.ethereum.off("chainChanged", handleChainChanged);
-        window.ethereum.off("connect", () => console.log("connect!!!"));
-        window.ethereum.off("disconnect", () => handleDisconnect);
+        window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
+        window.ethereum.removeListener("chainChanged", handleChainChanged);
+        window.ethereum.removeListener("connect", () => console.log("connect!!!"));
+        window.ethereum.removeListener("disconnect", () => handleDisconnect);
       }
     };
     //eslint-disable-next-line

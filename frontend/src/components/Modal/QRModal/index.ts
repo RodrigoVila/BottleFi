@@ -1,0 +1,1 @@
+export { QRModal } from "./QRModal";

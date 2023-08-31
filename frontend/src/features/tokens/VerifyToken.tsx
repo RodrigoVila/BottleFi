@@ -1,35 +1,57 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { Modal } from "@components/Modal";
-import { SuccessError } from "@components/SuccessError";
+import { useToastNotifications } from "@hooks";
+import { GradientButton } from "@components/Buttons";
+import { TextInput } from "@components/Inputs";
 
-export const VerifyToken = ({ params }: { params: { id: string } }) => {
-  const [isValid] = useState(null);
-  // const [tokenInfo, setTokenInfo] = useState({});
+import {
+  Divider,
+  TokenColumn,
+  TokenDescription,
+  TokenLayout,
+  TokenTitle,
+} from "./layout";
 
-  const { id } = params;
+export const VerifyToken = () => {
+  const [tokenId, setTokenId] = useState<number>();
 
-  // useEffect(() => {
-  //   if (id && tokens.length > 0) {
-  //     const getTokenValidity = async () => {
-  //       const valid = await isValidToken(id);
-  //       setIsValid(valid);
-  //     };
-  //     const getTokenInfo = async () => {
-  //       const info = await getTokenByID(id);
-  //       setTokenInfo(info);
-  //     };
-  //     getTokenValidity();
-  //     getTokenInfo();
-  //   }
-  // }, [id, tokens]);
+  const { showInfoNotification } = useToastNotifications();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (!tokenId) {
+      showInfoNotification("Please introduce a valid token ID");
+      return;
+    }
+
+    navigate(`/verify/${tokenId}`);
+  };
 
   return (
-    <Modal isOpen={false} onClose={() => {}}>
-      {isValid !== null && (
-        // <SuccessError tokenID={id} isErrorModal={!isValid} />
-        <SuccessError tokenID={id} isErrorModal={false} />
-      )}
-    </Modal>
+    <TokenLayout>
+      <TokenColumn>
+        <TokenTitle>Verify: Checks token authenticity</TokenTitle>
+        <TokenDescription>
+          Verification provides assurance of a token's legitimacy. By verifying,
+          you ensure its genuine origin and uncompromised value. Trust the
+          verified status for secure transactions and confident actions.
+        </TokenDescription>
+      </TokenColumn>
+
+      <Divider />
+
+      <TokenColumn className="gap-8">
+        <TextInput
+          type="number"
+          min={0}
+          label="Token ID"
+          value={tokenId}
+          onChange={(e) => setTokenId(e.target.value)}
+          required
+        />
+        <GradientButton onClick={handleClick}>Verify</GradientButton>
+      </TokenColumn>
+    </TokenLayout>
   );
 };

@@ -25,7 +25,7 @@ export const TextInput = ({
         type={type}
         name={label?.toLowerCase()}
         className={twMerge(
-          "border-glass border-2 bg-transparent w-full p-1 rounded-md focus:outline-none focus:border-white py-[6px]",
+          "border-glass border-2 bg-transparent w-full p-1 pl-3 rounded-md focus:outline-none focus:border-white py-[6px]",
           className
         )}
         {...rest}

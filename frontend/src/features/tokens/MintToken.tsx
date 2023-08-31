@@ -13,19 +13,18 @@ import {
   TokenTitle,
 } from "./layout";
 
+const initialData = { name: "", description: "" };
+
 export const MintToken = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
-  const [userData, setUserData] = useState<IPFSStorageData>({
-    name: "",
-    description: "",
-  });
+  const [userData, setUserData] = useState<IPFSStorageData>(initialData);
 
   const { uploadFileToIPFS, uploadMetadataToIPFS } = useIPFS();
 
   const { mintToken } = useNFTContract();
 
-  const { showErrorNotification, showSuccessNotification } =
+  const { showInfoNotification, showSuccessNotification } =
     useToastNotifications();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +44,7 @@ export const MintToken = () => {
     e.preventDefault();
 
     if (!userData.name || !userData.description || !file) {
-      showErrorNotification("Every input is mandatory");
+      showInfoNotification("Every input is mandatory");
       return;
     }
 
@@ -67,10 +66,12 @@ export const MintToken = () => {
         }
       }
     } catch (err) {
-      // Error messages are being handled by the "notifyPromise" fn
+      //Todo: Intercept errors
       console.error("Err at MintToken component", err);
     } finally {
       setIsLoading(false);
+      setFile(null);
+      setUserData(initialData);
     }
   };
 
@@ -103,7 +104,7 @@ export const MintToken = () => {
           required
         />
 
-        <FileInput onChange={handleFileSelect} />
+        <FileInput label="Token Image" value={file} onChange={handleFileSelect} />
 
         <GradientButton loading={isLoading} onClick={handleSubmit}>
           Add

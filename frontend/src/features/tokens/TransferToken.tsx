@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { useDappContext } from "@context/dapp";
+import { useNFTContract, useToastNotifications } from "@hooks";
 import { GradientButton } from "@components/Buttons";
 import { SelectInput, TextInput } from "@components/Inputs";
 
@@ -12,39 +14,54 @@ import {
 } from "./layout";
 
 export const TransferToken = () => {
-  const [, setTokenID] = useState("");
+  const [tokenId, settokenId] = useState("");
   const [destinationAddress, setDestinationAddress] = useState("");
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // const clearInputs = () => {
-  //   setDestinationAddress("");
-  //   setTokenID("");
-  // };
+  const { tokens } = useDappContext();
+  const { transferToken } = useNFTContract();
+  const {
+    showWarningNotification,
+    showSuccessNotification,
+    showErrorNotification,
+  } = useToastNotifications();
 
-  // const handleSubmit = async () => {
-  //   if (!tokenID) {
-  //     alert("Please select token");
-  //     return;
-  //   }
-  //   if (!destinationAddress) {
-  //     alert("Please write a destination address");
-  //     return;
-  //   }
-  //   setIsLoading(true);
-  //   // await transfer(tokenID, destinationAddress)
-  //   //   .then(() => {
-  //   //     setIsLoading(false);
-  //   //     setSuccessMessage("Success!");
-  //   //     clearInputs();
-  //   //   })
-  //   //   .catch((e) => {
-  //   //     setErrorMessage(`Error: ${e}`);
-  //   //     setIsLoading(false);
-  //   //     clearInputs();
-  //   //   });
-  // };
+  const clearInputs = () => {
+    setDestinationAddress("");
+    settokenId("");
+  };
 
-  const tokens = [{ id: "1", name: "asf" }];
+  const handleSubmit = async () => {
+    if (!tokenId) {
+      showWarningNotification("Please select token");
+      return;
+    }
+    if (!destinationAddress) {
+      showWarningNotification("Please write a destination address");
+      return;
+    }
+    setIsLoading(true);
+
+    try {
+      const success = await transferToken(
+        destinationAddress,
+        parseInt(tokenId)
+      );
+      if (success) {
+        showSuccessNotification(
+          "Token transfered successfully. Try checking sender/receiver dashboards!"
+        );
+      } else {
+        showErrorNotification("Something went wrong. Please try again later.");
+      }
+    } catch (error) {
+      //Todo: Intercept errors
+      console.error("Err at Transfer component", error);
+    } finally {
+      setIsLoading(false);
+      clearInputs();
+    }
+  };
 
   return (
     <TokenLayout>
@@ -60,13 +77,13 @@ export const TransferToken = () => {
         </TokenDescription>
       </TokenColumn>
 
-      <Divider />
+      <Divider type="vertical" />
 
       <TokenColumn className="gap-8">
         <SelectInput
           label="Token to transfer"
           options={tokens}
-          onChange={(e) => setTokenID(e.target.value)}
+          onChange={(e) => settokenId(e.target.value)}
           required
         />
         <TextInput
@@ -75,7 +92,7 @@ export const TransferToken = () => {
           onChange={(e) => setDestinationAddress(e.target.value)}
           required
         />
-        <GradientButton loading={isLoading} onClick={() => {}}>
+        <GradientButton loading={isLoading} onClick={handleSubmit}>
           Transfer
         </GradientButton>
       </TokenColumn>

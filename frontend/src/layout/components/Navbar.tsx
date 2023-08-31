@@ -4,7 +4,7 @@ import { AccountData, NavItems } from "./";
 
 export const Navbar = () => {
   return (
-    <header className="flex items-center justify-between w-full text-xl font-semibold text-white z-1 glass-alt min-h-[40px]">
+    <header className="flex items-center justify-between w-full text-xl font-semibold text-white z-1 glass-alt min-h-[40px] border-b-2 border-b-transparent">
       <Logo type="navbar" />
       <NavItems />
       <AccountData />

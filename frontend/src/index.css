@@ -1,4 +1,5 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap') */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,10 +16,6 @@
     backdrop-filter: blur(4px) saturate(97%);
     -webkit-backdrop-filter: blur(4px) saturate(97%);
     background-color: rgba(0, 0, 0, 0.28);
-  }
-
-  .border-glass {
-    border-color: rgba(255, 255, 255, 0.125);
   }
 
   .center {
@@ -66,37 +63,15 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.dashboardBg {
-  background-color: rgb(15 23 42);
-
-  background-image: radial-gradient(rgb(15 23 42) 0px, transparent 40%),
-    radial-gradient(at 10% 29%, #7e22ce 0px, transparent 20%),
-    radial-gradient(at 56% 17%, #b91c1c 0px, transparent 20%),
-    radial-gradient(at 94% 19%, #701a75 0px, transparent 20%),
-    radial-gradient(at 81% 57%, #9f1239 0px, transparent 20%),
-    radial-gradient(at 94% 94%, #ec4899 0px, transparent 20%);
-
-  animation: gradient 50s ease infinite;
-
-  background-size: 200% 200%;
-
-  background-attachment: fixed;
+/* To hide arrows on input numbers */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 20%;
-  }
-
-  25% {
-    background-position: 100% 50%;
-  }
-
-  50% {
-    background-position: 50% 70%;
-  }
-
-  100% {
-    background-position: 0% 20%;
-  }
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

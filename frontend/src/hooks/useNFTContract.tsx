@@ -41,10 +41,16 @@ export const useNFTContract = () => {
   const getTokens = async (): Promise<TokenList | null> => {
     const address = await getCurrentAccount();
     if (!address) return null;
+    // const balance = parseBigInt(await nft.getBalance())
+    const rawTokens = await nft.listMyTokens();
+    const tokenIds = rawTokens.map(parseBigInt);
 
-    const rawTokensOfOwners = await nft.tokensOfOwner();
-    const tokensOfOwner = rawTokensOfOwners.map((t) => parseBigInt(t));
-    const tokens = await Promise.all(tokensOfOwner.map(getTokenById));
+    const tokens = await Promise.all(
+      tokenIds.map(async (tokenId) => {
+        const token = await getTokenById(tokenId);
+        return token;
+      })
+    );
 
     return tokens;
   };
@@ -74,5 +80,16 @@ export const useNFTContract = () => {
     }
   };
 
-  return { getTokenById, getTokens, mintToken, transferToken };
+  const sellToken = async (to: string, tokenId: number): Promise<boolean> => {
+    try {
+      const response = await nft.sell(to, tokenId);
+      const receipt = await response.wait();
+      return !!receipt;
+    } catch (err) {
+      notifyCatchErrors(err);
+      return false;
+    }
+  };
+
+  return { getTokenById, getTokens, mintToken, transferToken, sellToken };
 };

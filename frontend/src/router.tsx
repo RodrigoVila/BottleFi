@@ -4,8 +4,8 @@ import { Layout } from "@layout";
 import { Dashboard } from "@features/dashboard";
 import { Login } from "@features/login";
 import {
-  InvalidateToken,
   MintToken,
+  SellToken,
   TokenValidity,
   TransferToken,
   VerifyToken,
@@ -35,8 +35,8 @@ export const router = createBrowserRouter([
         element: <MintToken />,
       },
       {
-        path: "invalidate",
-        element: <InvalidateToken />,
+        path: "sell",
+        element: <SellToken />,
       },
       {
         path: "transfer",

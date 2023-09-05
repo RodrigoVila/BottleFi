@@ -29,8 +29,8 @@ const links: Link[] = [
     hoverColor: "hover:border-b-green-400",
   },
   {
-    title: "Invalidate",
-    to: "/invalidate",
+    title: "Sell",
+    to: "/sell",
     borderColor: "border-b-blue-400",
     hoverColor: "hover:border-b-blue-400",
   },

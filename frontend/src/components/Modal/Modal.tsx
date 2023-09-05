@@ -37,7 +37,7 @@ export const Modal = ({
         onClick={disableOutsideClick ? undefined : onClose}
       >
         <AnimatedContainer
-          className={twMerge("max-w-xl h-fit", className)}
+          className={twMerge("max-w-xl h-fit m-4", className)}
           bodyClassName={twMerge("relative flex-col gap-6", bodyClassName)}
           onClick={(e) => e.preventDefault()}
         >

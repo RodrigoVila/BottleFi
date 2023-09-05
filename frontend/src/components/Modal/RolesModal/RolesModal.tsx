@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useModalContext } from "@context/modals";
@@ -26,7 +26,7 @@ export const RolesModal = () => {
 
   const [localStorageData] = useLocalStorage(LOCAL_STORAGE_KEY);
   const { setData } = useDataStorage();
-  const { register, getRoleData } = useRolesContract();
+  const { register } = useRolesContract();
   const { isRolesModalOpen, setRolesModalOpen } = useModalContext();
   const { showWarningNotification, showSuccessNotification } =
     useToastNotifications();
@@ -123,9 +123,8 @@ export const RolesModal = () => {
       />
 
       <GradientButton onClick={handleSubmit} loading={isLoading}>
-        Sign
+        Sign in
       </GradientButton>
-      <GradientButton onClick={getRoleData}>getRole</GradientButton>
     </Modal>
   );
 };

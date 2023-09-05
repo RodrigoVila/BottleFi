@@ -14,7 +14,7 @@ import {
 } from "./layout";
 
 export const TransferToken = () => {
-  const [tokenId, settokenId] = useState("");
+  const [tokenId, setTokenId] = useState("");
   const [destinationAddress, setDestinationAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,7 +28,7 @@ export const TransferToken = () => {
 
   const clearInputs = () => {
     setDestinationAddress("");
-    settokenId("");
+    setTokenId("");
   };
 
   const handleSubmit = async () => {
@@ -83,7 +83,7 @@ export const TransferToken = () => {
         <SelectInput
           label="Token to transfer"
           options={tokens}
-          onChange={(e) => settokenId(e.target.value)}
+          onChange={(e) => setTokenId(e.target.value)}
           required
         />
         <TextInput

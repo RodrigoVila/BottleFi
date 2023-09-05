@@ -22,8 +22,6 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (tokens) return;
-
     const fetchTokens = async () => {
       const tokenList = await getTokens();
       if (tokenList) setTokens(tokenList);

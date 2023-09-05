@@ -1,168 +1,216 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
-import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
-import '@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol';
-import '@openzeppelin/contracts/utils/Counters.sol';
-import './Roles.sol';
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "./Roles.sol";
 
 contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
-	using Counters for Counters.Counter;
+    using EnumerableSet for EnumerableSet.UintSet;
+    using Counters for Counters.Counter;
 
-	/*** Roles contract instance ***/
+    /*** Roles contract instance ***/
 
-	Roles private rolesContractInstance;
+    Roles private rolesContractInstance;
 
-	/*** Data Types ***/
+    /*** Data Types ***/
 
-	struct Token {
-		uint256 id;
-		string uri;
-		uint256 mintedAt;
-		address mintedBy; //This could be cellar name inherited from main contract
-	}
+    struct Token {
+        uint256 id;
+        string uri;
+        uint256 mintedAt;
+        address mintedBy;
+    }
 
-	/*** Storage ***/
+    /*** Storage ***/
 
-	//Token ID count
-	Counters.Counter private _tokenIdCounter;
+    //Token ID count
+    Counters.Counter private _tokenIdCounter;
 
-	//Tracks tokens
-	mapping(uint256 => Token) private indexToToken;
+    //Given token id, returns  token data
+    mapping(uint256 => Token) private indexToToken;
 
-	// Which tokens owner has
-	mapping(address => uint256[]) private tokensOwnedBy;
+    //Given owner address, returns an array of token ids
+    mapping(address => EnumerableSet.UintSet) private ownerTokens;
 
-	//Token validity (Used to know if bottle is authentic or not).
-	mapping(uint256 => bool) public tokenIndexIsValid;
+    //Given token id, return token authenticity.
+    mapping(uint256 => bool) public tokenIndexIsValid;
 
-	/*** Modifiers ***/
+    /*** Modifiers ***/
 
-	modifier onlySupplier() {
-		require(rolesContractInstance.hasRole(rolesContractInstance.SUPPLIER_ROLE(), msg.sender), 'Only supplier roles can perform this task');
-		_;
-	}
+    modifier onlySupplier() {
+        require(
+            rolesContractInstance.hasRole(
+                rolesContractInstance.SUPPLIER_ROLE(),
+                msg.sender
+            ),
+            "Only supplier roles can perform this task"
+        );
+        _;
+    }
 
-	modifier onlyVendor() {
-		require(rolesContractInstance.hasRole(rolesContractInstance.VENDOR_ROLE(), msg.sender), 'Only vendor roles can perform this task');
-		_;
-	}
+    modifier onlyVendor() {
+        require(
+            rolesContractInstance.hasRole(
+                rolesContractInstance.VENDOR_ROLE(),
+                msg.sender
+            ),
+            "Only vendor roles can perform this task"
+        );
+        _;
+    }
 
-	modifier onlySupplierOrVendor() {
-		require(
-			rolesContractInstance.hasRole(rolesContractInstance.SUPPLIER_ROLE(), msg.sender) ||
-				rolesContractInstance.hasRole(rolesContractInstance.VENDOR_ROLE(), msg.sender),
-			'Only suppliers or vendors can perform this task'
-		);
-		_;
-	}
+    modifier onlySupplierOrVendor() {
+        require(
+            rolesContractInstance.hasRole(
+                rolesContractInstance.SUPPLIER_ROLE(),
+                msg.sender
+            ) ||
+                rolesContractInstance.hasRole(
+                    rolesContractInstance.VENDOR_ROLE(),
+                    msg.sender
+                ),
+            "Only suppliers or vendors can perform this task"
+        );
+        _;
+    }
 
-	/*** Events ***/
+    /*** Events ***/
 
-	event Mint(uint256 id, string tokenURI, uint256 mintedAt, address mintedBy);
-	event Sell(address seller, address to, uint256 id);
+    event Mint(uint256 id, string tokenURI, uint256 mintedAt, address mintedBy);
+    event Sell(address seller, address to, uint256 id, uint256 mintedAt);
 
-	/*** Constructor ***/
+    /*** Constructor ***/
 
-	constructor(address _rolesContractAddress) ERC721('BottleFi', 'BTF') {
-		rolesContractInstance = Roles(_rolesContractAddress);
-	}
+    constructor(address _rolesContractAddress) ERC721("BottleFi", "BTF") {
+        rolesContractInstance = Roles(_rolesContractAddress);
+    }
 
-	/*** Methods ***/
+    /*** Methods ***/
 
-	function mint(string memory _uri) external onlySupplier {
-		uint256 tokenId = _tokenIdCounter.current();
-		_tokenIdCounter.increment();
+    function mint(string memory _uri) external onlySupplier {
+        _tokenIdCounter.increment();
+        uint256 tokenId = _tokenIdCounter.current();
 
-		Token memory token = Token({ id: tokenId, uri: _uri, mintedAt: block.timestamp, mintedBy: msg.sender });
+        Token memory token = Token({
+            id: tokenId,
+            uri: _uri,
+            mintedAt: block.timestamp,
+            mintedBy: msg.sender
+        });
 
-		indexToToken[tokenId] = token;
-		tokenIndexIsValid[tokenId] = true;
-		tokensOwnedBy[msg.sender].push(tokenId);
+        indexToToken[tokenId] = token;
+		ownerTokens[msg.sender].add(tokenId);
+        tokenIndexIsValid[tokenId] = true;
 
-		_safeMint(msg.sender, tokenId);
-		_setTokenURI(tokenId, _uri);
+        _mint(msg.sender, tokenId);
+        _setTokenURI(tokenId, _uri);
 
-		emit Mint(tokenId, _uri, block.timestamp, msg.sender);
-	}
+        emit Mint(tokenId, _uri, block.timestamp, msg.sender);
+    }
 
-	function transfer(address _to, uint256 _tokenId) external onlySupplier returns (uint256) {
-		address seller = ownerOf(_tokenId);
-		require(seller == msg.sender, 'Only owner of this token can transfer');
+    function transfer(
+        address _to,
+        uint256 _tokenId
+    ) external onlySupplier returns (uint256) {
+        address seller = ownerOf(_tokenId);
+        require(seller == msg.sender, "Only owner of this token can transfer");
 
-		transferFrom(seller, _to, _tokenId);
+		ownerTokens[msg.sender].remove(_tokenId);
+        ownerTokens[_to].add(_tokenId);
 
-		return _tokenId;
-	}
+        _transfer(seller, _to, _tokenId);
 
-	function sell(address _to, uint256 _tokenId) external onlySupplierOrVendor returns (uint256) {
-		address seller = ownerOf(_tokenId);
-		require(seller == msg.sender, 'Only owner of this token can sell');
+        return _tokenId;
+    }
 
-		tokenIndexIsValid[_tokenId] = false;
+    function sell(
+        address _to,
+        uint256 _tokenId
+    ) external onlySupplierOrVendor returns (uint256) {
+        address seller = ownerOf(_tokenId);
+        require(seller == msg.sender, "Only owner of this token can sell");
 
-		transferFrom(seller, _to, _tokenId);
+		ownerTokens[msg.sender].remove(_tokenId);
+        ownerTokens[_to].add(_tokenId);
+        tokenIndexIsValid[_tokenId] = false;
 
-		emit Sell(seller, _to, _tokenId);
+        _transfer(seller, _to, _tokenId);
 
-		return _tokenId;
-	}
+        emit Sell(seller, _to, _tokenId, block.timestamp);
 
-	//Return token validity (Sold bottle = Invalid token)
-	function isValidToken(uint256 _tokenId) external view returns (bool) {
-		return tokenIndexIsValid[_tokenId];
-	}
+        return _tokenId;
+    }
 
-	//Return array of token owned IDs
-	function tokensOfOwner() external view returns (uint256[] memory) {
-		return tokensOwnedBy[msg.sender];
-	}
+    // Given an id, returns token data
+    function getTokenById(
+        uint256 _tokenId
+    ) public view returns (uint256, string memory, uint256, bool) {
+        uint256 id = indexToToken[_tokenId].id;
+        string memory uri = indexToToken[_tokenId].uri;
+        uint256 mintedAt = indexToToken[_tokenId].mintedAt;
+        bool isValid = tokenIndexIsValid[_tokenId];
 
-	// Given an id, returns token data
-	function getTokenById(uint256 _tokenId)
-		public
-		view
-		returns (
-			uint256,
-			string memory,
-			uint256,
-			bool
-		)
-	{
-		uint256 id = indexToToken[_tokenId].id;
-		string memory uri = indexToToken[_tokenId].uri;
-		uint256 mintedAt = indexToToken[_tokenId].mintedAt;
-		bool isValid = tokenIndexIsValid[_tokenId];
+        return (id, uri, mintedAt, isValid);
+    }
 
-		return (id, uri, mintedAt, isValid);
-	}
+    //List owner tokens
+    function listMyTokens() external view returns (uint256[] memory) {
+        uint256[] memory tokens = new uint256[](
+            ownerTokens[msg.sender].length()
+        );
 
-	// The following functions are overrides required by Solidity.
+        for (uint256 i = 0; i < ownerTokens[msg.sender].length(); i++) {
+            tokens[i] = ownerTokens[msg.sender].at(i);
+        }
 
-	function supportsInterface(bytes4 interfaceId)
-		public
-		view
-		override(ERC721, ERC721Enumerable, ERC721URIStorage)
-		returns (bool)
-	{
-		return super.supportsInterface(interfaceId);
-	}
+        return tokens;
+    }
 
-	function _beforeTokenTransfer(
-		address from,
-		address to,
-		uint256 tokenId,
-		uint256 batchSize
-	) internal override(ERC721, ERC721Enumerable) {
-		super._beforeTokenTransfer(from, to, tokenId, batchSize);
-	}
+    //Return token validity (Sold bottle = Invalid token)
+    function isValidToken(uint256 _tokenId) external view returns (bool) {
+        return tokenIndexIsValid[_tokenId];
+    }
 
-	function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
-		super._burn(tokenId);
-	}
+    //Return owner's token balance
+    function getBalance() external view returns (uint256) {
+        return balanceOf(msg.sender);
+    }
 
-	function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
-		return super.tokenURI(tokenId);
-	}
+    // The following functions are overrides required by Solidity.
+
+    function supportsInterface(
+        bytes4 interfaceId
+    )
+        public
+        view
+        override(ERC721, ERC721Enumerable, ERC721URIStorage)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
+
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override(ERC721, ERC721Enumerable) {
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
+    }
+
+    function _burn(
+        uint256 tokenId
+    ) internal override(ERC721, ERC721URIStorage) {
+        super._burn(tokenId);
+    }
+
+    function tokenURI(
+        uint256 tokenId
+    ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
+        return super.tokenURI(tokenId);
+    }
 }

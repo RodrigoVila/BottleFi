@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers, utils } from "ethers";
 
 import { Network, Provider, Signer, WalletProviders } from "@types";
 
@@ -26,6 +26,15 @@ export const getCurrentAccount = async (): Promise<string | undefined> => {
     return accounts[0];
   }
   return undefined;
+};
+
+export const getBalance = async (): Promise<string | undefined> => {
+  const provider = getProvider()
+  const account = await getCurrentAccount();
+  if (provider && account) {
+    const balance = await provider.getBalance(account)
+    return utils.formatEther(balance);
+  }
 };
 
 export const getNetwork = async (): Promise<Network> => {

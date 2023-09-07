@@ -4,11 +4,11 @@ import { TfiFaceSad } from "react-icons/tfi";
 import { Link, useParams } from "react-router-dom";
 
 import { useNFTContract } from "@hooks";
+import { Button } from "@components/Buttons";
 import { Spinner } from "@components/Spinner";
 import { Token } from "@types";
 
 import { Divider, TokenColumn, TokenLayout } from "./layout";
-import { Button } from "@components/Buttons";
 
 export const TokenValidity = () => {
   const [tokenData, setTokenData] = useState<Token | null>(null);

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Link, use, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 type Link = {
@@ -8,6 +7,8 @@ type Link = {
   borderColor: string;
   hoverColor: string;
 };
+
+type NavItemProps = { position?: "horizontal" | "vertical" };
 
 const links: Link[] = [
   {
@@ -42,19 +43,29 @@ const links: Link[] = [
   },
 ];
 
-export const NavItems = () => {
+export const NavItems = ({ position = "horizontal" }: NavItemProps) => {
   const { pathname } = useLocation();
 
-  const itemStyle =
-    "text-base text-white cursor-pointer transition-colors duration-200 h-full py-4 border-b-2 border-b-transparent font-marcellus";
+  const positionStyles =
+    position === "horizontal"
+      ? "hidden md:flex-1 md:flex flex-row w-full"
+      : "flex-col";
+
+
 
   return (
-    <ul className="flex justify-center flex-1 w-full gap-6 m-0 list-none">
+    <ul
+      className={twMerge(
+        "justify-center gap-6 m-0 list-none",
+        positionStyles
+      )}
+    >
       {links.map((link) => (
         <li
           key={link.title}
           className={twMerge(
-            itemStyle,
+            "text-base text-white cursor-pointer transition-colors duration-200 h-full py-4 border-b-2 border-b-transparent font-marcellus",
+            position === "horizontal" ? "py-4" : "py-2 my-6",
             link.hoverColor,
             pathname.includes(link.to) && link.borderColor
           )}

@@ -14,7 +14,7 @@ export default defineConfig({
       "@context": path.resolve(__dirname, "./src/context"),
       "@features": path.resolve(__dirname, "./src/features"),
       "@hooks": path.resolve(__dirname, "./src/hooks/index.ts"),
-      "@layout": path.resolve(__dirname, "./src/layout/index.ts"),
+      "@layout": path.resolve(__dirname, "./src/layout"),
       "@typechain-types": path.resolve(__dirname, "../typechain-types"),
       "@types": path.resolve(__dirname, "./src/types.d.ts"),
       "@utils": path.resolve(__dirname, "./src/utils"),

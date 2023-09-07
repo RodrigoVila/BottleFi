@@ -29,7 +29,7 @@
       "@constants": ["./constants/index.ts"],
       "@features/*": ["./features/*"],
       "@hooks": ["./hooks/index.ts"],
-      "@layout": ["./layout/index.ts"],
+      "@layout/*": ["./layout/*"],
       "@typechain-types/*": ["../../typechain-types/*"],
       "@types": ["./types.d.ts"],
       "@utils/*": ["./utils/*"]

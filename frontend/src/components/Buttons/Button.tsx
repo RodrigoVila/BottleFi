@@ -1,7 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { Spinner } from "@components/Spinner";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon?: any;

@@ -12,7 +12,7 @@ export const Logo = ({ type = "login" }: LogoProps) => {
   return (
     <div
       className={twMerge(
-        "flex items-center justify-start gap-1 flex-1",
+        "flex items-center justify-center md:justify-start gap-1 flex-1",
         containerStyles
       )}
     >

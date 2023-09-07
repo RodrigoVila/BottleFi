@@ -48,6 +48,7 @@ module.exports = {
                 "^@artifacts",
                 "^@features",
                 "^@components",
+                "^@layout",
                 "^@utils",
                 "^@constants",
                 "^@types",

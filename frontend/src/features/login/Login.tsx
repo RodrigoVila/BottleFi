@@ -14,7 +14,7 @@ export const Login = () => {
       {user && <Navigate to="/dashboard" />}
       <div className="w-full h-screen bg-center bg-no-repeat bg-cover bg-login">
         <div className="w-full h-full center bg-overlay">
-          <div className="flex-col max-w-xl gap-5 center">
+          <div className="flex-col max-w-xl gap-5 mx-2 center md:mx-0">
             <Logo />
             <p className="text-3xl font-bold text-center font-cormorant">
               <span className="font-bold gradient-text">Exclusive</span>{" "}

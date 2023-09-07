@@ -1,4 +1,4 @@
-import { toast, ToastOptions, ToastPromiseParams } from "react-toastify";
+import { toast, ToastOptions } from "react-toastify";
 
 const options: ToastOptions = {
   position: "top-center",

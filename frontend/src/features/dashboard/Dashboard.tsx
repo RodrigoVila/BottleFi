@@ -31,7 +31,7 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex-col w-full max-w-2xl gap-2 center">
+    <div className="flex-col w-full max-w-2xl gap-2 mx-2 md:mx-0 center">
       <h3 className="text-4xl font-medium font-marcellus">Dashboard</h3>
       <div
         className={twMerge(
@@ -44,26 +44,22 @@ export const Dashboard = () => {
               <tr>
                 <th className="py-3">Image</th>
                 <th>Name</th>
-                <th>Description</th>
+                <th className="hidden md:table-cell">Description</th>
                 <th>Mint Date</th>
                 <th>Validity</th>
                 <th>QR</th>
               </tr>
             </thead>
             <tbody>
-              {tokens?.map((token, index) => {
-                const isLastItem = index === tokens.length - 1;
+              {tokens?.map((token) => {
                 const { id, image, name, description, mintedAt, isValid } =
                   token;
                 return (
                   <tr
                     key={`${id}-${mintedAt}`}
-                    className={twMerge(
-                      "h-20 text-center border-b-glass",
-                      !isLastItem && "border-b-[1px]"
-                    )}
+                    className="h-20 text-center border-b-glass border-b-[1px]"
                   >
-                    <td className="w-24 h-24">
+                    <td className="w-20 h-20 md:w-24 md:h-24">
                       <img
                         src={image}
                         alt="Token"
@@ -71,7 +67,7 @@ export const Dashboard = () => {
                       />
                     </td>
                     <td>{name}</td>
-                    <td>{description}</td>
+                    <td className="hidden md:table-cell">{description}</td>
                     <td>{mintedAt}</td>
                     <td>
                       {isValid ? (
@@ -85,7 +81,7 @@ export const Dashboard = () => {
                         className="h-10 px-0"
                         onClick={() => handleClick(id)}
                       >
-                        <span className="text-s">See</span>
+                        <span className="px-2 text-s">See</span>
                       </Button>
                     </td>
                   </tr>

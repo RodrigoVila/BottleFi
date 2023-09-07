@@ -20,11 +20,8 @@ export const SellToken = () => {
 
   const { tokens } = useDappContext();
   const { sellToken } = useNFTContract();
-  const {
-    showWarningNotification,
-    showSuccessNotification,
-    showErrorNotification,
-  } = useToastNotifications();
+  const { showWarningNotification, showSuccessNotification } =
+    useToastNotifications();
 
   const clearInputs = () => {
     setDestinationAddress("");
@@ -48,8 +45,6 @@ export const SellToken = () => {
         showSuccessNotification(
           "Token sold successfully. Try checking token authenticity at receivers dashboard!"
         );
-      } else {
-        showErrorNotification("Something went wrong. Please try again later.");
       }
     } catch (error) {
       //Todo: Intercept errors

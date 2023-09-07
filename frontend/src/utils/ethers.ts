@@ -1,6 +1,6 @@
 import { ethers, utils } from "ethers";
 
-import { Network, Provider, Signer, WalletProviders } from "@types";
+import { Network, Provider, Signer } from "@types";
 
 export const getProvider = (): Provider => {
   if (typeof window !== "undefined" && window.ethereum) {

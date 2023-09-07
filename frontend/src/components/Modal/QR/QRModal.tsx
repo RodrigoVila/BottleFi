@@ -18,13 +18,13 @@ export const QRModal = () => {
   return (
     <Modal isOpen={isQRModalOpen} onClose={closeModal}>
       {tokenUrlAddress ? (
-        <div className="flex flex-col items-center gap-8 px-4 pt-8 pb-6">
-          <h3 className="text-3xl">
+        <div className="flex flex-col items-center gap-4 px-4 pt-8 pb-6 md:gap-8">
+          <h3 className="md:text-3xl">
             Scan this QR from your phone to verify token authenticity
           </h3>
-          <QRCode value={tokenUrlAddress} />
+          <QRCode value={tokenUrlAddress} className="w-24 h-24 md:h-48 md:w-48" />
           <span>or</span>
-          <Link to={tokenUrlAddress} className="underline">
+          <Link to={tokenUrlAddress} className="text-sm underline md:text-base">
             Verify from this website
           </Link>
         </div>

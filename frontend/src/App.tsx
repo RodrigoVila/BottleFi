@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "@context/auth";
 import { DappProvider } from "@context/dapp";
 import { ModalProvider } from "@context/modals";
-import { Modals } from "@components/Modal";
 
 import { router } from "./router";
 
@@ -16,7 +15,6 @@ function App() {
       <DappProvider>
         <ModalProvider>
           <ToastContainer />
-          <Modals />
           <RouterProvider router={router} />
         </ModalProvider>
       </DappProvider>

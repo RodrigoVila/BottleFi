@@ -5,7 +5,7 @@ import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 
 describe("NFT contract", function () {
   async function tokenFixture() {
-    const [owner, addr1, addr2] = await ethers.getSigners();
+    const [owner, addr1] = await ethers.getSigners();
 
     const rolesContract = await ethers.deployContract("Roles");
     await rolesContract.waitForDeployment();
@@ -17,6 +17,7 @@ describe("NFT contract", function () {
 
     return { owner, addr1, rolesContract, nftContract };
   }
+
   it("Should mint a token when called by a supplier", async function () {
     const { owner, rolesContract, nftContract } = await loadFixture(
       tokenFixture
@@ -24,14 +25,16 @@ describe("NFT contract", function () {
 
     const uri = "http://test.com";
     const mint = nftContract.mint(uri);
-    await expect(mint).to.be.revertedWith("Only Suppliers");
+    await expect(mint).to.be.revertedWith(
+      "Only supplier roles can perform this task"
+    );
 
     await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
 
     const mint2 = nftContract.mint(uri);
     await expect(mint2)
       .to.emit(nftContract, "Mint")
-      .withArgs(0, uri, anyValue, owner.address);
+      .withArgs(1, uri, anyValue, owner.address);
   });
 
   it("Should transfer a token when called by a supplier", async function () {
@@ -39,13 +42,15 @@ describe("NFT contract", function () {
       tokenFixture
     );
 
-    const transfer1 = nftContract.transfer(addr1.address, 0);
-    await expect(transfer1).to.be.revertedWith("Only Suppliers");
+    const transfer1 = nftContract.transfer(addr1.address, 1);
+    await expect(transfer1).to.be.revertedWith(
+      "Only supplier roles can perform this task"
+    );
 
     await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
     await nftContract.mint("http://test.com");
 
-    const transfer2 = nftContract.transfer(addr1.address, 0);
+    const transfer2 = nftContract.transfer(addr1.address, 1);
     await expect(transfer2).to.changeTokenBalances(
       nftContract,
       [owner, addr1],
@@ -58,22 +63,24 @@ describe("NFT contract", function () {
       tokenFixture
     );
 
-    const sell1 = nftContract.sell(addr1.address, 0);
-    await expect(sell1).to.be.revertedWith("Only Suppliers or Vendors");
+    const sell1 = nftContract.sell(addr1.address, 1);
+    await expect(sell1).to.be.revertedWith(
+      "Only suppliers or vendors can perform this task"
+    );
 
     await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
     await nftContract.mint("http://test.com");
 
-    expect(await nftContract.isValidToken(0)).to.be.true;
+    expect(await nftContract.isValidToken(1)).to.be.true;
 
-    const sell2 = nftContract.sell(addr1.address, 0);
+    const sell2 = nftContract.sell(addr1.address, 1);
     await expect(sell2).to.changeTokenBalances(
       nftContract,
       [owner, addr1],
       [-1, 1]
     );
 
-    expect(await nftContract.isValidToken(0)).to.be.false;
+    expect(await nftContract.isValidToken(1)).to.be.false;
   });
 
   it("Should sell (but not transfer) when called by a vendor", async function () {
@@ -83,7 +90,7 @@ describe("NFT contract", function () {
     //We register supplier, then mint and transfer token to addr1
     await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
     await nftContract.mint("http://test.com");
-    await nftContract.transfer(addr1.address, 0);
+    await nftContract.transfer(addr1.address, 1);
 
     // Then create a vendor account with addr1
     await rolesContract
@@ -92,14 +99,15 @@ describe("NFT contract", function () {
 
     // As transfer is not active with vendor acc, tx is rejected
     await expect(
-      nftContract.connect(addr1).transfer(owner.address, 0)
-    ).to.be.revertedWith("Only Suppliers");
+      nftContract.connect(addr1).transfer(owner.address, 1)
+    ).to.be.revertedWith("Only supplier roles can perform this task");
 
     // Finally, vendor can sell and event is emitted
-    const sellFromVendor = nftContract.connect(addr1).sell(owner.address, 0);
+    const sellFromVendor = nftContract.connect(addr1).sell(owner.address, 1);
+
     await expect(sellFromVendor)
       .to.emit(nftContract, "Sell")
-      .withArgs(addr1.address, owner.address, 0);
+      .withArgs(addr1.address, owner.address, 1, anyValue);
   });
 
   it("Should revert if transfer is not called by the owner", async function () {
@@ -114,7 +122,7 @@ describe("NFT contract", function () {
       .registerSupplier("Fake Supplier2", "Fake Desc2");
 
     await expect(
-      nftContract.connect(addr1).transfer(owner.address, 0)
+      nftContract.connect(addr1).transfer(owner.address, 1)
     ).to.be.revertedWith("Only owner of this token can transfer");
   });
 
@@ -130,7 +138,7 @@ describe("NFT contract", function () {
       .registerSupplier("Fake Supplier2", "Fake Desc2");
 
     await expect(
-      nftContract.connect(addr1).sell(owner.address, 0)
+      nftContract.connect(addr1).sell(owner.address, 1)
     ).to.be.revertedWith("Only owner of this token can sell");
   });
 
@@ -142,7 +150,7 @@ describe("NFT contract", function () {
     await nftContract.mint("cd");
     await nftContract.mint("ef");
 
-    expect((await nftContract.tokensOfOwner()).length).to.equal(3);
+    expect((await nftContract.listMyTokens()).length).to.equal(3);
   });
 
   it("Should return token details by ID", async function () {
@@ -152,7 +160,7 @@ describe("NFT contract", function () {
     await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
     await nftContract.mint(uri);
 
-    const tokenId = 0;
+    const tokenId = 1;
     const block = await ethers.provider.getBlock("latest");
     const isValid = true;
 

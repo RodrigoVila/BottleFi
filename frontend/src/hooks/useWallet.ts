@@ -122,5 +122,5 @@ export const useWallet = () => {
     //eslint-disable-next-line
   }, []);
 
-  return { isWalletConnected, handleConnect };
+  return { isWalletConnected, handleConnect,handleDisconnect };
 };

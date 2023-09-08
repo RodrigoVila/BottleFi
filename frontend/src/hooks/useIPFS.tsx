@@ -16,7 +16,7 @@ export const useIPFS = () => {
       const { path } = await IPFS.add(file);
       return path;
     } catch (error) {
-      console.error("An error occurred while uploading to IPFS");
+      console.error("Error trying to upload file to IPFS: ", error);
     }
   };
 
@@ -33,7 +33,7 @@ export const useIPFS = () => {
       const { path } = await IPFS.add(strData);
       return path;
     } catch (error) {
-      console.error("An error occurred while uploading to IPFS");
+      console.error("Error trying to upload metadata to IPFS: ", error);
     }
   };
 
@@ -49,8 +49,8 @@ export const useIPFS = () => {
       const json = await response.json();
 
       return json;
-    } catch (e) {
-      console.error("ERror geting data from ipfs: ", e);
+    } catch (error) {
+      console.error("Error geting data from ipfs: ", error);
     }
   };
 

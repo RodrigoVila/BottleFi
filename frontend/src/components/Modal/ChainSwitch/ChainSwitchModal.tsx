@@ -14,11 +14,11 @@ export const ChainSwitchModal = () => {
       isOpen={isChainSwitchModalOpen}
       onClose={closeModal}
       className="bg-[rgba(255,0,0,0.5)]"
-      bodyClassName="border-2 border-[rgba(255,0,0,0.7)] bg-black"
+      bodyClassName="border-2 border-[rgba(255,0,0,0.7)] bg-slate-900 p-2 md:p-8"
       disableOutsideClick
     >
-      <h3 className="text-3xl font-semibold">Invalid chain detected</h3>
-      <h5 className="text-lg">
+      <h3 className="text-2xl font-semibold md:text-3xl">Invalid chain detected</h3>
+      <h5 className="text-base md:text-lg">
         This application only works on the{" "}
         <a
           target="_blank"

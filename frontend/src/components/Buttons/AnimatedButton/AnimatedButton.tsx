@@ -9,12 +9,12 @@ export const AnimatedButton = ({
   ...rest
 }: AnimatedButtonProps) => {
   return (
-    <div className="flex w-full flex-row items-center justify-center">
+    <div className="flex flex-row items-center justify-center w-full">
       <button
         className="animate-background inline-block rounded-full bg-gradient-to-r from-purple-700 via-fuchsia-900 to-red-700 bg-[length:400%_400%] p-[2px]"
         {...rest}
       >
-        <span className="block rounded-full bg-slate-900 hover:bg-transparent px-16 py-2 font-bold text-white">
+        <span className="block px-4 py-2 text-base font-bold text-white rounded-full md:px-16 bg-slate-900 hover:bg-transparent md:text-xl">
           {children}
         </span>
       </button>

@@ -19,7 +19,7 @@ export const TransferToken = () => {
 
   const { tokens } = useDappContext();
   const { transferToken } = useNFTContract();
-  const { showWarningNotification, showSuccessNotification } =
+  const { showSuccessNotification, showWarningNotification } =
     useToastNotifications();
 
   const clearInputs = () => {
@@ -48,9 +48,9 @@ export const TransferToken = () => {
           "Token transfered successfully. Try checking sender/receiver dashboards!"
         );
       }
-    } catch (error) {
-      //Todo: Intercept errors
-      console.error("Err at Transfer component", error);
+    } catch (err) {
+      // Errors are handled by the useNFTContract hook. No need to notify here.
+      console.error("Transfer error: ", err);
     } finally {
       setIsLoading(false);
       clearInputs();

@@ -24,7 +24,7 @@ export const MintToken = () => {
 
   const { mintToken } = useNFTContract();
 
-  const { showInfoNotification, showSuccessNotification } =
+  const { showErrorNotification, showInfoNotification, showSuccessNotification } =
     useToastNotifications();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,8 +66,8 @@ export const MintToken = () => {
         }
       }
     } catch (err) {
-      //Todo: Intercept errors
-      console.error("Err at MintToken component", err);
+      // Errors are handled by the useNFTContract hook. No need to notify here.
+      console.error("Mint Token Error: ", err);
     } finally {
       setIsLoading(false);
       setFile(null);

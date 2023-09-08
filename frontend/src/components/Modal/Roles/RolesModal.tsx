@@ -28,8 +28,11 @@ export const RolesModal = () => {
   const [, setLocalStorage] = useLocalStorage(LOCAL_STORAGE_KEY);
   const { isRolesModalOpen, setRolesModalOpen } = useModalContext();
   const { register } = useRolesContract();
-  const { showWarningNotification, showSuccessNotification } =
-    useToastNotifications();
+  const {
+    showErrorNotification,
+    showSuccessNotification,
+    showWarningNotification,
+  } = useToastNotifications();
 
   const closeModal = () => setRolesModalOpen(false);
 
@@ -66,8 +69,10 @@ export const RolesModal = () => {
         closeModal();
       }
     } catch (error) {
-      // TODO: Notify this correctly
-      console.error(error);
+      showErrorNotification(
+        "Register role error. Please try again later or check the console for more information."
+      );
+      console.error("Register role error: ", error);
     } finally {
       setLoading(false);
     }

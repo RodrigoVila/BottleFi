@@ -46,7 +46,7 @@ export const SellToken = () => {
         );
       }
     } catch (error) {
-      //Todo: Intercept errors
+      // Errors are handled by the useNFTContract hook. No need to notify here.
       console.error("Err at Transfer component", error);
     } finally {
       setIsLoading(false);

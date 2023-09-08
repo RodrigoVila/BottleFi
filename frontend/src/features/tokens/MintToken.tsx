@@ -24,7 +24,7 @@ export const MintToken = () => {
 
   const { mintToken } = useNFTContract();
 
-  const { showErrorNotification, showInfoNotification, showSuccessNotification } =
+  const { showInfoNotification, showSuccessNotification } =
     useToastNotifications();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +45,16 @@ export const MintToken = () => {
 
     if (!userData.name || !userData.description || !file) {
       showInfoNotification("Every input is mandatory");
+      return;
+    }
+
+    if (userData.name.length > 20) {
+      showInfoNotification("Max characters for name is 20");
+      return;
+    }
+
+    if (userData.description.length > 50) {
+      showInfoNotification("Max characters for description is 50");
       return;
     }
 
@@ -87,24 +97,26 @@ export const MintToken = () => {
         </TokenDescription>
       </TokenColumn>
 
-      <Divider />
+      <Divider type="horizontal" />
 
       <TokenColumn className="justify-between">
         <TextInput
           label="Name"
           value={userData.name}
           onChange={handleInputChange}
-          required
         />
 
         <TextInput
           label="Description"
           value={userData.description}
           onChange={handleInputChange}
-          required
         />
 
-        <FileInput label="Token Image" value={file} onChange={handleFileSelect} />
+        <FileInput
+          label="Token Image"
+          value={file}
+          onChange={handleFileSelect}
+        />
 
         <GradientButton loading={isLoading} onClick={handleSubmit}>
           Add

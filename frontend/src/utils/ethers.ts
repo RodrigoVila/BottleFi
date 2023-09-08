@@ -33,7 +33,7 @@ export const getBalance = async (): Promise<string | undefined> => {
   const account = await getCurrentAccount();
   if (provider && account) {
     const rawBalance = await provider.getBalance(account);
-    const balance = parseFloat(utils.formatEther(rawBalance)).toFixed(2);
+    const balance = parseFloat(utils.formatEther(rawBalance)).toFixed(3);
     return balance;
   }
 };

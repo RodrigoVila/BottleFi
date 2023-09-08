@@ -8,11 +8,7 @@ import {
   useRolesContract,
 } from "@hooks";
 import { getCurrentAccount, getNetwork } from "@utils/ethers";
-import {
-  HARDHAT_LOCALHOST_ID,
-  LOCAL_STORAGE_KEY,
-  SEPOLIA_NETWORK_ID,
-} from "@constants";
+import { LOCAL_STORAGE_KEY, SEPOLIA_NETWORK_ID } from "@constants";
 
 export const useWallet = () => {
   const { setChainSwitchModalOpen } = useModalContext();
@@ -38,10 +34,8 @@ export const useWallet = () => {
       const chainId = network?.chainId;
       const { name, role } = await getRoleData();
 
-      if (chainId === SEPOLIA_NETWORK_ID || chainId === HARDHAT_LOCALHOST_ID) {
-        const chainName =
-          chainId === SEPOLIA_NETWORK_ID ? "Sepolia" : "Hardhat Localhost";
-        console.log("handleConnect");
+      if (chainId === SEPOLIA_NETWORK_ID) {
+        const chainName = "Sepolia";
         const user = {
           chainId,
           chainName,
@@ -122,5 +116,5 @@ export const useWallet = () => {
     //eslint-disable-next-line
   }, []);
 
-  return { isWalletConnected, handleConnect,handleDisconnect };
+  return { isWalletConnected, handleConnect, handleDisconnect };
 };

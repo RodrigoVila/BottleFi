@@ -1,7 +1,7 @@
 import { InputHTMLAttributes } from "react";
 import { BsFillCloudUploadFill } from "react-icons/bs";
 
-type FileInputProps = InputHTMLAttributes<HTMLInputElement> & {
+type FileInputProps = Omit<InputHTMLAttributes<HTMLInputElement>,"value"> & {
   value: File | null
   label?: string;
 };

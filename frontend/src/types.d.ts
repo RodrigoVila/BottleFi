@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 export type WalletType = "coinbase" | "metamask";
 
 export type WalletProviders = {
-  [key in WalletType]: any;
+  [key in WalletType]: string;
 };
 
 export type UserDataType = {
@@ -45,7 +45,7 @@ type Token = {
   isValid: boolean;
 };
 
-type TokenList = Token[]
+type TokenList = Token[];
 
 type IPFSStorageData = {
   name: string;

@@ -26,6 +26,7 @@ export const Layout = () => {
     };
 
     fetchTokens();
+    //eslint-disable-next-line
   }, [user?.address]);
 
   return (

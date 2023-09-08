@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BsPatchCheck } from "react-icons/bs";
 import { TfiFaceSad } from "react-icons/tfi";
 import { Link, useParams } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
 
 import { useNFTContract } from "@hooks";
 import { Button } from "@components/Buttons";
@@ -9,7 +10,6 @@ import { Spinner } from "@components/Spinner";
 import { Token } from "@types";
 
 import { Divider, TokenColumn, TokenLayout } from "./layout";
-import { twMerge } from "tailwind-merge";
 
 export const TokenValidity = () => {
   const [tokenData, setTokenData] = useState<Token | null>(null);

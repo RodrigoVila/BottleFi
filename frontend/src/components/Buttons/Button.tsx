@@ -1,16 +1,13 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  icon?: any;
   loading?: boolean;
   children: ReactNode;
   className?: string;
 };
 
 export const Button = ({
-  icon = null,
   loading = false,
   children,
   className,

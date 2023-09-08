@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 
 interface Window {
-    ethereum: any
+  //eslint-disable-next-line
+  ethereum: any;
 }

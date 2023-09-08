@@ -1,8 +1,7 @@
 import QRCode from "react-qr-code";
 import { Link } from "react-router-dom";
 
-import { useDappContext } from "@context/dapp";
-import { useModalContext } from "@context/modals";
+import { useDappContext,useModalContext } from "@hooks";
 
 import { Modal } from "..";
 

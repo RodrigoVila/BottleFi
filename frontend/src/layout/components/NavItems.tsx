@@ -48,7 +48,7 @@ export const NavItems = ({ position = "horizontal" }: NavItemProps) => {
 
   const positionStyles =
     position === "horizontal"
-      ? "hidden md:flex-1 md:flex flex-row w-full"
+      ? "hidden md:flex-1 md:flex flex-row w-full mx-2"
       : "flex-col";
 
 

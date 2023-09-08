@@ -1,6 +1,6 @@
 import { Logo } from "@components/Logo";
 
-import { AccountData, NavItems } from "./";
+import { LoginOrAccountButton, NavItems } from "./";
 import { DrawerMenuButton } from "./DrawerMenuButton";
 
 export const Navbar = () => {
@@ -9,7 +9,7 @@ export const Navbar = () => {
       <DrawerMenuButton />
       <Logo type="navbar" />
       <NavItems />
-      <AccountData />
+      <LoginOrAccountButton />
     </header>
   );
 };

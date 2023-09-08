@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Layout } from "@layout";
 
 import { Dashboard } from "@features/dashboard";
 import { Login } from "@features/login";
@@ -12,6 +11,7 @@ import {
 } from "@features/tokens";
 import { NotFound } from "@components/NotFound";
 import { RequireAuthAndRole } from "@components/RequireAuthAndRole";
+import { Layout } from "@layout/Layout";
 
 export const router = createBrowserRouter([
   {

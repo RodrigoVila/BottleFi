@@ -9,7 +9,13 @@ export const parseAccount = (account: string) => {
   return `${first5}...${last3}`;
 };
 
-export const parseWalletError = (errorMessage: string) => {
+export const parseCatchError = (error: unknown): string => {
+  return error instanceof Error ? error.message : (error as string);
+};
+
+export const parseWalletError = (error: unknown) => {
+  const errorMessage = parseCatchError(error);
+  console.log(error instanceof Error)
   if (errorMessage.includes("user rejected action")) {
     alert("User rejected wallet request, please try again.");
   } else if (errorMessage.includes("already pending for origin")) {
@@ -21,14 +27,10 @@ export const parseWalletError = (errorMessage: string) => {
   }
 };
 
-export const parseCatchError = (error: unknown): string => {
-  return error instanceof Error ? error.message : (error as string);
-};
-
 //TODO: Test this in different cases
 export const parseRevertErrorMessage = (error: unknown) => {
+  const errorMessage = parseCatchError(error);
   try {
-    const errorMessage = error.message;
     const startIndex = errorMessage.indexOf("reverted with reason string '");
     if (startIndex !== -1) {
       const searchStringLength = "reverted with reason string '".length;
@@ -56,7 +58,9 @@ export const parseBigInt = (b: bigint) => parseInt(b.toString(), 16);
 export const parseTokenResponse = (token: TokenResponse) => {
   const id = parseBigInt(token[0]);
   const uri = token[1];
-  const mintedAt = new Date(parseBigInt(token[2]) * 1000).toLocaleString().slice(0,9);
+  const mintedAt = new Date(parseBigInt(token[2]) * 1000)
+    .toLocaleString()
+    .slice(0, 9);
   const isValid = token[3];
 
   return { id, uri, mintedAt, isValid };

@@ -10,7 +10,7 @@ import { useErrors } from "./useErrors";
 import { useIPFS } from "./useIPFS";
 
 export const useNFTContract = () => {
-  const { notifyCatchErrors } = useErrors();
+  const { notifyMetamaskErrors } = useErrors();
   const { getDataFromIPFS } = useIPFS();
 
   const address = import.meta.env.VITE_NFT_CONTRACT_ADDRESS;
@@ -61,7 +61,7 @@ export const useNFTContract = () => {
       const receipt = await response.wait();
       return !!receipt;
     } catch (err) {
-      notifyCatchErrors(err);
+      notifyMetamaskErrors(err);
       return false;
     }
   };
@@ -75,7 +75,7 @@ export const useNFTContract = () => {
       const receipt = await response.wait();
       return !!receipt;
     } catch (err) {
-      notifyCatchErrors(err);
+      notifyMetamaskErrors(err);
       return false;
     }
   };
@@ -86,7 +86,7 @@ export const useNFTContract = () => {
       const receipt = await response.wait();
       return !!receipt;
     } catch (err) {
-      notifyCatchErrors(err);
+      notifyMetamaskErrors(err);
       return false;
     }
   };

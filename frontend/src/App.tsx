@@ -1,13 +1,12 @@
+import "react-toastify/dist/ReactToastify.css";
 import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import { AuthProvider } from "@context/auth";
-import { DappProvider } from "@context/dapp";
-import { ModalProvider } from "@context/modals";
-
+import { AuthProvider } from "./context/auth";
+import { DappProvider } from "./context/dapp";
+import { ModalProvider } from "./context/modals";
 import { router } from "./router";
 
-import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (

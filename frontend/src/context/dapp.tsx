@@ -3,7 +3,6 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useContext,
   useState,
 } from "react";
 
@@ -27,7 +26,7 @@ const initialValue: DappContextType = {
   setTokenUrlAddress: () => {},
 };
 
-const DappContext = createContext<DappContextType>(initialValue);
+export const DappContext = createContext<DappContextType>(initialValue);
 
 export const DappProvider = ({ children }: DappProviderProps) => {
   const [tokens, setTokens] = useState(initialValue.tokens);
@@ -45,12 +44,4 @@ export const DappProvider = ({ children }: DappProviderProps) => {
   };
 
   return <DappContext.Provider value={value}>{children}</DappContext.Provider>;
-};
-
-export const useDappContext = () => {
-  const context = useContext(DappContext);
-  if (!context) {
-    throw new Error("useDappContext must be used within a DappProvider");
-  }
-  return context;
 };

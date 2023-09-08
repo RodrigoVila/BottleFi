@@ -8,7 +8,7 @@ import { Roles } from "@typechain-types/contracts/Roles";
 import { useErrors } from "./useErrors";
 
 export const useRolesContract = () => {
-  const { notifyCatchErrors } = useErrors();
+  const { notifyMetamaskErrors } = useErrors();
 
   const address = import.meta.env.VITE_ROLES_CONTRACT_ADDRESS;
   const abi = rolesContractArtifact["abi"];
@@ -32,7 +32,7 @@ export const useRolesContract = () => {
       const receipt = await response.wait();
       if (receipt) return role;
     } catch (err) {
-      notifyCatchErrors(err);
+      notifyMetamaskErrors(err);
       return undefined;
     }
     return undefined;

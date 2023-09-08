@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 
-import { useAuthContext } from "@context/auth";
-import { useWallet } from "@hooks";
+import { useAuthContext, useWallet } from "@hooks";
 import { AnimatedButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
 
@@ -24,9 +23,8 @@ export const Login = () => {
               Avoid counterfeit and bring trust to your customers.
             </p>
             <div className="flex flex-col items-center justify-center gap-2">
-              {/* <AnimatedButton onClick={toggleModal}>Web3 Login</AnimatedButton> */}
               <AnimatedButton onClick={handleConnect}>
-                Connect with Browser Wallet
+                Connect with wallet
               </AnimatedButton>
             </div>
           </div>

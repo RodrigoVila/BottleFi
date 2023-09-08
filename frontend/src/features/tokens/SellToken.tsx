@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-import { useDappContext } from "@context/dapp";
-import { useNFTContract, useToastNotifications } from "@hooks";
+import { useDappContext, useNFTContract, useToastNotifications } from "@hooks";
 import { GradientButton } from "@components/Buttons";
 import { SelectInput, TextInput } from "@components/Inputs";
 

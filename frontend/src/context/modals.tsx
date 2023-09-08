@@ -3,7 +3,6 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useContext,
   useState,
 } from "react";
 
@@ -33,7 +32,7 @@ const initialValue = {
   setRolesModalOpen: () => {},
 };
 
-const ModalContext = createContext<ModalContextType>(initialValue);
+export const ModalContext = createContext<ModalContextType>(initialValue);
 
 export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [isChainSwitchModalOpen, setChainSwitchModalOpen] = useState(
@@ -64,12 +63,4 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   return (
     <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
   );
-};
-
-export const useModalContext = () => {
-  const context = useContext(ModalContext);
-  if (!context) {
-    throw new Error("useModalContext must be used within a ModalProvider");
-  }
-  return context;
 };

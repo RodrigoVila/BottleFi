@@ -1,4 +1,4 @@
-import { useModalContext } from "@context/modals";
+import { useModalContext } from "@hooks";
 import { NavItems } from "@layout/components";
 
 import { Modal } from "../Modal";

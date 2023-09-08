@@ -25,7 +25,6 @@
     "paths": {
       "@artifacts/*": ["../../artifacts/*"],
       "@components/*": ["./components/*"],
-      "@context/*": ["./context/*"],
       "@constants": ["./constants/index.ts"],
       "@features/*": ["./features/*"],
       "@hooks": ["./hooks/index.ts"],

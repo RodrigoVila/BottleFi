@@ -3,7 +3,6 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useContext,
   useState,
 } from "react";
 
@@ -23,7 +22,7 @@ const initialValue: AuthContextType = {
   setUser: () => {},
 };
 
-const AuthContext = createContext<AuthContextType>(initialValue);
+export const AuthContext = createContext<AuthContextType>(initialValue);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState(initialValue.user);
@@ -33,12 +32,4 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuthContext = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuthContext must be used within a AuthProvider");
-  }
-  return context;
 };

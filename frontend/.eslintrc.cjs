@@ -21,7 +21,6 @@ module.exports = {
     {
       files: ["*.js", "*.jsx", "*.ts", "*.tsx"],
       rules: {
-        "react-refresh/only-export-components": "off",
         "no-unused-vars": "off", // or "@typescript-eslint/no-unused-vars": "off",
         "unused-imports/no-unused-imports": "error",
         "unused-imports/no-unused-vars": [
@@ -37,13 +36,12 @@ module.exports = {
           "error",
           {
             groups: [
-              // React-related packages come first.
-              ["^react", "^@?\\w"],
+              // CSS + React-related packages come first.
+              ["^.+\\.?(css)$", "^react", "^@?\\w"],
               // Library-package imports by sortOrder.
               ["^@?\\w", "^react", "^[^.]", "^\\."],
               // Empty line between different groups.
               [
-                "^@context",
                 "^@hooks",
                 "^@artifacts",
                 "^@features",

@@ -1,6 +1,6 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 
-import { useModalContext } from "@context/modals";
+import { useModalContext } from "@hooks";
 
 export const DrawerMenuButton = () => {
   const { setDrawerModalOpen } = useModalContext();

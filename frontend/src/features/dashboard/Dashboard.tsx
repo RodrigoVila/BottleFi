@@ -1,12 +1,9 @@
 import { useEffect } from "react";
-import { BiCheckCircle } from "react-icons/bi";
-import { GiCancel } from "react-icons/gi";
 import { twMerge } from "tailwind-merge";
 
-import { useDappContext } from "@context/dapp";
-import { useModalContext } from "@context/modals";
-import { useNFTContract } from "@hooks";
-import { Button } from "@components/Buttons";
+import { useDappContext, useModalContext, useNFTContract } from "@hooks";
+
+import { TokensTable } from "./TokensTable";
 
 export const Dashboard = () => {
   const { tokens, setTokens, setTokenUrlAddress } = useDappContext();
@@ -38,58 +35,7 @@ export const Dashboard = () => {
           "flex flex-col w-full text-white glass-alt border-glass border-[2px] rounded-xl min-h-[24rem]"
         )}
       >
-        <div className="flex flex-col">
-          <table>
-            <thead className="border-b-2 rounded-b-none border-glass font-marcellus">
-              <tr>
-                <th className="py-3">Image</th>
-                <th>Name</th>
-                <th className="hidden md:table-cell">Description</th>
-                <th>Mint Date</th>
-                <th>Validity</th>
-                <th>QR</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tokens?.map((token) => {
-                const { id, image, name, description, mintedAt, isValid } =
-                  token;
-                return (
-                  <tr
-                    key={`${id}-${mintedAt}`}
-                    className="h-20 text-center border-b-glass border-b-[1px]"
-                  >
-                    <td className="w-20 h-20 md:w-24 md:h-24">
-                      <img
-                        src={image}
-                        alt="Token"
-                        className="w-full h-full bg-center bg-cover"
-                      />
-                    </td>
-                    <td>{name}</td>
-                    <td className="hidden md:table-cell">{description}</td>
-                    <td>{mintedAt}</td>
-                    <td>
-                      {isValid ? (
-                        <BiCheckCircle className="w-5 h-5 mx-auto text-green-400" />
-                      ) : (
-                        <GiCancel className="w-5 h-5 mx-auto text-red-400" />
-                      )}
-                    </td>
-                    <td className="pr-3">
-                      <Button
-                        className="h-10 px-0"
-                        onClick={() => handleClick(id)}
-                      >
-                        <span className="px-2 text-s">See</span>
-                      </Button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <TokensTable tokens={tokens} handleSeeQR={handleClick} />
       </div>
     </div>
   );

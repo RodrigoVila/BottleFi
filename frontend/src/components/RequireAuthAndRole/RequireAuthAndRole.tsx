@@ -1,8 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
-import { useAuthContext } from "@context/auth";
-import { useModalContext } from "@context/modals";
+import { useAuthContext, useModalContext } from "@hooks";
 
 export const RequireAuthAndRole = ({ children }: { children: ReactNode }) => {
   const location = useLocation();

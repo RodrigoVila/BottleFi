@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useModalContext } from "@context/modals";
 import {
-  useDataStorage,
+  useAuthContext,
   useLocalStorage,
+  useModalContext,
   useRolesContract,
   useToastNotifications,
 } from "@hooks";
@@ -24,10 +24,10 @@ export const RolesModal = () => {
 
   const { name, description } = roleData;
 
-  const [localStorageData] = useLocalStorage(LOCAL_STORAGE_KEY);
-  const { setData } = useDataStorage();
-  const { register } = useRolesContract();
+  const { setUser } = useAuthContext();
+  const [, setLocalStorage] = useLocalStorage(LOCAL_STORAGE_KEY);
   const { isRolesModalOpen, setRolesModalOpen } = useModalContext();
+  const { register } = useRolesContract();
   const { showWarningNotification, showSuccessNotification } =
     useToastNotifications();
 
@@ -54,18 +54,28 @@ export const RolesModal = () => {
 
     setLoading(true);
 
-    const role = await register(selectedRole, name, description);
-    if (role !== undefined) {
-      showSuccessNotification(`${role} registered successfully!`);
-      setData({ ...localStorageData, role, name });
-      closeModal();
+    try {
+      const role = await register(selectedRole, name, description);
+      if (role !== undefined) {
+        setUser((prev) => {
+          const currentUser = { ...prev, role, name };
+          setLocalStorage(currentUser);
+          return currentUser;
+        });
+        showSuccessNotification(`${role} registered successfully!`);
+        closeModal();
+      }
+    } catch (error) {
+      // TODO: Notify this correctly
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   //This gives the same look n feel as when we focus/blur the other inputs
-  const onFocusRole = () => setRoleFocus(true)
-  const onBlurRole = () => setRoleFocus(false)
+  const onFocusRole = () => setRoleFocus(true);
+  const onBlurRole = () => setRoleFocus(false);
   const radioStyles = isRoleFocus ? "border-white" : "border-glass";
 
   return (

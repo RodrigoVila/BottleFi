@@ -29,11 +29,12 @@ export const getCurrentAccount = async (): Promise<string | undefined> => {
 };
 
 export const getBalance = async (): Promise<string | undefined> => {
-  const provider = getProvider()
+  const provider = getProvider();
   const account = await getCurrentAccount();
   if (provider && account) {
-    const balance = await provider.getBalance(account)
-    return utils.formatEther(balance);
+    const rawBalance = await provider.getBalance(account);
+    const balance = parseFloat(utils.formatEther(rawBalance)).toFixed(2);
+    return balance;
   }
 };
 

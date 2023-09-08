@@ -1,10 +1,14 @@
 import { Outlet } from "react-router-dom";
 
+import { useWallet } from "@hooks";
 import { Modals } from "@components/Modal";
 
 import { MainContainer, Navbar } from "./components";
 
 export const Layout = () => {
+  //This is being called here for event listeners
+  useWallet();
+
   return (
     <>
       <Modals />

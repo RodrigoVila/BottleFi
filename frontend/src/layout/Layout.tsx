@@ -1,13 +1,32 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import { useWallet } from "@hooks";
+import {
+  useAuthContext,
+  useDappContext,
+  useNFTContract,
+  useWallet,
+} from "@hooks";
 import { Modals } from "@components/Modal";
 
 import { MainContainer, Navbar } from "./components";
 
 export const Layout = () => {
+  const { setTokens } = useDappContext();
+  const { user } = useAuthContext();
+  const { getTokens } = useNFTContract();
+  
   //This is being called here for event listeners
   useWallet();
+
+  useEffect(() => {
+    const fetchTokens = async () => {
+      const tokenList = await getTokens();
+      if (tokenList) setTokens(tokenList);
+    };
+
+    fetchTokens();
+  }, [user?.address]);
 
   return (
     <>

@@ -24,10 +24,8 @@ export const UserData = () => {
   }, []);
 
   return isConnected ? (
-    <div className="justify-end flex-1 pr-3 w-fit">
-      <div className="justify-end gap-3 center">
-        <UserMenu />
-      </div>
+    <div className="flex justify-end flex-1 mr-3">
+      <UserMenu />
     </div>
   ) : (
     <GradientButton onClick={handleConnect}>Login</GradientButton>

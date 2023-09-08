@@ -10,7 +10,7 @@ export const RequireAuthAndRole = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!user) return;
-    if (!user.role) setRolesModalOpen(true);
+    user.role ? setRolesModalOpen(false) : setRolesModalOpen(true);
   }, [user, setRolesModalOpen]);
 
   if (!user) {

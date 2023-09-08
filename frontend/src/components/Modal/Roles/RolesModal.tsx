@@ -138,7 +138,7 @@ export const RolesModal = () => {
       />
 
       <GradientButton onClick={handleSubmit} loading={isLoading}>
-        Sign in
+        Create
       </GradientButton>
     </Modal>
   );

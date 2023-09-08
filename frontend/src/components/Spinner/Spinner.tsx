@@ -12,7 +12,7 @@ export const Spinner = ({ children, svgClassName, labelClasName }: SpinnerPropsT
     <div role='status' className='flex flex-wrap items-center justify-center'>
       <svg
         aria-hidden='true'
-        className={twMerge('h-6 w-6 animate-spin fill-gray-400 text-gray-300', svgClassName)}
+        className={twMerge('h-6 w-6 animate-spin fill-gray-400 text-gray-300', svgClassName, children && "mr-2")}
         viewBox='0 0 100 101'
         fill='bg-pink-400'
         xmlns='http://www.w3.org/2000/svg'

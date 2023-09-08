@@ -32,15 +32,12 @@ export const useWallet = () => {
       const address = await getCurrentAccount();
       const network = await getNetwork();
       const chainId = network?.chainId;
-      const { name, role } = await getRoleData();
+      const role = await getRoleData();
 
       if (chainId === SEPOLIA_NETWORK_ID) {
-        const chainName = "Sepolia";
         const user = {
           chainId,
-          chainName,
           address,
-          name,
           role,
         };
         setUser(user);
@@ -59,11 +56,13 @@ export const useWallet = () => {
     console.log("Disconnect!");
   };
 
-  const handleAccountsChanged = (accounts: string[]) => {
+  const handleAccountsChanged = async (accounts: string[]) => {
     if (accounts.length > 0) {
       const address = accounts[0];
+      const role = await getRoleData();
+
       setUser((prev) => {
-        const currentUser = { ...prev, address };
+        const currentUser = { ...prev, address, role };
         setLocalStorage(currentUser);
         console.log(
           "handleAccountsChanged Storage/context data: ",
@@ -76,7 +75,7 @@ export const useWallet = () => {
     }
   };
 
-  const handleChainChanged = (hexChainId: string) => {
+  const handleChainChanged = async (hexChainId: string) => {
     const chainId = parseInt(hexChainId);
     if (chainId === SEPOLIA_NETWORK_ID) {
       setUser((prev) => {

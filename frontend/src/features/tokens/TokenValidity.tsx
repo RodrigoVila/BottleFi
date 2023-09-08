@@ -9,6 +9,7 @@ import { Spinner } from "@components/Spinner";
 import { Token } from "@types";
 
 import { Divider, TokenColumn, TokenLayout } from "./layout";
+import { twMerge } from "tailwind-merge";
 
 export const TokenValidity = () => {
   const [tokenData, setTokenData] = useState<Token | null>(null);
@@ -16,6 +17,8 @@ export const TokenValidity = () => {
   const { getTokenById } = useNFTContract();
 
   const itemRowStyle = "flex items-center justify-between";
+  const itemStyleLeft = "mr-2";
+  const itemStyleRight = "text-right ml-2";
 
   useEffect(() => {
     if (!tokenId) return;
@@ -28,10 +31,6 @@ export const TokenValidity = () => {
     //eslint-disable-next-line
   }, [tokenId]);
 
-  useEffect(() => {
-    console.log(tokenData);
-  }, [tokenData]);
-
   if (tokenData === null)
     return (
       <TokenLayout className="p-32 center">
@@ -40,7 +39,7 @@ export const TokenValidity = () => {
     );
 
   return (
-    <TokenLayout className="flex-col p-6">
+    <TokenLayout className="flex-col max-w-3xl p-6 w-max">
       {/* <img src={tokenData.image} className="h-auto max-w-full" /> */}
       {tokenData.isValid ? (
         <>
@@ -58,22 +57,25 @@ export const TokenValidity = () => {
             </div>
           </TokenColumn>
           <Divider type="horizontal" />
-          <TokenColumn className="text-xl">
+          <TokenColumn className="justify-between max-w-md text-xl">
             <div className={itemRowStyle}>
-              <p>Token ID</p>
-              <p>{tokenData.id}</p>
+              <p className={itemStyleLeft}>Token ID</p>
+              <p className={itemStyleRight}>{tokenData.id}</p>
             </div>
+            <Divider />
             <div className={itemRowStyle}>
-              <p>Minted at</p>
-              <p>{tokenData.mintedAt}</p>
+              <p className={itemStyleLeft}>Minted at</p>
+              <p className={itemStyleRight}>{tokenData.mintedAt}</p>
             </div>
+            <Divider />
             <div className={itemRowStyle}>
-              <p>Owner</p>
-              <p>{tokenData.name}</p>
+              <p className={itemStyleLeft}>Owner</p>
+              <p className={itemStyleRight}>{tokenData.name}</p>
             </div>
+            <Divider />
             <div className={itemRowStyle}>
-              <p>Token Description</p>
-              <p>{tokenData.description}</p>
+              <p className={itemStyleLeft}>Description</p>
+              <p className={twMerge("truncate",itemStyleRight)}>{tokenData.description}</p>
             </div>
           </TokenColumn>
         </>

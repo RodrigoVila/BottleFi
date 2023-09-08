@@ -23,7 +23,7 @@ export const AnimatedContainer = ({
     >
       <div
         className={twMerge(
-          "rounded-2xl bg-slate-900 center p-2 font-bold text-white h-full w-full",
+          "rounded-2xl bg-black center p-2 font-bold text-white h-full w-full",
           bodyClassName
         )}
       >

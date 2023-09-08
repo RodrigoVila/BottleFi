@@ -9,10 +9,9 @@ export type WalletProviders = {
 export type UserDataType = {
   address?: string;
   name?: string;
-  role?: string;
+  role?: string | null;
   chainId?: number;
   chainName?: string;
-  signer?: Signer;
 };
 
 export type ChangeNetworkType = {

@@ -38,31 +38,21 @@ export const useRolesContract = () => {
     return undefined;
   };
 
-  const getRoleData = async (): Promise<{
-    name: string | undefined;
-    role: RolesType | undefined;
-  }> => {
-    const emptyData = { name: undefined, role: undefined };
+  const getRoleData = async (): Promise<RolesType | null> => {
     const address = await getCurrentAccount();
-    if (!address) return emptyData;
+    if (!address) return null;
 
     try {
       const supplierProfile = await roles.suppliers(address);
-      if (supplierProfile?.name) {
-        console.log({ name: supplierProfile.name, role: "Supplier" });
-        return { name: supplierProfile.name, role: "Supplier" };
-      }
+      if (supplierProfile?.name) return "Supplier";
 
       const vendorProfile = await roles.vendors(address);
-      if (vendorProfile?.name) {
-        console.log({ name: vendorProfile.name, role: "Vendor" });
-        return { name: vendorProfile.name, role: "Vendor" };
-      }
-      console.log(emptyData);
-      return emptyData;
+      if (vendorProfile?.name) return "Vendor";
+
+      return null;
     } catch (error) {
       console.error("Error fetching role:", error);
-      return emptyData;
+      return null;
     }
   };
 

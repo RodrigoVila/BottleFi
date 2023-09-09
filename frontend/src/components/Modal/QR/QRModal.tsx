@@ -1,7 +1,7 @@
 import QRCode from "react-qr-code";
 import { Link } from "react-router-dom";
 
-import { useDappContext,useModalContext } from "@hooks";
+import { useDappContext, useModalContext } from "@hooks";
 
 import { Modal } from "..";
 
@@ -21,7 +21,10 @@ export const QRModal = () => {
           <h3 className="md:text-3xl">
             Scan this QR from your phone to verify token authenticity
           </h3>
-          <QRCode value={`${tokenUrlAddress}?noredirect`} className="w-24 h-24 md:h-48 md:w-48" />
+          <QRCode
+            value={tokenUrlAddress}
+            className="w-18 h-18 md:h-24 md:w-24"
+          />
           <span>or</span>
           <Link to={tokenUrlAddress} className="text-sm underline md:text-base">
             Verify from this website

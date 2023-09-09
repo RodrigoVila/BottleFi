@@ -23,7 +23,7 @@
     /* Paths */
     "baseUrl": "./src",
     "paths": {
-      "@artifacts/*": ["../../artifacts/*"],
+      "@artifacts/*": ["../artifacts/*"],
       "@components/*": ["./components/*"],
       "@constants": ["./constants/index.ts"],
       "@features/*": ["./features/*"],

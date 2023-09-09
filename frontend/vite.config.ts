@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react()], 
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -19,6 +19,7 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
+  
   optimizeDeps: {
     esbuildOptions: {
       define: {

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
 
 import { useAuthContext, useModalContext, useWallet } from "@hooks";
 import { AnimatedButton } from "@components/Buttons";
@@ -22,7 +21,7 @@ export const Login = () => {
 
   return (
     <>
-      {user && <Navigate to="/dashboard" />}
+      {/* {user?.address && <Navigate to="/dashboard" />} */}
       <div className="w-full h-screen bg-center bg-no-repeat bg-cover bg-login">
         <div className="w-full h-full center bg-overlay font-marcellus">
           <div className="flex-col max-w-xl gap-5 mx-2 center md:mx-0">

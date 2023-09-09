@@ -19,8 +19,9 @@ export const SelectInput = ({ options, label, onChange }: SelectInputProps) => {
         className="w-full p-1 py-2 pr-0 bg-transparent border-2 rounded-md border-glass"
         placeholder="Select a token"
         onChange={onChange}
+        defaultValue="default"
       >
-        <option selected disabled>
+        <option value="default" disabled>
           Select a token from the list
         </option>
         {options &&

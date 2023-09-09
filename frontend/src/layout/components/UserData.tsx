@@ -21,6 +21,7 @@ export const UserData = () => {
     };
 
     getWalletConnection();
+    //eslint-disable-next-line
   }, []);
 
   return isConnected ? (
@@ -28,6 +29,9 @@ export const UserData = () => {
       <UserMenu />
     </div>
   ) : (
+    <>
+    adsdasdsdasd
     <GradientButton onClick={handleConnect}>Login</GradientButton>
+    </>
   );
 };

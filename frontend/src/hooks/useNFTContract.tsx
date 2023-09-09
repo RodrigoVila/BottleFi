@@ -38,21 +38,25 @@ export const useNFTContract = () => {
     return token;
   };
 
-  const getTokens = async (): Promise<TokenList | null> => {
+  const fetchTokens = async (): Promise<TokenList> => {
     const address = await getCurrentAccount();
-    if (!address) return null;
-    // const balance = parseBigInt(await nft.getBalance())
-    const rawTokens = await nft.listMyTokens();
-    const tokenIds = rawTokens.map(parseBigInt);
+    if (!address) return [];
 
-    const tokens = await Promise.all(
-      tokenIds.map(async (tokenId) => {
-        const token = await getTokenById(tokenId);
-        return token;
-      })
-    );
+    try {
+      const rawTokens = await nft.listMyTokens();
+      const tokenIds = rawTokens.map(parseBigInt);
 
-    return tokens;
+      const tokens = await Promise.all(
+        tokenIds.map(async (tokenId) => {
+          const token = await getTokenById(tokenId);
+          return token;
+        })
+      );
+
+      return tokens;
+    } catch {
+      return [];
+    }
   };
 
   const mintToken = async (uri: string): Promise<boolean> => {
@@ -91,5 +95,11 @@ export const useNFTContract = () => {
     }
   };
 
-  return { getTokenById, getTokens, mintToken, transferToken, sellToken };
+  return {
+    getTokenById,
+    fetchTokens,
+    mintToken,
+    transferToken,
+    sellToken,
+  };
 };

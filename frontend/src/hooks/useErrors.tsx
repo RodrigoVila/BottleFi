@@ -1,5 +1,6 @@
 import { serializeError } from "eth-rpc-errors";
 
+import { parseWalletError } from "@utils/parse";
 import { METAMASK_POSSIBLE_ERRORS } from "@constants";
 
 import { useToastNotifications } from "./useToastNotifications";
@@ -9,27 +10,16 @@ export const useErrors = () => {
 
   // TODO: Improve this hook and how errors are being parsed/read
   const notifyMetamaskErrors = (err: unknown) => {
-    const serErr = serializeError(err);
-    const code = serErr.code.toString();
+    const serError = serializeError(err);
+    const code = serError.code.toString();
     const error = METAMASK_POSSIBLE_ERRORS[code];
 
-    showErrorNotification(error.message);
-
-    // if (error.message.includes("user rejected transaction")) {
-    //   showErrorNotification("User rejected transaction");
-    //   return;
-    // }
-
-    // if (error.message.includes("reverted with reason")) {
-    //   const err = parseRevertErrorMessage(error);
-    //   if (err.includes("Invalid tokens can")) {
-    //     const err = "Invalid tokens can't be transferred";
-    //     showErrorNotification(err);
-    //     return;
-    //   }
-    //   showErrorNotification(err);
-    //   return;
-    // }
+    if (error.message.includes("Internal JSON-RPC error")) {
+      const err = parseWalletError(serError);
+      showErrorNotification(err);
+    } else {
+      showErrorNotification(error.message);
+    }
   };
   return { notifyMetamaskErrors };
 };

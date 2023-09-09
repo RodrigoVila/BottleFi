@@ -1,6 +1,7 @@
 import { Logo } from "@components/Logo";
+import { NavItems } from "@components/NavItems";
 
-import { DrawerMenuButton, NavItems, UserData } from "./";
+import { DrawerMenuButton, UserData } from "./";
 
 export const Navbar = () => {
   return (

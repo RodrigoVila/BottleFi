@@ -1,23 +1,24 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   useAuthContext,
   useErrors,
-  useLocalStorage,
   useModalContext,
   useRolesContract,
 } from "@hooks";
 import { getCurrentAccount, getNetwork } from "@utils/ethers";
-import { LOCAL_STORAGE_KEY, SEPOLIA_NETWORK_ID } from "@constants";
+import { supportedNetworkId } from "@constants";
 
 export const useWallet = () => {
-  const { setChainSwitchModalOpen } = useModalContext();
+  const { closeAllModals, setChainSwitchModalOpen } = useModalContext();
 
   const { getRoleData } = useRolesContract();
   const { setUser } = useAuthContext();
 
-  const [, setLocalStorage] = useLocalStorage(LOCAL_STORAGE_KEY);
   const { notifyMetamaskErrors } = useErrors();
+
+  const navigate = useNavigate();
 
   const isWalletConnected = async (): Promise<boolean> => {
     if (window.ethereum) {
@@ -29,47 +30,50 @@ export const useWallet = () => {
 
   const handleConnect = async () => {
     try {
-      const address = await getCurrentAccount();
       const network = await getNetwork();
       const chainId = network?.chainId;
-      const role = await getRoleData();
+      if (!chainId) return;
 
-      if (chainId === SEPOLIA_NETWORK_ID) {
-        const user = {
-          chainId,
-          address,
-          role,
-        };
-        setUser(user);
-        setLocalStorage(user);
-      } else {
+      if (chainId !== supportedNetworkId) {
         setChainSwitchModalOpen(true);
+        return;
       }
+      const address = await getCurrentAccount();
+      const role = await getRoleData();
+      const newUser = {
+        chainId,
+        address,
+        role,
+      };
+      setUser(newUser);
+      // setLocalStorage(newUser);
+      navigate("./dashboard");
     } catch (err) {
+      console.error(err);
       notifyMetamaskErrors(err);
     }
   };
 
   const handleDisconnect = () => {
     setUser(null);
-    setLocalStorage(null);
-    console.log("Disconnect!");
+    // setLocalStorage(null);
+    closeAllModals();
   };
 
   const handleAccountsChanged = async (accounts: string[]) => {
     if (accounts.length > 0) {
       const address = accounts[0];
-      const role = await getRoleData();
+      try {
+        const role = await getRoleData();
 
-      setUser((prev) => {
-        const currentUser = { ...prev, address, role };
-        setLocalStorage(currentUser);
-        console.log(
-          "handleAccountsChanged Storage/context data: ",
-          currentUser
-        );
-        return currentUser;
-      });
+        setUser((prev) => {
+          const currentUser = { ...prev, address, role };
+          // setLocalStorage(currentUser);
+          return currentUser;
+        });
+      } catch (err) {
+        console.error("Handle account change error: ", { err });
+      }
     } else {
       handleDisconnect();
     }
@@ -77,16 +81,14 @@ export const useWallet = () => {
 
   const handleChainChanged = async (hexChainId: string) => {
     const chainId = parseInt(hexChainId);
-    if (chainId === SEPOLIA_NETWORK_ID) {
+    if (chainId === supportedNetworkId) {
       setUser((prev) => {
         const currentUser = { ...prev, chainId };
-        setLocalStorage(currentUser);
-        console.log("handleChainChanged Storage/context data: ", currentUser);
+        // setLocalStorage(currentUser);
         return currentUser;
       });
-      // TODO Reloading the page after chain change is recommended. Test if data is being updated and persisted without reloading
-      // window.location.reload();
     } else {
+      closeAllModals();
       setChainSwitchModalOpen(true);
     }
   };

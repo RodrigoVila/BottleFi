@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { Dashboard } from "@features/dashboard";
-import { Login } from "@features/login";
 import {
   MintToken,
   SellToken,
@@ -10,21 +9,13 @@ import {
   VerifyToken,
 } from "@features/tokens";
 import { NotFound } from "@components/NotFound";
-import { RequireAuthAndRole } from "@components/RequireAuthAndRole";
-import { Layout } from "@layout/Layout";
+
+import { App } from "./App";
 
 export const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <Login />,
-  },
-  {
     path: "/",
-    element: (
-      <RequireAuthAndRole>
-        <Layout />
-      </RequireAuthAndRole>
-    ),
+    element: <App />,
     children: [
       {
         path: "dashboard",

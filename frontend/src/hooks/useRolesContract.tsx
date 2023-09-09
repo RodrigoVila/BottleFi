@@ -41,7 +41,6 @@ export const useRolesContract = () => {
   const getRoleData = async (): Promise<RolesType | null> => {
     const address = await getCurrentAccount();
     if (!address) return null;
-
     try {
       const supplierProfile = await roles.suppliers(address);
       if (supplierProfile?.name) return "Supplier";
@@ -51,7 +50,6 @@ export const useRolesContract = () => {
 
       return null;
     } catch (error) {
-      console.error("Error fetching role:", error);
       return null;
     }
   };

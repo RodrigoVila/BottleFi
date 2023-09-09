@@ -6,7 +6,11 @@ type MetamaskPossibleErrors = {
 };
 
 export const SEPOLIA_NETWORK_ID = 11155111;
-export const HARDHAT_LOCALHOST_ID = 31337;
+export const HARDHAT_NETWORK_ID = 31337;
+
+export const supportedNetworkId = import.meta.env.DEV
+  ? HARDHAT_NETWORK_ID
+  : SEPOLIA_NETWORK_ID;
 
 export const LOCAL_STORAGE_KEY = "@BF_DATA";
 
@@ -48,7 +52,8 @@ export const METAMASK_POSSIBLE_ERRORS: MetamaskPossibleErrors = {
   },
   "-32002": {
     standard: "EIP-1474",
-    message: "Resource unavailable. Check if your wallet has a pending transaction.",
+    message:
+      "Resource unavailable. Check if your wallet has a pending transaction.",
   },
   "-32003": {
     standard: "EIP-1474",

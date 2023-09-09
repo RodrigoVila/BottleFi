@@ -118,7 +118,7 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
     ) external onlySupplier returns (uint256) {
         address seller = ownerOf(_tokenId);
         require(seller == msg.sender, "Only owner of this token can transfer");
-        require(isValidToken(_tokenId), "Invalid tokens can't be transferred");
+        require(isValidToken(_tokenId), "Invalid tokens cant be transferred");
 
 
 		ownerTokens[msg.sender].remove(_tokenId);
@@ -135,7 +135,7 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage {
     ) external onlySupplierOrVendor returns (uint256) {
         address seller = ownerOf(_tokenId);
         require(seller == msg.sender, "Only owner of this token can sell");
-        require(isValidToken(_tokenId), "Invalid tokens can't be sold");
+        require(isValidToken(_tokenId), "Invalid tokens cant be sold");
 
 		ownerTokens[msg.sender].remove(_tokenId);
         ownerTokens[_to].add(_tokenId);

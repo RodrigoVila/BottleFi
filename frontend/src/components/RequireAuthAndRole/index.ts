@@ -1,1 +1,0 @@
-export { RequireAuthAndRole } from "./RequireAuthAndRole";

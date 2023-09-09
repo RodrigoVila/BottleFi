@@ -126,13 +126,13 @@ export const RolesModal = () => {
 
       <TextInput
         name="name"
-        label={`${selectedRole} Name`}
+        label={`${selectedRole || ""} Name`}
         value={name}
         onChange={handleDataChange}
       />
       <TextInput
         name="description"
-        label={`${selectedRole} Description`}
+        label={`${selectedRole || ""} Description`}
         value={description}
         onChange={handleDataChange}
       />

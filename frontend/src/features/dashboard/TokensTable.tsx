@@ -1,17 +1,29 @@
 import { BiCheckCircle } from "react-icons/bi";
 import { GiCancel } from "react-icons/gi";
 
+import { useDappContext, useModalContext } from "@hooks";
 import { Button } from "@components/Buttons";
 import { Spinner } from "@components/Spinner";
-import { TokenList } from "@types";
 
-type TokensTable = {
-  tokens: TokenList | null;
-  handleSeeQR: (id: number) => void;
-};
+export const TokensTable = () => {
+  const { isLoading, tokens, setTokenUrlAddress } = useDappContext();
+  const { setQRModalOpen } = useModalContext();
 
-export const TokensTable = ({ tokens, handleSeeQR }: TokensTable) => {
-  return tokens ? (
+  const handleClick = (id: number) => {
+    const url = `${window.location.origin}/verify/${id.toString()}`;
+
+    setTokenUrlAddress(url);
+    setQRModalOpen(true);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen center">
+        <Spinner>Loading tokens...</Spinner>
+      </div>
+    );
+  }
+  return tokens.length > 0 ? (
     // <div className="flex flex-col">
     <table className="border-collapse">
       <thead className="sticky top-0 bg-black border-b-2 rounded-b-none border-glass font-marcellus">
@@ -50,7 +62,7 @@ export const TokensTable = ({ tokens, handleSeeQR }: TokensTable) => {
                 )}
               </td>
               <td className="pl-1 pr-3">
-                <Button className="h-10 px-0" onClick={() => handleSeeQR(id)}>
+                <Button className="h-10 px-0" onClick={() => handleClick(id)}>
                   <span className="px-2 text-s">See</span>
                 </Button>
               </td>
@@ -60,8 +72,8 @@ export const TokensTable = ({ tokens, handleSeeQR }: TokensTable) => {
       </tbody>
     </table>
   ) : (
-    <div className="w-full h-screen center">
-      <Spinner>Loading tokens...</Spinner>
+    <div className="w-full h-screen px-8 text-xl text-center center">
+      You don't have tokens yet. If you have a Supplier role, then you can mint one. Otherwise you can transfer to this address from an account with that role.
     </div>
   );
 };

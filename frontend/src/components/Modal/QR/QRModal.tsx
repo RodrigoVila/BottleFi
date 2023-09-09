@@ -21,7 +21,7 @@ export const QRModal = () => {
           <h3 className="md:text-3xl">
             Scan this QR from your phone to verify token authenticity
           </h3>
-          <QRCode value={tokenUrlAddress} className="w-24 h-24 md:h-48 md:w-48" />
+          <QRCode value={`${tokenUrlAddress}?noredirect`} className="w-24 h-24 md:h-48 md:w-48" />
           <span>or</span>
           <Link to={tokenUrlAddress} className="text-sm underline md:text-base">
             Verify from this website

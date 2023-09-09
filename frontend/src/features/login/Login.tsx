@@ -1,12 +1,24 @@
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
-import { useAuthContext, useWallet } from "@hooks";
+import { useAuthContext, useModalContext, useWallet } from "@hooks";
 import { AnimatedButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
+import { supportedNetworkId } from "@constants";
 
 export const Login = () => {
   const { user } = useAuthContext();
+  const { setChainSwitchModalOpen } = useModalContext();
   const { handleConnect } = useWallet();
+
+  useEffect(() => {
+    if (!user) return;
+
+    user.chainId === supportedNetworkId
+      ? setChainSwitchModalOpen(false)
+      : setChainSwitchModalOpen(true);
+      //eslint-disable-next-line
+  }, [user]);
 
   return (
     <>

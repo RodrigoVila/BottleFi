@@ -47,11 +47,14 @@ export const getNetwork = async (): Promise<Network> => {
   return undefined;
 };
 
-export const connectToSepoliaNetwork = async (): Promise<Network> => {
+// It prompts the wallet to connect with the corresponding network: Hardhat(dev env) or Sepolia(prod env)
+export const connectToSupportedNetwork = async (): Promise<Network> => {
+  const supportedNetworkId = import.meta.env.DEV ? "0x7a69" : "0xaa36a7";
+
   const provider = getProvider();
   if (provider) {
     await provider.send("wallet_switchEthereumChain", [
-      { chainId: "0xaa36a7" },
+      { chainId: supportedNetworkId },
     ]);
   }
   return undefined;

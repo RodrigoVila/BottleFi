@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -34,6 +34,10 @@ export const RolesModal = () => {
     showWarningNotification,
   } = useToastNotifications();
 
+  const clearInputs = () => {
+    setSelectedRole(null);
+    setRoleData({ name: "", description: "" });
+  };
   const closeModal = () => setRolesModalOpen(false);
 
   const handleRoleChange = (value: Roles) => {
@@ -75,6 +79,7 @@ export const RolesModal = () => {
       console.error("Register role error: ", error);
     } finally {
       setLoading(false);
+      clearInputs();
     }
   };
 
@@ -82,6 +87,12 @@ export const RolesModal = () => {
   const onFocusRole = () => setRoleFocus(true);
   const onBlurRole = () => setRoleFocus(false);
   const radioStyles = isRoleFocus ? "border-white" : "border-glass";
+
+  // As this modal is being open/closed from other parts of the App
+  // we clear the inputs before it can be used
+  useEffect(() => {
+    clearInputs();
+  }, []);
 
   return (
     <Modal

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { BsPatchCheck } from "react-icons/bs";
 import { TfiFaceSad } from "react-icons/tfi";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 import { useNFTContract } from "@hooks";
-import { Button } from "@components/Buttons";
 import { Spinner } from "@components/Spinner";
 import { Token } from "@types";
 
@@ -15,9 +14,6 @@ export const TokenValidity = () => {
   const [tokenData, setTokenData] = useState<Token | null>(null);
 
   const { tokenId } = useParams();
-  const [searchParams] = useSearchParams();
-  //This param is only for QR users (mobile) who probably are not connected to the app so the shouldnt have a "Go To..." button
-  const redirect = !searchParams.get("noredirect");
 
   const { getTokenById } = useNFTContract();
 
@@ -96,12 +92,6 @@ export const TokenValidity = () => {
             across this token, we kindly request that you report it to the
             seller or reach out to us via our social media channels.
           </p>
-
-          {redirect && (
-            <Button className="w-1/2 rounded-full">
-              <Link to="/dashboard">Go to Dashboard</Link>
-            </Button>
-          )}
         </div>
       )}
     </TokenLayout>

@@ -90,10 +90,9 @@ export const MintToken = () => {
       <TokenColumn>
         <TokenTitle>Mint: Generates an authentic token</TokenTitle>
         <TokenDescription>
-          Minting involves creating a one-of-a-kind digital certificate on the
-          blockchain. As the initiator, you hold the exclusive ability to ensure
-          the token's authenticity whether you decide to sell it or transfer it
-          to a new owner.
+          Involves creating a one-of-a-kind digital certificate on the
+          blockchain. You hold the exclusive ability to ensure the token's
+          authenticity by transfer or sell it.
         </TokenDescription>
       </TokenColumn>
 

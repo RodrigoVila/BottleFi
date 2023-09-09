@@ -57,12 +57,12 @@ export const SellToken = () => {
   return (
     <TokenLayout>
       <TokenColumn>
-        <TokenTitle>Sell: Passes ownership, invalidating token</TokenTitle>
+        <TokenTitle>Sell: Transfers token and invalidates it</TokenTitle>
         <TokenDescription>
-          Selling works like transfer but the token becomes invalidated. If the
-          user attempts to verify the bottle's authenticity after a selling,
-          they will encounter a clear indicator advising them to reconsider
-          their purchase due to its questionable status.
+          The only way to remove authenticity. If the user attempts to verify
+          the bottle after a selling, they will encounter a clear indicator
+          advising them to reconsider their purchase due to its questionable
+          status.
         </TokenDescription>
       </TokenColumn>
 

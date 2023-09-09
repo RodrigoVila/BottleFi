@@ -61,10 +61,10 @@ export const TransferToken = () => {
     <TokenLayout>
       <TokenColumn>
         <TokenTitle>
-          Transfer: Passes ownership, keeping authenticity
+          Transfer: Passes token ownership
         </TokenTitle>
         <TokenDescription>
-          Transfer enables you to exchange ownership of a token while keeping
+          It enables you to replace ownership of a token while keeping
           it's validity. For example, a supplier transfering products to a
           vendor who later will sell (invalidate) the token for the final
           consumer.

@@ -51,6 +51,7 @@ module.exports = {
                 "^@constants",
                 "^@types",
                 "^@typechain-types",
+                "^@assets",
               ],
               // Parent imports. Put `..` last.
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"],

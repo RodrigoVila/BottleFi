@@ -24,6 +24,7 @@
     "baseUrl": "./src",
     "paths": {
       "@artifacts/*": ["../artifacts/*"],
+      "@assets/*": ["./assets/*"],
       "@components/*": ["./components/*"],
       "@constants": ["./constants/index.ts"],
       "@features/*": ["./features/*"],

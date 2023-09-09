@@ -1,4 +1,4 @@
-import { VscVerifiedFilled } from "react-icons/vsc";
+import { VscVerified } from "react-icons/vsc";
 import { twMerge } from "tailwind-merge";
 
 type LogoProps = {
@@ -17,7 +17,7 @@ export const Logo = ({ type = "login" }: LogoProps) => {
         containerStyles
       )}
     >
-      <VscVerifiedFilled size={type === "login" ? 62 : 30} className="text-red-700" />
+      <VscVerified size={type === "login" ? 62 : 30} className="text-pink-600" />
       <h1
         className={twMerge(
           "m-0 font-semibold leading-none font-fondamento",

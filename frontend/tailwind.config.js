@@ -10,8 +10,8 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-          login: "url(./src/assets/login-bg.jpeg)",
-          layout:"url(./src/assets/sky-bg.jpeg)"
+          login: "url(assets/login-bg.jpeg)",
+          layout:"url(assets/sky-bg.jpeg)"
       },
       colors: {
         opacityRed: "rgba(205, 4, 4, 0.7)",

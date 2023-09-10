@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
@@ -23,8 +25,17 @@ export default defineConfig({
   optimizeDeps: {
     esbuildOptions: {
       define: {
-        global: "globalThis"
-      }
-    }
-  }
+        global: "globalThis",
+      },
+    },
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: ["./setupTest.ts"],
+    coverage: {
+      provider: "v8",
+      reporter: ["html"],
+    },
+  },
 });

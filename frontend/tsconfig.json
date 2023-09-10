@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "types": ["vitest/globals"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -33,8 +34,8 @@
       "@typechain-types/*": ["../../typechain-types/*"],
       "@types": ["./types.d.ts"],
       "@utils/*": ["./utils/*"]
-    },
+    }
   },
-  "include": ["src"],
+  "include": ["src", "./setupTest.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

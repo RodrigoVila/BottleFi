@@ -15,7 +15,7 @@ export const Button = ({
 }: ButtonProps) => {
   const baseStyles =
     "flex justify-between items-center w-full bg-black border border-white my-1 mx-0 p-2 text-white cursor-pointer text-base hover:bg-white transition-all duration-300 hover:text-black";
-  const loadingStyles = loading && "bg-slate-500";
+  const loadingStyles = loading && "bg-slate-500 pointer-events-none";
 
   return (
     <button

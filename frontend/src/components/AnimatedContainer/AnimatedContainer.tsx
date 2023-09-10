@@ -15,6 +15,7 @@ export const AnimatedContainer = ({
 }: AnimatedContainerProps) => {
   return (
     <div
+      data-testid="animated-container"
       className={twMerge(
         "flex w-full h-full  center text-xl font-bold animate-background rounded-2xl bg-gradient-to-r from-purple-700 via-fuchsia-900 to-red-700 bg-[length:400%_400%] p-[2px]",
         className

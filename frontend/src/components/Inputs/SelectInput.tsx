@@ -5,13 +5,16 @@ import { TokenList } from "@types";
 type SelectInputProps = SelectHTMLAttributes<HTMLSelectElement> & {
   options: TokenList | null;
   label?: string;
-  onChange?: ChangeEventHandler<HTMLSelectElement>
+  onChange?: ChangeEventHandler<HTMLSelectElement>;
 };
 export const SelectInput = ({ options, label, onChange }: SelectInputProps) => {
   return (
     <div className="flex flex-col gap-2">
       {label && (
-        <label htmlFor={label} className="hidden m-0 font-semibold text-white md:block">
+        <label
+          htmlFor={label}
+          className="hidden m-0 font-semibold text-white md:block"
+        >
           {label}
         </label>
       )}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useDappContext, useModalContext } from "@hooks";
 
-import { Modal } from "..";
+import { Modal } from ".";
 
 export const QRModal = () => {
   const { isQRModalOpen, setQRModalOpen } = useModalContext();

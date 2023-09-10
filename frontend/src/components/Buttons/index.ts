@@ -1,4 +1,3 @@
-export { AnimatedButton } from "./AnimatedButton/AnimatedButton";
+export { AnimatedButton } from "./AnimatedButton";
 export { Button } from "./Button";
-export { GoButton } from "./GoButton/GoButton";
-export { GradientButton } from "./GradientButton/GradientButton";
+export { GradientButton } from "./GradientButton";

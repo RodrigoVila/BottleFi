@@ -14,7 +14,7 @@ import { RadioInput } from "@components/Inputs/RadioInput";
 import { LOCAL_STORAGE_KEY } from "@constants";
 import { Roles } from "@types";
 
-import { Modal } from "..";
+import { Modal } from ".";
 
 export const RolesModal = () => {
   const [selectedRole, setSelectedRole] = useState<Roles | null>(null);

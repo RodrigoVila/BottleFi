@@ -7,8 +7,8 @@ import {
   useModalContext,
   useRolesContract,
 } from "@hooks";
-import { getCurrentAccount, getNetwork } from "@utils/ethers";
 import { supportedNetworkId } from "@constants";
+import { getCurrentAccount, getNetwork } from "@utils/ethers";
 
 export const useWallet = () => {
   const { closeAllModals, setChainSwitchModalOpen } = useModalContext();

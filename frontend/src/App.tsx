@@ -8,8 +8,8 @@ import {
   useWallet,
 } from "@hooks";
 import { Login } from "@features/login";
-import { Modals } from "@components/Modal";
 import { supportedNetworkId } from "@constants";
+import { Modals } from "@components/Modal";
 
 import { Layout } from "./layout";
 

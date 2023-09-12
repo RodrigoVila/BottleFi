@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { Modal } from ".";
+
 import {
   useAuthContext,
   useLocalStorage,
@@ -8,13 +10,11 @@ import {
   useRolesContract,
   useToastNotifications,
 } from "@hooks";
+import { LOCAL_STORAGE_KEY } from "@constants";
 import { GradientButton } from "@components/Buttons";
 import { TextInput } from "@components/Inputs";
 import { RadioInput } from "@components/Inputs/RadioInput";
-import { LOCAL_STORAGE_KEY } from "@constants";
 import { Roles } from "@types";
-
-import { Modal } from ".";
 
 export const RolesModal = () => {
   const [selectedRole, setSelectedRole] = useState<Roles | null>(null);

@@ -1,9 +1,9 @@
 import QRCode from "react-qr-code";
 import { Link } from "react-router-dom";
 
-import { useDappContext, useModalContext } from "@hooks";
-
 import { Modal } from ".";
+
+import { useDappContext, useModalContext } from "@hooks";
 
 export const QRModal = () => {
   const { isQRModalOpen, setQRModalOpen } = useModalContext();

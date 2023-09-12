@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useAuthContext, useLocalStorage, useWallet } from "@hooks";
+import { LOCAL_STORAGE_KEY } from "@constants";
 import { Button } from "@components/Buttons";
 import { getBalance } from "@utils/ethers";
 import { parseAccount } from "@utils/parse";
-import { LOCAL_STORAGE_KEY } from "@constants";
 import { UserDataType } from "@types";
 
 import { UserBalance } from "./UserBalance";

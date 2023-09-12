@@ -42,13 +42,14 @@ module.exports = {
               ["^@?\\w", "^react", "^[^.]", "^\\."],
               // Empty line between different groups.
               [
+                "^@context",
                 "^@hooks",
                 "^@artifacts",
                 "^@features",
+                "^@constants",
                 "^@components",
                 "^@layout",
                 "^@utils",
-                "^@constants",
                 "^@types",
                 "^@typechain-types",
                 "^@assets",

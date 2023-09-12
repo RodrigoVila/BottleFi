@@ -27,6 +27,7 @@
       "@artifacts/*": ["../artifacts/*"],
       "@assets/*": ["./assets/*"],
       "@components/*": ["./components/*"],
+      "@context/*": ["./context/*"],
       "@constants": ["./constants/index.ts"],
       "@features/*": ["./features/*"],
       "@hooks": ["./hooks/index.ts"],

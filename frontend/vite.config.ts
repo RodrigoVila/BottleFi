@@ -14,6 +14,7 @@ export default defineConfig({
       "@artifacts": path.resolve(__dirname, "./artifacts"),
       "@components": path.resolve(__dirname, "./src/components"),
       "@constants": path.resolve(__dirname, "./src/constants/index.ts"),
+      "@context": path.resolve(__dirname, "./src/context"),
       "@features": path.resolve(__dirname, "./src/features"),
       "@hooks": path.resolve(__dirname, "./src/hooks/index.ts"),
       "@layout": path.resolve(__dirname, "./src/layout"),

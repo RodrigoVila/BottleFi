@@ -1,7 +1,7 @@
 import { serializeError } from "eth-rpc-errors";
 
-import { parseWalletError } from "@utils/parse";
 import { METAMASK_POSSIBLE_ERRORS } from "@constants";
+import { parseWalletError } from "@utils/parse";
 
 import { useToastNotifications } from "./useToastNotifications";
 

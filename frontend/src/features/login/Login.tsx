@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
 import { useAuthContext, useModalContext, useWallet } from "@hooks";
+import { supportedNetworkId } from "@constants";
 import { AnimatedButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
-import { supportedNetworkId } from "@constants";
 
 export const Login = () => {
   const { user } = useAuthContext();

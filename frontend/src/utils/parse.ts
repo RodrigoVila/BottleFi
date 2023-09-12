@@ -66,6 +66,6 @@ export const parseTokenResponse = (token: TokenResponse) => {
   return { id, uri, mintedAt, isValid };
 };
 
-export const parseBigIntToDate = (token: bigint) => {
-  return new Date(parseBigInt(token) * 1000).toLocaleString().slice(0, 8);
+export const parseBigNumToDate = (n:number) => {
+  return new Date(n * 1000).toLocaleString().slice(0, 8);
 };

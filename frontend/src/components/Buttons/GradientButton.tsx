@@ -29,7 +29,7 @@ export const GradientButton = ({
 
     const timer = setTimeout(() => {
       setLongWait(true);
-    }, 4000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, [loading]);
 
@@ -52,11 +52,11 @@ export const GradientButton = ({
       >
         {!loading && icon && <span>{icon}</span>}
         {loading ? (
-          <div>
+          <div className="flex flex-wrap gap-2">
             <Spinner />
             {isLongWait ? (
               <span className="mr-2 text-xs">
-                Sorry, sometimes transactions can be slow...
+                Almost there...
               </span>
             ) : null}
           </div>

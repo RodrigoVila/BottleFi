@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -20,28 +20,28 @@ export const useWallet = () => {
 
   const navigate = useNavigate();
 
-  const isWalletConnected = async (): Promise<boolean> => {
-    if (window.ethereum) {
-      const isConnected = await window.ethereum.isConnected();
-      return isConnected;
+  const isCorrectChainId = useMemo(async () => {
+    const network = await getNetwork();
+    const chainId = network?.chainId;
+    if (!chainId) return;
+
+    if (chainId === supportedNetworkId) {
+      return true;
     }
     return false;
-  };
+  }, []);
 
   const handleConnect = async () => {
-    try {
-      const network = await getNetwork();
-      const chainId = network?.chainId;
-      if (!chainId) return;
+    if (!isCorrectChainId) {
+      setChainSwitchModalOpen(true);
+      return;
+    }
 
-      if (chainId !== supportedNetworkId) {
-        setChainSwitchModalOpen(true);
-        return;
-      }
+    try {
       const address = await getCurrentAccount();
       const role = await getRoleData();
       const newUser = {
-        chainId,
+        chainId: supportedNetworkId,
         address,
         role,
       };
@@ -117,5 +117,5 @@ export const useWallet = () => {
     //eslint-disable-next-line
   }, []);
 
-  return { isWalletConnected, handleConnect, handleDisconnect };
+  return { isCorrectChainId, handleConnect, handleDisconnect };
 };

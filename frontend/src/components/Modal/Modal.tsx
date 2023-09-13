@@ -11,8 +11,9 @@ type ModalProps = {
   children: ReactNode;
   className?: string;
   bodyClassName?: string;
+  overlayClassName?: string;
   disableOutsideClick?: boolean;
-  withoutCloseButton?: boolean
+  withoutCloseButton?: boolean;
 };
 
 export const Modal = ({
@@ -21,8 +22,9 @@ export const Modal = ({
   children,
   className,
   bodyClassName,
+  overlayClassName,
   disableOutsideClick = false,
-  withoutCloseButton = false
+  withoutCloseButton = false,
 }: ModalProps) => {
   useEffect(() => {
     isOpen
@@ -33,7 +35,7 @@ export const Modal = ({
   return isOpen ? (
     <Portal>
       <div
-        className="absolute inset-0 z-0 flex items-center justify-center text-center bg-darkOverlay"
+        className={twMerge("absolute inset-0 z-0 flex items-center justify-center text-center bg-darkOverlay",overlayClassName)}
         onClick={disableOutsideClick ? undefined : onClose}
       >
         <AnimatedContainer

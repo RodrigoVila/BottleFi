@@ -20,8 +20,8 @@ export const GradientButton = ({
   const [isLongWait, setLongWait] = useState(false);
 
   const loadingStyles = loading
-    ? "bg-slate-500 pointer-events-none"
-    : "bg-black";
+    ? "bg-slate-500 pointer-events-none px-4"
+    : "bg-black px-16";
   const iconStyles = icon ? "justify-start" : "justify-center";
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export const GradientButton = ({
 
     const timer = setTimeout(() => {
       setLongWait(true);
-    }, 5000);
+    }, 4000);
     return () => clearTimeout(timer);
   }, [loading]);
 
@@ -44,7 +44,7 @@ export const GradientButton = ({
     >
       <div
         className={twMerge(
-          "flex items-center gap-6 bg-black m-px font-semibold h-12 px-16 hover:bg-transparent transition-all duration-300",
+          "flex items-center gap-6 bg-black m-px font-semibold h-12 hover:bg-transparent transition-all duration-300",
           iconStyles,
           className,
           loadingStyles
@@ -52,11 +52,11 @@ export const GradientButton = ({
       >
         {!loading && icon && <span>{icon}</span>}
         {loading ? (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex items-center gap-2">
             <Spinner />
             {isLongWait ? (
-              <span className="mr-2 text-xs">
-                Almost there...
+              <span className="w-full mr-2 text-sm">
+                Please wait...
               </span>
             ) : null}
           </div>

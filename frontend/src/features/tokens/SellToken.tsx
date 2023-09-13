@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-import { useDappContext, useNFTContract, useToastNotifications } from "@hooks";
+import {
+  useDappContext,
+  useModalContext,
+  useNFTContract,
+  useToastNotifications,
+  useWallet,
+} from "@hooks";
 import { GradientButton } from "@components/Buttons";
 import { SelectInput, TextInput } from "@components/Inputs";
 
@@ -17,8 +23,10 @@ export const SellToken = () => {
   const [destinationAddress, setDestinationAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { tokens } = useDappContext();
+  const { tokens, getTokens } = useDappContext();
+  const { setChainSwitchModalOpen } = useModalContext();
   const { sellToken } = useNFTContract();
+  const { isCorrectChainId } = useWallet();
   const { showWarningNotification, showSuccessNotification } =
     useToastNotifications();
 
@@ -36,6 +44,12 @@ export const SellToken = () => {
       showWarningNotification("Please write a destination address");
       return;
     }
+
+    if (!isCorrectChainId) {
+      setChainSwitchModalOpen(true);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -44,6 +58,8 @@ export const SellToken = () => {
         showSuccessNotification(
           "Token sold successfully. Try checking token authenticity at receivers dashboard!"
         );
+        // Update token list after sell
+        getTokens();
       }
     } catch (error) {
       // Errors are handled by the useNFTContract hook. No need to notify here.

@@ -1,11 +1,6 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useState,
-} from "react";
+import { createContext, ReactNode, useState } from "react";
 
+import { useNFTContract } from "@hooks";
 import { TokenList } from "@types";
 
 type DappProviderProps = {
@@ -14,20 +9,14 @@ type DappProviderProps = {
 
 type DappContextType = {
   tokens: TokenList;
-  setTokens: Dispatch<SetStateAction<TokenList>>;
-  tokenUrlAddress: string | null;
-  setTokenUrlAddress: Dispatch<SetStateAction<string | null>>;
   isLoading: boolean;
-  setLoading: Dispatch<SetStateAction<boolean>>;
+  getTokens: () => Promise<void>;
 };
 
 const initialValue: DappContextType = {
   tokens: [],
-  setTokens: () => {},
-  tokenUrlAddress: null,
-  setTokenUrlAddress: () => {},
   isLoading: false,
-  setLoading: () => {},
+  getTokens: async () => {},
 };
 
 export const DappContext = createContext<DappContextType>(initialValue);
@@ -36,18 +25,19 @@ export const DappProvider = ({ children }: DappProviderProps) => {
   const [tokens, setTokens] = useState(initialValue.tokens);
   const [isLoading, setLoading] = useState(initialValue.isLoading);
 
-  //Address that will be shared with the QR Modal
-  const [tokenUrlAddress, setTokenUrlAddress] = useState(
-    initialValue.tokenUrlAddress
-  );
+  const { fetchTokens } = useNFTContract();
+
+  const getTokens = async () => {
+    setLoading(true);
+    const tokenList = await fetchTokens();
+    setLoading(false);
+    if (tokenList) setTokens(tokenList);
+  };
 
   const value = {
     tokens,
-    setTokens,
-    tokenUrlAddress,
-    setTokenUrlAddress,
+    getTokens,
     isLoading,
-    setLoading,
   };
 
   return <DappContext.Provider value={value}>{children}</DappContext.Provider>;

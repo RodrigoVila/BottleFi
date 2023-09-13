@@ -1,6 +1,13 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 
-import { useIPFS, useNFTContract, useToastNotifications } from "@hooks";
+import {
+  useDappContext,
+  useIPFS,
+  useModalContext,
+  useNFTContract,
+  useToastNotifications,
+  useWallet,
+} from "@hooks";
 import { GradientButton } from "@components/Buttons";
 import { FileInput, TextInput } from "@components/Inputs";
 import { IPFSStorageData } from "@types";
@@ -20,10 +27,11 @@ export const MintToken = () => {
   const [file, setFile] = useState<File | null>(null);
   const [userData, setUserData] = useState<IPFSStorageData>(initialData);
 
+  const { getTokens } = useDappContext();
+  const { setChainSwitchModalOpen } = useModalContext();
   const { uploadFileToIPFS, uploadMetadataToIPFS } = useIPFS();
-
+  const { isCorrectChainId } = useWallet();
   const { mintToken } = useNFTContract();
-
   const { showInfoNotification, showSuccessNotification } =
     useToastNotifications();
 
@@ -58,6 +66,11 @@ export const MintToken = () => {
       return;
     }
 
+    if (!isCorrectChainId) {
+      setChainSwitchModalOpen(true);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -72,6 +85,8 @@ export const MintToken = () => {
             showSuccessNotification(
               "Token minted successfully. Go to dashboard to see it!"
             );
+            // We get tokens after mint so they are loaded at the dashboard when we go back
+            getTokens();
           }
         }
       }

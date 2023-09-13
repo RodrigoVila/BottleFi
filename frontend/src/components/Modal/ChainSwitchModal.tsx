@@ -1,5 +1,5 @@
 import { useModalContext } from "@hooks";
-import { AnimatedButton } from "@components/Buttons";
+import { AnimatedButton, GradientButton } from "@components/Buttons";
 import { connectToSupportedNetwork } from "@utils/ethers";
 
 import { Modal } from "./";
@@ -17,8 +17,9 @@ export const ChainSwitchModal = () => {
     <Modal
       isOpen={isChainSwitchModalOpen}
       onClose={closeModal}
-      className="bg-[rgba(255,0,0,0.5)]"
-      bodyClassName="border-2 border-[rgba(255,0,0,0.7)] bg-black p-2 md:p-8"
+      overlayClassName="bg-[rgba(255,0,0,0.5)]"
+      className="p-0 border-4 border-red-500"
+      bodyClassName="p-8"
       disableOutsideClick
     >
       <h3 className="text-2xl font-semibold md:text-3xl">
@@ -37,9 +38,9 @@ export const ChainSwitchModal = () => {
         . To utilize its features, please ensure you are connected to this
         network.
       </h5>
-      <AnimatedButton onClick={connectToSupportedNetwork}>
+      <GradientButton  onClick={connectToSupportedNetwork}>
         {`Connect to ${supportedNetworkName}`}
-      </AnimatedButton>
+      </GradientButton>
     </Modal>
   );
 };

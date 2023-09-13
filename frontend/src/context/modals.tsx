@@ -11,8 +11,6 @@ type ModalContextType = {
   setChainSwitchModalOpen: Dispatch<SetStateAction<boolean>>;
   isDrawerModalOpen: boolean;
   setDrawerModalOpen: Dispatch<SetStateAction<boolean>>;
-  isQRModalOpen: boolean;
-  setQRModalOpen: Dispatch<SetStateAction<boolean>>;
   isRolesModalOpen: boolean;
   setRolesModalOpen: Dispatch<SetStateAction<boolean>>;
   closeAllModals: () => void;
@@ -27,8 +25,6 @@ const initialValue = {
   setChainSwitchModalOpen: () => {},
   isDrawerModalOpen: false,
   setDrawerModalOpen: () => {},
-  isQRModalOpen: false,
-  setQRModalOpen: () => {},
   isRolesModalOpen: false,
   setRolesModalOpen: () => {},
   closeAllModals: () => {},
@@ -45,8 +41,6 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     initialValue.isDrawerModalOpen
   );
 
-  const [isQRModalOpen, setQRModalOpen] = useState(initialValue.isQRModalOpen);
-
   const [isRolesModalOpen, setRolesModalOpen] = useState(
     initialValue.isRolesModalOpen
   );
@@ -54,7 +48,6 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   const closeAllModals = () => {
     setChainSwitchModalOpen(false);
     setDrawerModalOpen(false);
-    setQRModalOpen(false);
     setRolesModalOpen(false);
   };
 
@@ -63,8 +56,6 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     setChainSwitchModalOpen,
     isDrawerModalOpen,
     setDrawerModalOpen,
-    isQRModalOpen,
-    setQRModalOpen,
     isRolesModalOpen,
     setRolesModalOpen,
     closeAllModals,

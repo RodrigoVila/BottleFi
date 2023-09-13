@@ -18,6 +18,12 @@
     background-color: rgba(0, 0, 0, 0.28);
   }
 
+  .glass-alt2 {
+    backdrop-filter: blur(4px) saturate(97%);
+    -webkit-backdrop-filter: blur(4px) saturate(97%);
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
   .center {
     display: flex;
     justify-content: center;

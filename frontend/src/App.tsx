@@ -14,8 +14,8 @@ import { Modals } from "@components/Modal";
 import { Layout } from "./layout";
 
 export const App = () => {
-  const { setTokens, setLoading } = useDappContext();
   const { user } = useAuthContext();
+  const { getTokens } = useDappContext();
   const {
     closeAllModals,
     isChainSwitchModalOpen,
@@ -24,17 +24,8 @@ export const App = () => {
     setRolesModalOpen,
   } = useModalContext();
 
-  const { fetchTokens } = useNFTContract();
-
   // To keep event listeners active
   useWallet();
-
-  const getTokens = async () => {
-    setLoading(true);
-    const tokenList = await fetchTokens();
-    setLoading(false);
-    if (tokenList) setTokens(tokenList);
-  };
 
   // Modal flow are handled by order importance
   useEffect(() => {

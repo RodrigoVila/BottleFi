@@ -1,6 +1,5 @@
 import { ChainSwitchModal } from "./ChainSwitchModal";
 import { DrawerModal } from "./DrawerModal";
-import { QRModal } from "./QRModal";
 import { RolesModal } from "./RolesModal";
 
 export const Modals = () => {
@@ -8,7 +7,6 @@ export const Modals = () => {
     <>
       <ChainSwitchModal />
       <DrawerModal />
-      <QRModal />
       <RolesModal />
     </>
   );

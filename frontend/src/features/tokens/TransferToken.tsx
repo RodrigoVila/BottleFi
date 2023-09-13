@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-import { useDappContext, useNFTContract, useToastNotifications } from "@hooks";
+import {
+  useDappContext,
+  useModalContext,
+  useNFTContract,
+  useToastNotifications,
+  useWallet,
+} from "@hooks";
 import { GradientButton } from "@components/Buttons";
 import { SelectInput, TextInput } from "@components/Inputs";
 
@@ -17,7 +23,9 @@ export const TransferToken = () => {
   const [destinationAddress, setDestinationAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { tokens } = useDappContext();
+  const { tokens, getTokens } = useDappContext();
+  const { setChainSwitchModalOpen } = useModalContext();
+  const { isCorrectChainId } = useWallet();
   const { transferToken } = useNFTContract();
   const { showSuccessNotification, showWarningNotification } =
     useToastNotifications();
@@ -36,6 +44,12 @@ export const TransferToken = () => {
       showWarningNotification("Please write a destination address");
       return;
     }
+
+    if (!isCorrectChainId) {
+      setChainSwitchModalOpen(true);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -47,6 +61,8 @@ export const TransferToken = () => {
         showSuccessNotification(
           "Token transfered successfully. Try checking sender/receiver dashboards!"
         );
+        // Update token list after transfer
+        getTokens();
       }
     } catch (err) {
       // Errors are handled by the useNFTContract hook. No need to notify here.
@@ -60,14 +76,11 @@ export const TransferToken = () => {
   return (
     <TokenLayout>
       <TokenColumn>
-        <TokenTitle>
-          Transfer: Passes token ownership
-        </TokenTitle>
+        <TokenTitle>Transfer: Passes token ownership</TokenTitle>
         <TokenDescription>
-          It enables you to replace ownership of a token while keeping
-          it's validity. For example, a supplier transfering products to a
-          vendor who later will sell (invalidate) the token for the final
-          consumer.
+          It enables you to replace ownership of a token while keeping it's
+          validity. For example, a supplier transfering products to a vendor who
+          later will sell (invalidate) the token for the final consumer.
         </TokenDescription>
       </TokenColumn>
 

@@ -58,7 +58,7 @@ export const TokenValidity = () => {
             </div>
           </TokenColumn>
           <Divider type="horizontal" />
-          <TokenColumn className="justify-between max-w-md text-xl">
+          <TokenColumn className="justify-between max-w-md py-3 text-xl">
             <div className={itemRowStyle}>
               <p className={itemStyleLeft}>Token ID</p>
               <p className={itemStyleRight}>{tokenData.id}</p>

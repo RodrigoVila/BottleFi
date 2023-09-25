@@ -1,28 +1,24 @@
 import { render } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { ChainSwitchModal } from ".";
+import { RolesModal } from ".";
 
 import { ModalProvider } from "@context/modals";
 import { useModalContext } from "@hooks";
 
-vi.mock("@utils/ethers", () => ({
-  connectToSupportedNetwork: vi.fn(),
-}));
-
-describe("ChainSwitchModal", () => {
+describe("RolesModal", () => {
   it("Should render intial state", () => {
-    const { isChainSwitchModalOpen, setChainSwitchModalOpen } = renderSut();
+    const { isRolesModalOpen, setRolesModalOpen } = renderSut();
 
-    expect(isChainSwitchModalOpen).toBe(false);
-    expect(setChainSwitchModalOpen).toBeDefined();
+    expect(isRolesModalOpen).toBe(false);
+    expect(setRolesModalOpen).toBeDefined();
   });
 });
 
 const renderSut = () => {
   render(
     <ModalProvider>
-      <ChainSwitchModal />
+      <RolesModal />
     </ModalProvider>
   );
   const { result } = renderHook(useModalContext);

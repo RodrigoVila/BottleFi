@@ -10,7 +10,14 @@ export const parseAccount = (account: string) => {
 };
 
 export const parseCatchError = (error: unknown): string => {
-  return error instanceof Error ? error.message : (error as string);
+  if (error instanceof Error) {
+    return error.message;
+  }
+  if (typeof error === "string") {
+    return error;
+  }
+
+  return String(error);
 };
 
 export const parseWalletError = (error: unknown) => {
@@ -56,7 +63,7 @@ export const parseRevertErrorMessage = (error: unknown) => {
 export const parseBigInt = (b: bigint) => parseInt(b.toString(), 16);
 
 export const parseTokenResponse = (token: TokenResponse) => {
-  const id = parseBigInt(token[0]);
+  const id = Number(token[0]);
   const uri = token[1];
   const mintedAt = new Date(Number(token[2]) * 1000)
     .toLocaleString()
@@ -66,6 +73,6 @@ export const parseTokenResponse = (token: TokenResponse) => {
   return { id, uri, mintedAt, isValid };
 };
 
-export const parseBigNumToDate = (n:number) => {
+export const parseBigNumToDate = (n: number) => {
   return new Date(n * 1000).toLocaleString().slice(0, 8);
 };

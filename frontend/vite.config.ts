@@ -37,6 +37,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["html"],
+      exclude: ["./src/utils/ethers.ts"]
     },
   },
 });

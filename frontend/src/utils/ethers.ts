@@ -23,7 +23,6 @@ export const isAccountConnected = async (): Promise<boolean> => {
   const provider = getProvider();
   if (provider) {
     const accounts: string[] = await provider.send("eth_accounts", []);
-    console.log("Connected? ", accounts.length > 0)
     return accounts.length > 0;
   }
   return false;

@@ -10,7 +10,7 @@ vi.mock("@utils/ethers", () => ({
   connectToSupportedNetwork: vi.fn(),
 }));
 
-// TODO: Add test cases 
+// TODO: Add more test cases 
 describe("ChainSwitchModal", () => {
   it("Should render intial state", () => {
     const { isChainSwitchModalOpen, setChainSwitchModalOpen } = renderSut();

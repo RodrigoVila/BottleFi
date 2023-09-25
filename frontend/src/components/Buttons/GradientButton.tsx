@@ -8,6 +8,7 @@ type GradientButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon?: ReactNode;
   loading?: boolean;
   className?: string;
+  bodyClassName?: string;
 };
 
 export const GradientButton = ({
@@ -15,6 +16,7 @@ export const GradientButton = ({
   icon,
   loading,
   className,
+  bodyClassName,
   ...rest
 }: GradientButtonProps) => {
   const [isLongWait, setLongWait] = useState(false);
@@ -37,6 +39,7 @@ export const GradientButton = ({
     <button
       className={twMerge(
         "w-full",
+        className,
         loading || rest.disabled ? "bg-slate-500" : "bg-gradient"
       )}
       disabled={rest.disabled || loading}
@@ -46,7 +49,7 @@ export const GradientButton = ({
         className={twMerge(
           "flex items-center gap-6 bg-black m-px font-semibold h-12 hover:bg-transparent transition-all duration-300",
           iconStyles,
-          className,
+          bodyClassName,
           loadingStyles
         )}
       >

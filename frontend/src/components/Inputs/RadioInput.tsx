@@ -26,7 +26,6 @@ export const RadioInput = ({
       onClick={() => onChange(value)}
     >
       {/* Input set as readOnly because onChange is being handled by parent div */}
-      {/* TODO: Fix: It wasn't working on the usual way because of clicking issues. This is a workaround */}
       <input
         readOnly
         type="radio"

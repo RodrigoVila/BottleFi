@@ -16,7 +16,7 @@ describe("GradientButton", () => {
     const user = userEvent.setup();
 
     render(
-      <GradientButton className="leading-5" onClick={mockOnClick}>
+      <GradientButton bodyClassName="leading-5" onClick={mockOnClick}>
         Test Button
       </GradientButton>
     );
@@ -45,19 +45,4 @@ describe("GradientButton", () => {
 
     expect(button).toBeDisabled();
   });
-
-  //TODO: Test functionality in the app first
-  // it.skip("Should render longwait message after loading for 4s", async () => {
-  //   vi.useFakeTimers();
-
-  //   render(
-  //     <GradientButton loading onClick={mockOnClick}>
-  //       Test Button
-  //     </GradientButton>
-  //   );
-
-  //   waitFor(() => vi.advanceTimersByTime(4000));
-
-  //   vi.useRealTimers();
-  // });
 });

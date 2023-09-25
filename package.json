@@ -11,8 +11,7 @@
     "deploy:localhost": "npx hardhat run scripts/deploy.ts --network localhost",
     "deploy:sepolia": "npx hardhat run scripts/deploy.ts --network sepolia",
     "hardhat:node": "npx hardhat node",
-    "test": "npx hardhat test",
-    "start": "npx hardhat clean && npx hardhat node"
+    "test": "npx hardhat test"
   },
   "repository": {
     "type": "git",

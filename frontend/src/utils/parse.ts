@@ -58,7 +58,7 @@ export const parseBigInt = (b: bigint) => parseInt(b.toString(), 16);
 export const parseTokenResponse = (token: TokenResponse) => {
   const id = parseBigInt(token[0]);
   const uri = token[1];
-  const mintedAt = new Date(parseBigInt(token[2]) * 1000)
+  const mintedAt = new Date(Number(token[2]) * 1000)
     .toLocaleString()
     .slice(0, 9);
   const isValid = token[3];

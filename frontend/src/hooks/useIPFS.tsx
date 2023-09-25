@@ -7,33 +7,20 @@ import { IPFSStorageData } from "@types";
 export const useIPFS = () => {
   const [IPFS, setIPFS] = useState<IPFSHTTPClient | null>(null);
 
-  //Todo: Unify the upload to ipfs functions
-  const uploadFileToIPFS = async (file: File): Promise<string | undefined> => {
-    if (!IPFS) {
-      throw new Error("IPFS not available");
-    }
-    try {
-      const { path } = await IPFS.add(file);
-      return path;
-    } catch (error) {
-      console.error("Error trying to upload file to IPFS: ", error);
-    }
-  };
-
-  const uploadMetadataToIPFS = async (
-    data: IPFSStorageData
+  const uploadDataToIPFS = async (
+    rawData: IPFSStorageData | File
   ): Promise<string | undefined> => {
     if (!IPFS) {
       throw new Error("IPFS not available");
     }
 
-    const strData = JSON.stringify(data);
+    const data = rawData instanceof File ? rawData : JSON.stringify(rawData);
 
     try {
-      const { path } = await IPFS.add(strData);
+      const { path } = await IPFS.add(data);
       return path;
     } catch (error) {
-      console.error("Error trying to upload metadata to IPFS: ", error);
+      console.error("Error trying to upload data to IPFS: ", error);
     }
   };
 
@@ -67,8 +54,7 @@ export const useIPFS = () => {
   }, []);
 
   return {
-    uploadFileToIPFS,
-    uploadMetadataToIPFS,
+    uploadDataToIPFS,
     getDataFromIPFS,
   };
 };

@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { BiDownArrowAlt } from "react-icons/bi";
 import { twMerge } from "tailwind-merge";
 
-import { useDappContext } from "@hooks";
-import { Spinner } from "@components/Spinner";
+import { TokenList } from "@types";
 
 import { Token } from "./Token";
-import { Link } from "react-router-dom";
 
-export const TokensTable = () => {
+type TokensTableType = {
+  tokens: TokenList;
+};
+
+export const TokensTable = ({ tokens }: TokensTableType) => {
   const [isFirstTime, setFirstTime] = useState(false);
   const [showQRMessage, setShowQRMessage] = useState(false);
   const [selectedQRShown, setSelectedQRShown] = useState<number | null>(null);
-
-  const { isLoading, tokens } = useDappContext();
 
   const showQR = (id: number | null) => {
     if (!isFirstTime) {
@@ -33,7 +33,7 @@ export const TokensTable = () => {
     return () => clearTimeout(timer);
   }, [showQRMessage]);
 
-  return tokens.length > 0 ? (
+  return (
     <div className="relative w-full">
       <div
         className={twMerge(
@@ -63,6 +63,7 @@ export const TokensTable = () => {
         <tbody className="glass-alt">
           {tokens?.map((token) => (
             <Token
+              key={token.image}
               token={token}
               isShown={selectedQRShown === token.id}
               showQR={showQR}
@@ -70,21 +71,6 @@ export const TokensTable = () => {
           ))}
         </tbody>
       </table>
-    </div>
-  ) : (
-    <div className="w-full h-screen px-8 text-xl text-center center">
-      {isLoading ? (
-        <Spinner>Loading tokens...</Spinner>
-      ) : (
-        <p>
-          You don't have tokens yet. If you have a Supplier role, then you can
-          <Link className="mx-1 font-bold underline" to="/mint">
-            mint
-          </Link>
-          one. Otherwise you can transfer to this address from an account with
-          that role.
-        </p>
-      )}
     </div>
   );
 };

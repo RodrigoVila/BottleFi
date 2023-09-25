@@ -29,7 +29,8 @@ export const MintToken = () => {
 
   const { getTokens } = useDappContext();
   const { setChainSwitchModalOpen } = useModalContext();
-  const { uploadFileToIPFS, uploadMetadataToIPFS } = useIPFS();
+
+  const { uploadDataToIPFS } = useIPFS();
   const { isCorrectChainId } = useWallet();
   const { mintToken } = useNFTContract();
   const { showInfoNotification, showSuccessNotification } =
@@ -75,13 +76,13 @@ export const MintToken = () => {
 
     try {
       // First we upload the token image in order to obtain it's ipfs path
-      const path = await uploadFileToIPFS(file);
+      const path = await uploadDataToIPFS(file);
       if (path) {
         // Then we upload again the metadata with the image included
-        const uri = await uploadMetadataToIPFS({ ...userData, image: path });
+        const uri = await uploadDataToIPFS({ ...userData, image: path });
         if (uri) {
-          const success = await mintToken(uri);
-          if (success) {
+          const minted = await mintToken(uri);
+          if (minted) {
             showSuccessNotification(
               "Token minted successfully. Go to dashboard to see it!"
             );

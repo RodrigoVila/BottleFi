@@ -49,7 +49,10 @@ export const UserMenu = () => {
       {isMenuOpen && (
         <div className="absolute right-0 flex-col gap-3 p-3 top-[51px] md:top-[55px] center glass-alt">
           <UserBalance balance={balance} />
-          <p className="w-full p-1 text-base text-center cursor-pointer" onClick={handleDisconnect}>
+          <p
+            className="w-full p-1 text-base text-center cursor-pointer"
+            onClick={handleDisconnect}
+          >
             Logout
           </p>
         </div>

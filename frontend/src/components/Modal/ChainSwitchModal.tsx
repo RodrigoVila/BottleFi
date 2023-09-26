@@ -17,7 +17,7 @@ export const ChainSwitchModal = () => {
     <Modal
       isOpen={isChainSwitchModalOpen}
       onClose={closeModal}
-      className="p-0 border-4 border-red-500"
+      className="p-0 border-4 border-red-500 z-[2]"
       bodyClassName="p-8"
       disableOutsideClick
       withoutCloseButton

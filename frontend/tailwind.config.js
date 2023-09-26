@@ -25,6 +25,7 @@ module.exports = {
         lightOverlay: "rgba(0, 0, 0, 0.35)",
         overlay: "rgba(0, 0, 0, 0.5)",
         darkOverlay: "rgba(0, 0, 0, 0.7)",
+        darkestOverlay: "rgba(0, 0, 0, 0.9)",
       },
       fontFamily: {
         fondamento: ["Fondamento", "cursive"],

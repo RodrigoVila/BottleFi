@@ -43,6 +43,7 @@ type Token = {
   image: string;
   mintedAt: string;
   isValid: boolean;
+  owner?:string
 };
 
 type TokenList = Token[];

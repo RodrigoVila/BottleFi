@@ -4,21 +4,24 @@ import { useNavigate } from "react-router-dom";
 import {
   useAuthContext,
   useErrors,
+  useLocalStorage,
   useModalContext,
   useRolesContract,
+  useToastNotifications,
 } from "@hooks";
-import { supportedNetworkId } from "@constants";
+import { LOCAL_STORAGE_KEY, supportedNetworkId } from "@constants";
 import { getCurrentAccount, getNetwork } from "@utils/ethers";
 
 export const useWallet = () => {
   const { closeAllModals, setChainSwitchModalOpen } = useModalContext();
-
-  const { getRoleData } = useRolesContract();
   const { setUser } = useAuthContext();
 
-  const { notifyMetamaskErrors } = useErrors();
-
   const navigate = useNavigate();
+
+  const [, setLocalStorage] = useLocalStorage(LOCAL_STORAGE_KEY);
+  const { getRoleData } = useRolesContract();
+  const { notifyMetamaskErrors } = useErrors();
+  const { showSuccessNotification } = useToastNotifications();
 
   const isCorrectChainId = useMemo(async () => {
     const network = await getNetwork();
@@ -46,8 +49,9 @@ export const useWallet = () => {
         role,
       };
       setUser(newUser);
-      // setLocalStorage(newUser);
-      navigate("./dashboard");
+      setLocalStorage({ isWalletConnected: true });
+      navigate("/dashboard");
+      showSuccessNotification("Wallet connected!");
     } catch (err) {
       console.error(err);
       notifyMetamaskErrors(err);
@@ -56,8 +60,9 @@ export const useWallet = () => {
 
   const handleDisconnect = () => {
     setUser(null);
-    // setLocalStorage(null);
+    setLocalStorage(null);
     closeAllModals();
+    navigate("/login");
   };
 
   const handleAccountsChanged = async (accounts: string[]) => {
@@ -66,11 +71,7 @@ export const useWallet = () => {
       try {
         const role = await getRoleData();
 
-        setUser((prev) => {
-          const currentUser = { ...prev, address, role };
-          // setLocalStorage(currentUser);
-          return currentUser;
-        });
+        setUser((prev) => ({ ...prev, address, role }));
       } catch (err) {
         console.error("Handle account change error: ", { err });
       }
@@ -82,11 +83,7 @@ export const useWallet = () => {
   const handleChainChanged = async (hexChainId: string) => {
     const chainId = parseInt(hexChainId);
     if (chainId === supportedNetworkId) {
-      setUser((prev) => {
-        const currentUser = { ...prev, chainId };
-        // setLocalStorage(currentUser);
-        return currentUser;
-      });
+      setUser((prev) => ({ ...prev, chainId }));
     } else {
       closeAllModals();
       setChainSwitchModalOpen(true);

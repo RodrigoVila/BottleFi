@@ -1,7 +1,7 @@
 import { Logo } from "@components/Logo";
 import { NavItems } from "@components/NavItems";
 
-import { DrawerMenuButton, UserData } from "./";
+import { DrawerMenuButton, UserMenu } from "./";
 
 export const Navbar = () => {
   return (
@@ -9,7 +9,7 @@ export const Navbar = () => {
       <DrawerMenuButton />
       <Logo type="navbar" />
       <NavItems />
-      <UserData />
+      <UserMenu />
     </header>
   );
 };

@@ -1,5 +1,5 @@
 import { useModalContext } from "@hooks";
-import { AnimatedButton, GradientButton } from "@components/Buttons";
+import { GradientButton } from "@components/Buttons";
 import { connectToSupportedNetwork } from "@utils/ethers";
 
 import { Modal } from "./";
@@ -17,10 +17,10 @@ export const ChainSwitchModal = () => {
     <Modal
       isOpen={isChainSwitchModalOpen}
       onClose={closeModal}
-      overlayClassName="bg-[rgba(255,0,0,0.5)]"
       className="p-0 border-4 border-red-500"
       bodyClassName="p-8"
       disableOutsideClick
+      withoutCloseButton
     >
       <h3 className="text-2xl font-semibold md:text-3xl">
         Invalid chain detected

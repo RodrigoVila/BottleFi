@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { Dashboard } from "@features/dashboard";
+import { Login } from "@features/login";
 import {
   MintToken,
   SellToken,
@@ -13,6 +14,10 @@ import { NotFound } from "@components/NotFound";
 import { App } from "./App";
 
 export const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <Login />
+  },
   {
     path: "/",
     element: <App />,

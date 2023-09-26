@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
+import { MouseEvent } from "react";
 import { BiCheckCircle } from "react-icons/bi";
 import { GiCancel } from "react-icons/gi";
 import QRCode from "react-qr-code";
@@ -51,7 +51,7 @@ export const Token = ({ token, isShown, showQR }: TokenProps) => {
       </td>
       <td className="relative w-20 h-20 md:w-24 md:h-24" onClick={toggle}>
         {!isShown ? (
-          <span className="absolute inset-0 text-white glass-alt2 center">
+          <span className="absolute inset-0 text-white bg-darkestOverlay center">
             Show
           </span>
         ) : null}

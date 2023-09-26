@@ -53,11 +53,11 @@ export const TransferToken = () => {
     setIsLoading(true);
 
     try {
-      const success = await transferToken(
+      const transferred = await transferToken(
         destinationAddress,
         parseInt(tokenId)
       );
-      if (success) {
+      if (transferred) {
         showSuccessNotification(
           "Token transfered successfully. Try checking sender/receiver dashboards!"
         );
@@ -68,8 +68,8 @@ export const TransferToken = () => {
       // Errors are handled by the useNFTContract hook. No need to notify here.
       console.error("Transfer error: ", err);
     } finally {
-      setIsLoading(false);
       clearInputs();
+      setIsLoading(false);
     }
   };
 
@@ -90,14 +90,13 @@ export const TransferToken = () => {
         <SelectInput
           label="Token to transfer"
           options={tokens}
+          value={tokenId}
           onChange={(e) => setTokenId(e.target.value)}
-          required
         />
         <TextInput
           label="Address"
           value={destinationAddress}
           onChange={(e) => setDestinationAddress(e.target.value)}
-          required
         />
         <GradientButton loading={isLoading} onClick={handleSubmit}>
           Transfer

@@ -22,6 +22,7 @@ export const useNFTContract = () => {
   const getTokenById = async (tokenId: number): Promise<Token> => {
     const tkn = await nft.getTokenById(tokenId);
     const { id, uri, mintedAt, isValid } = parseTokenResponse(tkn);
+    const owner = await nft.ownerOf(id)
     const metadata = await getDataFromIPFS(uri);
     const imageUri = `${import.meta.env.VITE_INFURA_GATEWAY_SUBDOMAIN}/${
       metadata?.image
@@ -31,6 +32,7 @@ export const useNFTContract = () => {
       id,
       mintedAt,
       isValid,
+      owner,
       name: metadata?.name,
       description: metadata?.description,
       image: imageUri,

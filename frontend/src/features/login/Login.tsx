@@ -4,6 +4,7 @@ import { useAuthContext, useModalContext, useWallet } from "@hooks";
 import { supportedNetworkId } from "@constants";
 import { AnimatedButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
+import { ChainSwitchModal } from "@components/Modal";
 
 export const Login = () => {
   const { user } = useAuthContext();
@@ -21,6 +22,7 @@ export const Login = () => {
 
   return (
     <>
+    <ChainSwitchModal />
       {/* {user?.address && <Navigate to="/dashboard" />} */}
       <div className="w-full h-screen bg-center bg-no-repeat bg-cover bg-login">
         <div className="w-full h-full center bg-overlay font-marcellus">

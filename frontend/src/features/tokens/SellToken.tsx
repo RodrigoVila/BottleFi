@@ -53,8 +53,8 @@ export const SellToken = () => {
     setIsLoading(true);
 
     try {
-      const success = await sellToken(destinationAddress, parseInt(tokenId));
-      if (success) {
+      const sold = await sellToken(destinationAddress, parseInt(tokenId));
+      if (sold) {
         showSuccessNotification(
           "Token sold successfully. Try checking token authenticity at receivers dashboard!"
         );
@@ -88,14 +88,13 @@ export const SellToken = () => {
         <SelectInput
           label="Token to sell"
           options={tokens}
+          value={tokenId}
           onChange={(e) => setTokenId(e.target.value)}
-          required
         />
         <TextInput
           label="Address"
           value={destinationAddress}
           onChange={(e) => setDestinationAddress(e.target.value)}
-          required
         />
         <GradientButton loading={isLoading} onClick={handleSubmit}>
           Sell

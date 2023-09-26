@@ -5,12 +5,10 @@ import { Modal } from ".";
 
 import {
   useAuthContext,
-  useLocalStorage,
   useModalContext,
   useRolesContract,
   useToastNotifications,
 } from "@hooks";
-import { LOCAL_STORAGE_KEY } from "@constants";
 import { GradientButton } from "@components/Buttons";
 import { TextInput } from "@components/Inputs";
 import { RadioInput } from "@components/Inputs/RadioInput";
@@ -25,7 +23,6 @@ export const RolesModal = () => {
   const { name, description } = roleData;
 
   const { setUser } = useAuthContext();
-  const [, setLocalStorage] = useLocalStorage(LOCAL_STORAGE_KEY);
   const { isRolesModalOpen, setRolesModalOpen } = useModalContext();
   const { register } = useRolesContract();
   const {
@@ -64,11 +61,7 @@ export const RolesModal = () => {
     try {
       const role = await register(selectedRole, name, description);
       if (role !== undefined) {
-        setUser((prev) => {
-          const currentUser = { ...prev, role, name };
-          setLocalStorage(currentUser);
-          return currentUser;
-        });
+        setUser((prev) => ({ ...prev, role, name }));
         showSuccessNotification(`${role} registered successfully!`);
         closeModal();
       }
@@ -89,7 +82,7 @@ export const RolesModal = () => {
   const radioStyles = isRoleFocus ? "border-white" : "border-glass";
 
   // As this modal is being open/closed from other parts of the App
-  // we clear the inputs before it can be used
+  // we clear the inputs before it can be used again
   useEffect(() => {
     clearInputs();
   }, []);

@@ -21,7 +21,7 @@ describe("AnimatedContainer", () => {
       </AnimatedButton>
     );
 
-    const button = screen.getByRole("button", { name: "Test Button" });
+    const button = screen.getByText("Test Button");
     expect(button).toHaveClass("bg-slate-200");
 
     await user.click(button);

@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { BsPatchCheck } from "react-icons/bs";
 import { TfiFaceSad } from "react-icons/tfi";
 import { useParams } from "react-router-dom";
-import { twMerge } from "tailwind-merge";
 
 import { useNFTContract } from "@hooks";
 import { Spinner } from "@components/Spinner";
+import { parseAccount } from "@utils/parse";
 import { Token } from "@types";
 
 import { Divider, TokenColumn, TokenLayout } from "./layout";
@@ -60,6 +60,11 @@ export const TokenValidity = () => {
           <Divider type="horizontal" />
           <TokenColumn className="justify-between max-w-md py-3 text-xl">
             <div className={itemRowStyle}>
+              <p className={itemStyleLeft}>Name</p>
+              <p className={itemStyleRight}>{tokenData.name}</p>
+            </div>
+            <Divider />
+            <div className={itemRowStyle}>
               <p className={itemStyleLeft}>Token ID</p>
               <p className={itemStyleRight}>{tokenData.id}</p>
             </div>
@@ -70,14 +75,9 @@ export const TokenValidity = () => {
             </div>
             <Divider />
             <div className={itemRowStyle}>
-              <p className={itemStyleLeft}>Owner</p>
-              <p className={itemStyleRight}>{tokenData.name}</p>
-            </div>
-            <Divider />
-            <div className={itemRowStyle}>
-              <p className={itemStyleLeft}>Description</p>
-              <p className={twMerge("truncate", itemStyleRight)}>
-                {tokenData.description}
+              <p className={itemStyleLeft}>Current Owner</p>
+              <p className={itemStyleRight}>
+                {tokenData.owner && parseAccount(tokenData.owner)}
               </p>
             </div>
           </TokenColumn>

@@ -1,14 +1,14 @@
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 import {
   useAuthContext,
   useDappContext,
+  useLocalStorage,
   useModalContext,
-  useNFTContract,
   useWallet,
 } from "@hooks";
-import { Login } from "@features/login";
-import { supportedNetworkId } from "@constants";
+import { LOCAL_STORAGE_KEY, supportedNetworkId } from "@constants";
 import { Modals } from "@components/Modal";
 
 import { Layout } from "./layout";
@@ -23,6 +23,8 @@ export const App = () => {
     isRolesModalOpen,
     setRolesModalOpen,
   } = useModalContext();
+
+  const [localStorage] = useLocalStorage(LOCAL_STORAGE_KEY);
 
   // To keep event listeners active
   useWallet();
@@ -61,8 +63,13 @@ export const App = () => {
 
   return (
     <>
+      {localStorage?.isWalletConnected ? (
+        <Navigate to="/dashboard" />
+      ) : (
+        <Navigate to="/login" />
+      )}
       <Modals />
-      {user?.address ? <Layout /> : <Login />}
+      <Layout />
     </>
   );
 };

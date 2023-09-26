@@ -19,15 +19,6 @@ export const getSigner = (): Signer => {
   return undefined;
 };
 
-export const isAccountConnected = async (): Promise<boolean> => {
-  const provider = getProvider();
-  if (provider) {
-    const accounts: string[] = await provider.send("eth_accounts", []);
-    return accounts.length > 0;
-  }
-  return false;
-};
-
 export const getCurrentAccount = async (): Promise<string | undefined> => {
   const provider = getProvider();
   if (provider) {

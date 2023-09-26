@@ -61,13 +61,11 @@ export const App = () => {
     //eslint-disable-next-line
   }, [user]);
 
+  if (!localStorage?.isWalletConnected) return <Navigate to="/login" />;
+
   return (
     <>
-      {localStorage?.isWalletConnected ? (
-        <Navigate to="/dashboard" />
-      ) : (
-        <Navigate to="/login" />
-      )}
+      <Navigate to="/dashboard" />
       <Modals />
       <Layout />
     </>

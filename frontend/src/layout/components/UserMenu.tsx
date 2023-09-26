@@ -18,6 +18,8 @@ export const UserMenu = () => {
   const toggleMenu = () => setMenuOpen((open) => !open);
 
   useEffect(() => {
+    if (!user) return;
+
     const fetchBalance = async () => {
       try {
         const balance = await getBalance();
@@ -28,7 +30,7 @@ export const UserMenu = () => {
     };
 
     fetchBalance();
-  }, []);
+  }, [user]);
 
   return (
     <div className="flex justify-end flex-1 mr-2">
@@ -56,7 +58,9 @@ export const UserMenu = () => {
           )}
         </>
       ) : (
-        <AnimatedButton className="!text-base md:px-4" onClick={handleConnect}>Login</AnimatedButton>
+        <AnimatedButton className="!text-base md:px-4" onClick={handleConnect}>
+          Login
+        </AnimatedButton>
       )}
     </div>
   );

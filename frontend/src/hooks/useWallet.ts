@@ -23,28 +23,26 @@ export const useWallet = () => {
   const { notifyMetamaskErrors } = useErrors();
   const { showSuccessNotification } = useToastNotifications();
 
-  const isCorrectChainId = useMemo(async () => {
+  const isCorrectChainId = async () => {
     const network = await getNetwork();
     const chainId = network?.chainId;
     if (!chainId) return;
-
+    
     if (chainId === supportedNetworkId) {
       return true;
     }
     return false;
-  }, []);
+  };
 
   const handleConnect = async () => {
-    if (!isCorrectChainId) {
-      setChainSwitchModalOpen(true);
-      return;
-    }
+    const network = await getNetwork();
+    const chainId = network?.chainId;
 
     try {
       const address = await getCurrentAccount();
       const role = await getRoleData();
       const newUser = {
-        chainId: supportedNetworkId,
+        chainId,
         address,
         role,
       };

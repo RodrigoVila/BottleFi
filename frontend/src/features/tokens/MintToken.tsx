@@ -67,7 +67,9 @@ export const MintToken = () => {
       return;
     }
 
-    if (!isCorrectChainId) {
+    const isChainIdCorrect = await isCorrectChainId();
+
+    if (!isChainIdCorrect) {
       setChainSwitchModalOpen(true);
       return;
     }

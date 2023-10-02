@@ -1,4 +1,4 @@
-import { VscVerified } from "react-icons/vsc";
+import { GiSquareBottle } from "react-icons/gi";
 import { twMerge } from "tailwind-merge";
 
 type LogoProps = {
@@ -18,9 +18,9 @@ export const Logo = ({ type = "login" }: LogoProps) => {
         containerStyles
       )}
     >
-      <VscVerified
+      <GiSquareBottle
         data-testid="Icon logo"
-        size={type === "login" ? 62 : 30}
+        size={type === "login" ? 40 : 30}
         className="text-pink-600"
       />
       <h1

@@ -9,7 +9,7 @@ export const DrawerModal = () => {
   const closeModal = () => setDrawerModalOpen(false);
 
   return (
-    <Modal isOpen={isDrawerModalOpen} onClose={closeModal}>
+    <Modal isOpen={isDrawerModalOpen} onClose={closeModal} bodyClassName="w-fit px-16" className="w-fit">
       <NavItems position="vertical" />
     </Modal>
   );

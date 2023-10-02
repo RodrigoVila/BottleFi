@@ -5,6 +5,7 @@ import { Modal } from ".";
 
 import {
   useAuthContext,
+  useDappContext,
   useModalContext,
   useRolesContract,
   useToastNotifications,
@@ -24,6 +25,7 @@ export const RolesModal = () => {
   const { name, description } = roleData;
 
   const { user, setUser } = useAuthContext();
+  const { getTokens } = useDappContext();
   const { isRolesModalOpen, setRolesModalOpen } = useModalContext();
   const { register } = useRolesContract();
   const {
@@ -32,7 +34,10 @@ export const RolesModal = () => {
     showWarningNotification,
   } = useToastNotifications();
 
-  const address = useMemo(() => user?.address ? parseAccount(user?.address) : "", [user])  
+  const address = useMemo(
+    () => (user?.address ? parseAccount(user?.address) : ""),
+    [user]
+  );
 
   //This gives the same look n feel as when we focus/blur the other inputs
   const radioStyles = isRoleFocus ? "border-white" : "border-glass";
@@ -89,6 +94,14 @@ export const RolesModal = () => {
   useEffect(() => {
     clearInputs();
   }, []);
+
+  useEffect(() => {
+    if (user?.role) {
+      getTokens();
+      closeModal();
+    }
+    //eslint-disable-next-line
+  }, [user]);
 
   return (
     <Modal

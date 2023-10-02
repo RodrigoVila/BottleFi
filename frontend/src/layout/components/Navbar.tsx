@@ -13,12 +13,12 @@ export const Navbar = () => {
       <DrawerMenuButton />
       <Logo type="navbar" />
       <NavItems />
-      <div className="flex justify-end flex-1">
+      <div className="flex justify-end flex-1 md:mr-2">
         {user?.address ? (
           <UserMenu address={user.address} />
         ) : (
           <AnimatedButton
-            className="!text-base md:px-4 md:mr-2"
+            className="!text-base md:px-4"
             onClick={handleConnect}
           >
             Login

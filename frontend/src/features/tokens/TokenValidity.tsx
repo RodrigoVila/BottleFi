@@ -44,9 +44,9 @@ export const TokenValidity = () => {
       {/* <img src={tokenData.image} className="h-auto max-w-full" /> */}
       {tokenData.isValid ? (
         <>
-          <TokenColumn className="max-w-md center">
+          <TokenColumn className="max-w-md mb-4 md:mb-0 center">
             <div className="flex-col gap-4 text-center center">
-              <BsPatchCheck size={96} className="text-green-400" />
+              <BsPatchCheck size={62} className="text-green-400" />
               <h3 className="text-5xl font-semibold font-marcellus">
                 Verified!
               </h3>
@@ -84,7 +84,7 @@ export const TokenValidity = () => {
         </>
       ) : (
         <div className="flex-col max-w-md gap-4 text-center center">
-          <TfiFaceSad size={96} />
+          <TfiFaceSad size={62} />
           <h3 className="text-5xl font-semibold font-marcellus">Oh dear!</h3>
           <p className="font-marcellus">
             We were unable to verify the authenticity of this token, and

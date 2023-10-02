@@ -19,7 +19,7 @@ export const Token = ({ token, isShown, showQR }: TokenProps) => {
   const url = `/verify/${id.toString()}`;
   const fullUrl = `${window.location.origin}${url}`;
 
-  const toggle = (e: MouseEvent<HTMLTableCellElement>) => {
+  const toggleShowQR = (e: MouseEvent<HTMLTableCellElement>) => {
     e.stopPropagation();
     isShown ? showQR(null) : showQR(id);
   };
@@ -49,13 +49,13 @@ export const Token = ({ token, isShown, showQR }: TokenProps) => {
           <GiCancel className="w-5 h-5 mx-auto text-red-400" />
         )}
       </td>
-      <td className="relative w-20 h-20 md:w-24 md:h-24" onClick={toggle}>
+      <td className="relative w-20 h-20 md:w-24 md:h-24" onClick={toggleShowQR}>
         {!isShown ? (
           <span className="absolute inset-0 text-white bg-darkestOverlay center">
             Show
           </span>
         ) : null}
-        <QRCode value={fullUrl} className="w-full h-full" />
+        <QRCode type="" value={fullUrl} className="w-full h-full" />
       </td>
     </tr>
   );

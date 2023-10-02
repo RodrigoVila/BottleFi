@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Modal } from ".";
@@ -12,6 +12,7 @@ import {
 import { GradientButton } from "@components/Buttons";
 import { TextInput } from "@components/Inputs";
 import { RadioInput } from "@components/Inputs/RadioInput";
+import { parseAccount } from "@utils/parse";
 import { Roles } from "@types";
 
 export const RolesModal = () => {
@@ -22,7 +23,7 @@ export const RolesModal = () => {
 
   const { name, description } = roleData;
 
-  const { setUser } = useAuthContext();
+  const { user, setUser } = useAuthContext();
   const { isRolesModalOpen, setRolesModalOpen } = useModalContext();
   const { register } = useRolesContract();
   const {
@@ -30,6 +31,13 @@ export const RolesModal = () => {
     showSuccessNotification,
     showWarningNotification,
   } = useToastNotifications();
+
+  const address = useMemo(() => user?.address ? parseAccount(user?.address) : "", [user])  
+
+  //This gives the same look n feel as when we focus/blur the other inputs
+  const radioStyles = isRoleFocus ? "border-white" : "border-glass";
+  const onFocusRole = () => setRoleFocus(true);
+  const onBlurRole = () => setRoleFocus(false);
 
   const clearInputs = () => {
     setSelectedRole(null);
@@ -76,11 +84,6 @@ export const RolesModal = () => {
     }
   };
 
-  //This gives the same look n feel as when we focus/blur the other inputs
-  const onFocusRole = () => setRoleFocus(true);
-  const onBlurRole = () => setRoleFocus(false);
-  const radioStyles = isRoleFocus ? "border-white" : "border-glass";
-
   // As this modal is being open/closed from other parts of the App
   // we clear the inputs before it can be used again
   useEffect(() => {
@@ -95,7 +98,7 @@ export const RolesModal = () => {
       disableOutsideClick
       withoutCloseButton
     >
-      <h3 className="mx-4 text-3xl font-semibold text-center">Create a role</h3>
+      <h3 className="mx-4 text-3xl font-semibold text-center">{`Create role for ${address}`}</h3>
       <label className="self-start -mb-4 font-semibold text-white">Role</label>
       <div
         className={twMerge(

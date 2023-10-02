@@ -16,15 +16,15 @@ export const Token = ({ token, isShown, showQR }: TokenProps) => {
   const navigate = useNavigate();
 
   const { id, image, name, description, mintedAt, isValid } = token;
-  const url = `/verify/${id.toString()}`;
-  const fullUrl = `${window.location.origin}${url}`;
+  const desktopURL = `/verify/${id.toString()}`;
+  const mobileURL = `${window.location.origin}/mobileVerify/${id.toString()}`;
 
   const toggleShowQR = (e: MouseEvent<HTMLTableCellElement>) => {
     e.stopPropagation();
     isShown ? showQR(null) : showQR(id);
   };
 
-  const onClick = () => navigate(url);
+  const onClick = () => navigate(desktopURL);
 
   return (
     <tr
@@ -55,7 +55,7 @@ export const Token = ({ token, isShown, showQR }: TokenProps) => {
             Show
           </span>
         ) : null}
-        <QRCode type="" value={fullUrl} className="w-full h-full" />
+        <QRCode type="" value={mobileURL} className="w-full h-full" />
       </td>
     </tr>
   );

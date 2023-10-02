@@ -12,6 +12,10 @@ export const supportedNetworkId = import.meta.env.DEV
   ? HARDHAT_NETWORK_ID
   : SEPOLIA_NETWORK_ID;
 
+export const supportedNetworkName = import.meta.env.DEV
+  ? "Hardhat local network"
+  : "Sepolia network";
+
 export const LOCAL_STORAGE_KEY = "@BF_DATA";
 
 const projectId = import.meta.env.VITE_INFURA_API_KEY;

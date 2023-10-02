@@ -1,4 +1,5 @@
 import { useModalContext } from "@hooks";
+import { supportedNetworkName } from "@constants";
 import { GradientButton } from "@components/Buttons";
 import { connectToSupportedNetwork } from "@utils/ethers";
 
@@ -7,9 +8,7 @@ import { Modal } from "./";
 export const ChainSwitchModal = () => {
   const { isChainSwitchModalOpen, setChainSwitchModalOpen } = useModalContext();
 
-  const supportedNetworkName = import.meta.env.DEV
-    ? "Hardhat local network"
-    : "Sepolia Test Network";
+
 
   const closeModal = () => setChainSwitchModalOpen(false);
 

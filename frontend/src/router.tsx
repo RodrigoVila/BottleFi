@@ -16,7 +16,7 @@ import { App } from "./App";
 export const router = createBrowserRouter([
   {
     path: "/login",
-    element: <Login />
+    element: <Login />,
   },
   {
     path: "/",
@@ -52,6 +52,10 @@ export const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "mobileVerify:tokenId",
+    element: <TokenValidity />,
   },
   {
     path: "*",

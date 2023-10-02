@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { useAuthContext, useModalContext, useWallet } from "@hooks";
-import { supportedNetworkId } from "@constants";
+import { supportedNetworkId, supportedNetworkName } from "@constants";
 import { AnimatedButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
 import { ChainSwitchModal } from "@components/Modal";
@@ -17,12 +17,12 @@ export const Login = () => {
     user.chainId === supportedNetworkId
       ? setChainSwitchModalOpen(false)
       : setChainSwitchModalOpen(true);
-      //eslint-disable-next-line
+    //eslint-disable-next-line
   }, [user]);
 
   return (
     <>
-    <ChainSwitchModal />
+      <ChainSwitchModal />
       {/* {user?.address && <Navigate to="/dashboard" />} */}
       <div className="w-full h-screen bg-center bg-no-repeat bg-cover bg-login">
         <div className="w-full h-full center bg-overlay font-marcellus">
@@ -36,9 +36,10 @@ export const Login = () => {
               Avoid counterfeit and bring trust to your customers.
             </p>
             <div className="flex flex-col items-center justify-center gap-2">
-              <AnimatedButton onClick={handleConnect}>
+              <AnimatedButton onClick={handleConnect} className="px-16">
                 Connect with wallet
               </AnimatedButton>
+              {`* Please make sure you are connected to ${supportedNetworkName} `}
             </div>
           </div>
         </div>

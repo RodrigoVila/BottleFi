@@ -4,7 +4,8 @@ import { Network, Provider, Signer } from "@types";
 
 export const getProvider = (): Provider => {
   if (typeof window !== "undefined" && window.ethereum) {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // Reference about "any" as a 2nd arg: https://github.com/ethers-io/ethers.js/issues/866
+    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
     return provider;
   }
   return undefined;

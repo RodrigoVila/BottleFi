@@ -68,7 +68,6 @@ export const useWallet = () => {
       const address = accounts[0];
       try {
         const role = await getRoleData();
-
         setUser((prev) => ({ ...prev, address, role }));
       } catch (err) {
         console.error("Handle account change error: ", { err });
@@ -81,7 +80,8 @@ export const useWallet = () => {
   const handleChainChanged = async (hexChainId: string) => {
     const chainId = parseInt(hexChainId);
     if (chainId === supportedNetworkId) {
-      setUser((prev) => ({ ...prev, chainId }));
+      const role = await getRoleData();
+      setUser((prev) => ({ ...prev, chainId, role }));
     } else {
       closeAllModals();
       setChainSwitchModalOpen(true);

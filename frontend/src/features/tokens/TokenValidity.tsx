@@ -5,34 +5,46 @@ import { useParams } from "react-router-dom";
 
 import { useNFTContract } from "@hooks";
 import { Spinner } from "@components/Spinner";
-import { parseAccount } from "@utils/parse";
+import { parseAccount, parseRevertErrorMessage } from "@utils/parse";
 import { Token } from "@types";
 
 import { Divider, TokenColumn, TokenLayout } from "./layout";
 
 export const TokenValidity = () => {
+  const [tokenValid, setTokenValid] = useState<boolean | null>(null);
   const [tokenData, setTokenData] = useState<Token | null>(null);
 
   const { tokenId } = useParams();
 
-  const { getTokenById } = useNFTContract();
+  const { getTokenById, isTokenValid } = useNFTContract();
 
   const itemRowStyle = "flex items-center justify-between";
   const itemStyleLeft = "mr-2";
   const itemStyleRight = "text-right ml-2";
 
-  useEffect(() => {
+  const fetchTokenIfValid = async () => {
     if (!tokenId) return;
-    const getToken = async () => {
-      const token = await getTokenById(parseInt(tokenId));
-      setTokenData(token);
-    };
+    try {
+      const isValid = await isTokenValid(parseInt(tokenId));
+      if (isValid) {
+        const token = await getTokenById(parseInt(tokenId));
+        setTokenValid(true);
+        setTokenData(token);
+      } else {
+        setTokenValid(false);
+      }
+    } catch (e) {
+      setTokenValid(false);
+      parseRevertErrorMessage(e);
+    }
+  };
 
-    getToken();
+  useEffect(() => {
+    fetchTokenIfValid();
     //eslint-disable-next-line
   }, [tokenId]);
 
-  if (tokenData === null)
+  if (tokenValid === null)
     return (
       <TokenLayout className="p-32 center">
         <Spinner />
@@ -42,7 +54,7 @@ export const TokenValidity = () => {
   return (
     <TokenLayout className="flex-col max-w-3xl p-6 w-max">
       {/* <img src={tokenData.image} className="h-auto max-w-full" /> */}
-      {tokenData.isValid ? (
+      {tokenValid && tokenData ? (
         <>
           <TokenColumn className="max-w-md mb-4 md:mb-0 center">
             <div className="flex-col gap-4 text-center center">

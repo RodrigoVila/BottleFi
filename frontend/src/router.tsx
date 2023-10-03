@@ -9,6 +9,7 @@ import {
   TransferToken,
   VerifyToken,
 } from "@features/tokens";
+import { MobileTokenValidity } from "@features/tokens/MobileTokenValidity";
 import { NotFound } from "@components/NotFound";
 
 import { App } from "./App";
@@ -54,8 +55,8 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "mobileVerify:tokenId",
-    element: <TokenValidity />,
+    path: "mobileVerify/:tokenId",
+    element: <MobileTokenValidity />,
   },
   {
     path: "*",

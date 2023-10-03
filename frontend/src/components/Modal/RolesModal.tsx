@@ -96,6 +96,7 @@ export const RolesModal = () => {
   }, []);
 
   useEffect(() => {
+    console.log({user})
     if (user?.role) {
       getTokens();
       closeModal();

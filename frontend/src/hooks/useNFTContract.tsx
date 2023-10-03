@@ -19,10 +19,14 @@ export const useNFTContract = () => {
 
   const nft = new Contract(address, abi, signer!) as Contract & NFT; //Is there another way to type this? Looks a bit odd.
 
+  const isTokenValid = async (tokenID: number) => {
+    return await nft.isValidToken(tokenID);
+  };
+
   const getTokenById = async (tokenId: number): Promise<Token> => {
     const tkn = await nft.getTokenById(tokenId);
     const { id, uri, mintedAt, isValid } = parseTokenResponse(tkn);
-    const owner = await nft.ownerOf(id)
+    const owner = await nft.ownerOf(id);
     const metadata = await getDataFromIPFS(uri);
     const imageUri = `${import.meta.env.VITE_INFURA_GATEWAY_SUBDOMAIN}/${
       metadata?.image
@@ -98,6 +102,7 @@ export const useNFTContract = () => {
   };
 
   return {
+    isTokenValid,
     getTokenById,
     fetchTokens,
     mintToken,

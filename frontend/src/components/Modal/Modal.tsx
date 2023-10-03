@@ -35,7 +35,7 @@ export const Modal = ({
   return isOpen ? (
     <Portal>
       <div
-        className={twMerge("absolute inset-0 z-0 flex items-center justify-center text-center bg-darkOverlay",overlayClassName)}
+        className={twMerge("absolute inset-0 z-[2] flex items-center justify-center text-center bg-darkOverlay",overlayClassName)}
         onClick={disableOutsideClick ? undefined : onClose}
       >
         <AnimatedContainer
@@ -44,7 +44,7 @@ export const Modal = ({
           onClick={(e) => e.preventDefault()}
         >
           {withoutCloseButton ? null : (
-            <button className="absolute top-3 right-3 z-[1]" onClick={onClose}>
+            <button className="absolute top-3 right-3 z-[3]" onClick={onClose}>
               <AiOutlineClose size={28} />
             </button>
           )}

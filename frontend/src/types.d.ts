@@ -26,7 +26,9 @@ export type ChangeNetworkType = {
   blockExplorerUrls: string[];
 };
 
-type Provider = ethers.providers.Web3Provider | undefined;
+type Web3ProviderType = ethers.providers.Web3ProviderType
+export type JsonRpcProvider = ethers.providers.JsonRpcProvider
+type Provider = Web3ProviderType | JsonRpcProvider | undefined;
 type Signer = ethers.Signer | undefined;
 type Network = ethers.providers.Network | undefined;
 

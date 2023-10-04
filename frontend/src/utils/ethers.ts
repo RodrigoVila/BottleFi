@@ -1,21 +1,35 @@
 import { ethers, utils } from "ethers";
 
-import { Network, Provider, Signer } from "@types";
+import { Network, Provider, Signer, Web3ProviderType } from "@types";
 
 export const getProvider = (): Provider => {
   if (typeof window !== "undefined" && window.ethereum) {
     // Reference about "any" as a 2nd arg: https://github.com/ethers-io/ethers.js/issues/866
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
     return provider;
+  } else {
+    const rpcProvider = new ethers.providers.JsonRpcProvider(
+      "https://rpc.sepolia.dev"
+    );
+    console.log({ rpcProvider });
+    return rpcProvider;
   }
-  return undefined;
 };
 
 export const getSigner = (): Signer => {
   const provider = getProvider();
   if (provider) {
+    // if (provider as Web3ProviderType) {
     const signer = provider.getSigner();
+    console.log({signer})
     return signer;
+    // } else {
+    //   const signer = new ethers.Wallet(
+    //     process.env.SIGNER_PRIVATE_KEY,
+    //     provider
+    //   );
+    //   return signer;
+    // }
   }
   return undefined;
 };

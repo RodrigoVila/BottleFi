@@ -11,7 +11,7 @@ export const getProvider = (): Provider => {
   } else {
     const infuraProvider = new ethers.providers.InfuraProvider(
       "sepolia",
-      `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_SEPOLIA_KEY}`
+      import.meta.env.VITE_INFURA_SEPOLIA_KEY
     );
     console.log({ infuraProvider });
     return infuraProvider;

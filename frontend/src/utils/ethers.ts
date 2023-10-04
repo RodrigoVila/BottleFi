@@ -6,30 +6,33 @@ export const getProvider = (): Provider => {
   if (typeof window !== "undefined" && window.ethereum) {
     // Reference about "any" as a 2nd arg: https://github.com/ethers-io/ethers.js/issues/866
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+    console.log({ provider });
     return provider;
   } else {
-    const rpcProvider = new ethers.providers.JsonRpcProvider(
-      "https://rpc.sepolia.dev"
+    const infuraProvider = new ethers.providers.InfuraProvider(
+      "sepolia",
+      `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_SEPOLIA_KEY}`
     );
-    console.log({ rpcProvider });
-    return rpcProvider;
+    console.log({ infuraProvider });
+    return infuraProvider;
   }
 };
 
 export const getSigner = (): Signer => {
   const provider = getProvider();
   if (provider) {
-    // if (provider as Web3ProviderType) {
-    const signer = provider.getSigner();
-    console.log({signer})
-    return signer;
-    // } else {
-    //   const signer = new ethers.Wallet(
-    //     process.env.SIGNER_PRIVATE_KEY,
-    //     provider
-    //   );
-    //   return signer;
-    // }
+    if (provider as Web3ProviderType) {
+      const signer = provider.getSigner();
+      console.log("Web3Signer: ", signer);
+      return signer;
+    } else {
+      const signer = new ethers.Wallet(
+        import.meta.env.SIGNER_PRIVATE_KEY,
+        provider
+      );
+      console.log("Infura Signer: ", signer);
+      return signer;
+    }
   }
   return undefined;
 };

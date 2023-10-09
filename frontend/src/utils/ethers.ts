@@ -20,21 +20,19 @@ export const getProvider = (): Provider => {
 
 export const getSigner = (): Signer => {
   const provider = getProvider();
-  if (provider) {
-    if (provider as Web3ProviderType) {
-      const signer = provider.getSigner();
-      console.log("Web3Signer: ", signer);
-      return signer;
-    } else {
-      const signer = new ethers.Wallet(
-        import.meta.env.SIGNER_PRIVATE_KEY,
-        provider
-      );
-      console.log("Infura Signer: ", signer);
-      return signer;
-    }
+  if (typeof window !== "undefined" && window.ethereum) {
+    console.log("provider?", provider as Web3ProviderType);
+    const signer = provider.getSigner();
+    console.log("Web3Signer: ", signer);
+    return signer;
+  } else {
+    const signer = new ethers.Wallet(
+      import.meta.env.SIGNER_PRIVATE_KEY,
+      provider
+    );
+    console.log("Infura Signer: ", signer);
+    return signer;
   }
-  return undefined;
 };
 
 export const getCurrentAccount = async (): Promise<string | undefined> => {

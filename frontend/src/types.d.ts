@@ -27,8 +27,8 @@ export type ChangeNetworkType = {
 };
 
 type Web3ProviderType = ethers.providers.Web3ProviderType
-export type JsonRpcProvider = ethers.providers.JsonRpcProvider
-type Provider = Web3ProviderType | JsonRpcProvider | undefined;
+export type InfuraProvider = ethers.providers.InfuraProvider
+type Provider = Web3ProviderType | InfuraProvider | undefined;
 type Signer = ethers.Signer | undefined;
 type Network = ethers.providers.Network | undefined;
 

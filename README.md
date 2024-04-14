@@ -25,4 +25,4 @@ Counterfeit products are a significant problem in many industries, with the wine
 
 ## Live Demo
 
-Experience BottleFi in action: [BottleFi Live Demo](https://bottlefi.vercel.app/dashboar
+[BottleFi Live Demo](https://bottlefi.vercel.app)

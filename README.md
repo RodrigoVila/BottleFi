@@ -127,3 +127,15 @@ npm run dev
 6. **Sell the Token**:
    - Sell the token back to yourself or to another account.
    - The token will no longer be valid after the sale.
+
+### 8. Testing
+To run the smart contract tests, go to project root and run
+```sh
+npm run test
+```
+
+To run frontend tests, go to frontend folder and run
+```sh
+cd frontend
+npm run test
+```

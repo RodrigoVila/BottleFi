@@ -8,8 +8,6 @@ import { Modal } from "./";
 export const ChainSwitchModal = () => {
   const { isChainSwitchModalOpen, setChainSwitchModalOpen } = useModalContext();
 
-
-
   const closeModal = () => setChainSwitchModalOpen(false);
 
   return (
@@ -37,7 +35,7 @@ export const ChainSwitchModal = () => {
         . To utilize its features, please ensure you are connected to this
         network.
       </h5>
-      <GradientButton  onClick={connectToSupportedNetwork}>
+      <GradientButton onClick={connectToSupportedNetwork}>
         {`Connect to ${supportedNetworkName}`}
       </GradientButton>
     </Modal>

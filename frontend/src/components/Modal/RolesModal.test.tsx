@@ -6,6 +6,10 @@ import { RolesModal } from ".";
 import { ModalProvider } from "@context/modals";
 import { useModalContext } from "@hooks";
 
+vi.mock("@utils/ethers", () => ({
+  getSigner: vi.fn(),
+}));
+
 describe("RolesModal", () => {
   it("Should render intial state", () => {
     const { isRolesModalOpen, setRolesModalOpen } = renderSut();

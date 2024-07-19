@@ -22,7 +22,7 @@ describe("Parse Utils", () => {
     expect(parsed.toString()).toBe("82429610041");
 
     const date = parseBigNumToDate(bigNum);
-    expect(date).toBe("3/9/2012");
+    expect(date).toBe("9/3/2012");
   });
 
   it("Should parseWalletErrors", () => {
@@ -42,13 +42,14 @@ describe("Parse Utils", () => {
   });
 
   it("Should parseCatchError as instanceof Error", () => {
-    const error = new Error("User rejected action")
+    const error = new Error("User rejected action");
     const parsedError1 = parseCatchError(error);
     expect(parsedError1).toBe("User rejected action");
   });
 
   it("Should parse revert reason when present", () => {
-    const errorMessage = "Transaction reverted with reason string 'Custom reason'";
+    const errorMessage =
+      "Transaction reverted with reason string 'Custom reason'";
     const revertReason = parseRevertErrorMessage(errorMessage);
     expect(revertReason).toBe("Custom reason");
   });
@@ -60,13 +61,18 @@ describe("Parse Utils", () => {
   });
 
   it("Should parse a valid TokenResponse", () => {
-    const token: TokenResponse = [BigInt("12345"), "tokenURI", 1632560000n, true];
+    const token: TokenResponse = [
+      BigInt("12345"),
+      "tokenURI",
+      1632560000n,
+      true,
+    ];
     const parsedToken = parseTokenResponse(token);
 
     expect(parsedToken).toEqual({
       id: 12345,
       uri: "tokenURI",
-      mintedAt: "9/25/2021", // This date format might vary depending on your locale settings
+      mintedAt: "25/9/2021", // This date format might vary depending on your locale settings
       isValid: true,
     });
   });

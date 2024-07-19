@@ -34,10 +34,15 @@ export const UserModal = () => {
   }, [user]);
 
   return user?.address ? (
-    <Modal isOpen={isUserModalOpen} onClose={closeModal} bodyClassName="w-fit px-8" className="w-fit">
+    <Modal
+      isOpen={isUserModalOpen}
+      onClose={closeModal}
+      bodyClassName="w-fit px-8"
+      className="w-fit"
+    >
       <div className="flex-col gap-3 p-3 center glass-alt">
         <p className="px-3 py-1 ml-3 text-base bg-transparent md:hidden sm:ml-0 font-marcellus w-max">
-         Acc: {parseAccount(user.address)}
+          Acc: {parseAccount(user.address)}
         </p>
         <UserBalance balance={balance} />
         <Button

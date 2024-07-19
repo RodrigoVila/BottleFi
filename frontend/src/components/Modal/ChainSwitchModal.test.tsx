@@ -6,8 +6,16 @@ import { ChainSwitchModal } from ".";
 import { ModalProvider } from "@context/modals";
 import { useModalContext } from "@hooks";
 
-vi.mock("@utils/ethers", () => ({
-  connectToSupportedNetwork: vi.fn(),
+vi.mock("@utils/ethers", async () => {
+  const actual = await vi.importActual("@utils/ethers");
+  return {
+    ...actual,
+    connectToSupportedNetwork: vi.fn(),
+  };
+});
+
+vi.mock("@components/buttons", () => ({
+  GradientButton: <button>Gradient button</button>,
 }));
 
 describe("ChainSwitchModal", () => {

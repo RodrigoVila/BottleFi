@@ -6,14 +6,12 @@ export const getProvider = (): Provider => {
   if (typeof window !== "undefined" && window.ethereum) {
     // Reference about "any" as a 2nd arg: https://github.com/ethers-io/ethers.js/issues/866
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-    console.log({ provider });
     return provider;
   } else {
     const infuraProvider = new ethers.providers.InfuraProvider(
       "sepolia",
       import.meta.env.VITE_INFURA_SEPOLIA_KEY
     );
-    console.log({ infuraProvider });
     return infuraProvider;
   }
 };
@@ -23,14 +21,12 @@ export const getSigner = (): Signer => {
   if (provider) {
     if (provider as Web3ProviderType) {
       const signer = provider.getSigner();
-      console.log("Web3Signer: ", signer);
       return signer;
     } else {
       const signer = new ethers.Wallet(
         import.meta.env.SIGNER_PRIVATE_KEY,
         provider
       );
-      console.log("Infura Signer: ", signer);
       return signer;
     }
   }

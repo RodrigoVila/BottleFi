@@ -28,7 +28,6 @@ export const TokenValidity = () => {
       const isValid = await isTokenValid(parseInt(tokenId));
       if (isValid) {
         const token = await getTokenById(parseInt(tokenId));
-        console.log({ token });
         setTokenValid(true);
         setTokenData(token);
       } else {

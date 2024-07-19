@@ -10,7 +10,8 @@ export const QRMessage = ({ isShown }: { isShown: boolean }) => {
       )}
     >
       <p className="p-2 border-2 border-white rounded-xl">
-        Scan the QR with your phone to see token's authenticity
+        Scan the QR with your phone to see token's authenticity ** Not working
+        for now**
       </p>
       <BsArrow90DegRight size={28} className="mx-1 rotate-90" />
     </div>

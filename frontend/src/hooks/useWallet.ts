@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -27,7 +27,7 @@ export const useWallet = () => {
     const network = await getNetwork();
     const chainId = network?.chainId;
     if (!chainId) return;
-    
+
     if (chainId === supportedNetworkId) {
       return true;
     }

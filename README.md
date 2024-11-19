@@ -4,7 +4,7 @@
 
 ## Motivation
 
-Counterfeit wine accounts for over 20% of the global market, resulting in billions of dollars in losses.
+Counterfeit wine and liquors accounts for over 20% of the global market, resulting in billions of dollars in losses.
 BottleFi addresses this issue for bottled beverages by providing a solution that ensures authenticity, security, and transparency. Using blockchain technology, BottleFi makes it possible to trace the origin and ownership of each bottle, offering a reliable method for verifying genuine products.
 
 ## How it Works

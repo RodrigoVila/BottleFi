@@ -13,8 +13,6 @@ type ModalContextType = {
   setDrawerModalOpen: Dispatch<SetStateAction<boolean>>;
   isRolesModalOpen: boolean;
   setRolesModalOpen: Dispatch<SetStateAction<boolean>>;
-  isUserModalOpen: boolean;
-  setUserModalOpen: Dispatch<SetStateAction<boolean>>;
   closeAllModals: () => void;
 };
 
@@ -29,8 +27,6 @@ const initialValue = {
   setDrawerModalOpen: () => {},
   isRolesModalOpen: false,
   setRolesModalOpen: () => {},
-  isUserModalOpen: false,
-  setUserModalOpen: () => {},
   closeAllModals: () => {},
 };
 
@@ -49,15 +45,10 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     initialValue.isRolesModalOpen
   );
 
-  const [isUserModalOpen, setUserModalOpen] = useState(
-    initialValue.isUserModalOpen
-  );
-
   const closeAllModals = () => {
     setChainSwitchModalOpen(false);
     setDrawerModalOpen(false);
     setRolesModalOpen(false);
-    setUserModalOpen(false);
   };
 
   const value = {
@@ -67,8 +58,6 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     setDrawerModalOpen,
     isRolesModalOpen,
     setRolesModalOpen,
-    isUserModalOpen,
-    setUserModalOpen,
     closeAllModals,
   };
 

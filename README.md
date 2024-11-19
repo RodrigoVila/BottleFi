@@ -57,8 +57,17 @@ cd BottleFi
 npm install
 ```
 
-### 3. Start the Local Blockchain Node
+### 3. Add Infura account and wallet key and start the Local Blockchain Node
+a) [Create an infura account](https://developer.metamask.io/) and create a Sepolia API key.
+b) Get one of your Metamask account private keys (*IMPORTANT NOTE: DO NOT USE KEYS WHERE YOU HAVE REAL FUNDS.*)
+c) Create a .env file at the root folder and add your keys
 
+```sh
+INFURA_API_KEY=<YOUR_INFURA_KEY>
+HARDHAT_DEPLOY_PRIVATE_KEY=<YOUR_NOT_IMPORTANT_METAMASK_PRIVATE_KEY> (Read important note above)
+```
+
+d) Run local node
 ```sh
 npm run hardhat:node
 ```

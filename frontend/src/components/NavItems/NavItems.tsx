@@ -51,8 +51,8 @@ export const NavItems = ({ position = "horizontal" }: NavItemProps) => {
 
   const positionStyles =
     position === "horizontal"
-      ? "hidden md:flex-1 md:flex flex-row w-full mx-2"
-      : "flex-col";
+      ? "hidden flex-1 lg:flex flex-row w-full mx-2"
+      : "flex-col px-2";
 
   const RoleLinks: Record<string, string[]> = {
     Supplier: ["Dashboard", "Mint", "Transfer", "Sell", "Verify"],
@@ -72,8 +72,8 @@ export const NavItems = ({ position = "horizontal" }: NavItemProps) => {
           <li
             key={link.title}
             className={twMerge(
-              "text-base text-white cursor-pointer transition-colors duration-200 h-full py-4 border-b-2 border-b-transparent font-marcellus",
-              position === "horizontal" ? "py-4" : "py-2 my-6",
+              "text-base text-white text-center cursor-pointer transition-colors duration-200 h-full py-4 border-b-2 border-b-transparent font-marcellus",
+              position === "horizontal" ? "py-4" : "px-6",
               link.hoverColor,
               pathname.includes(link.to) && link.borderColor
             )}

@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { twMerge } from "tailwind-merge";
 
 import { Modal } from ".";
 
@@ -11,15 +10,13 @@ import {
   useToastNotifications,
 } from "@hooks";
 import { GradientButton } from "@components/Buttons";
-import { TextInput } from "@components/Inputs";
-import { RadioInput } from "@components/Inputs/RadioInput";
+import { Dropdown, TextInput } from "@components/Inputs";
+import { Option } from "@components/Inputs/Dropdown";
 import { parseAccount } from "@utils/parse";
-import { Roles } from "@types";
 
 export const RolesModal = () => {
-  const [selectedRole, setSelectedRole] = useState<Roles | null>(null);
+  const [selectedRole, setSelectedRole] = useState<Option | null>(null);
   const [roleData, setRoleData] = useState({ name: "", description: "" });
-  const [isRoleFocus, setRoleFocus] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   const { name, description } = roleData;
@@ -39,10 +36,13 @@ export const RolesModal = () => {
     [user]
   );
 
-  //This gives the same look n feel as when we focus/blur the other inputs
-  const radioStyles = isRoleFocus ? "border-white" : "border-glass";
-  const onFocusRole = () => setRoleFocus(true);
-  const onBlurRole = () => setRoleFocus(false);
+  const options: Option[] = [
+    {
+      title: "Supplier",
+      description: "Suppliers can do any action: Mint, transfer, sell",
+    },
+    { title: "Vendor", description: "Vendors can only sell and verify" },
+  ];
 
   const clearInputs = () => {
     setSelectedRole(null);
@@ -50,8 +50,8 @@ export const RolesModal = () => {
   };
   const closeModal = () => setRolesModalOpen(false);
 
-  const handleRoleChange = (value: Roles) => {
-    setSelectedRole(value);
+  const handleRoleChange = (role: Option) => {
+    setSelectedRole(role);
   };
 
   const handleDataChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,20 +60,22 @@ export const RolesModal = () => {
   };
 
   const handleSubmit = async () => {
-    if (!name || !description) {
-      showWarningNotification("Please complete all inputs");
-      return;
-    }
     if (!selectedRole) {
       showWarningNotification("Please select a role");
       return;
     }
+    if (!name || !description) {
+      showWarningNotification("Name and description required");
+      return;
+    }
+
 
     setLoading(true);
 
     try {
-      const role = await register(selectedRole, name, description);
+      const role = await register(selectedRole.title, name, description);
       if (role !== undefined) {
+        console.log({role})
         setUser((prev) => ({ ...prev, role, name }));
         showSuccessNotification(`${role} registered successfully!`);
         closeModal();
@@ -113,46 +115,20 @@ export const RolesModal = () => {
     >
       <h3 className="mx-4 text-3xl font-semibold text-center">{`Create role for ${address}`}</h3>
       <label className="self-start -mb-4 font-semibold text-white">Role</label>
-      <div
-        className={twMerge(
-          "flex flex-col gap-3 px-2 py-3 border-2 max-w-fit rounded-md",
-          radioStyles
-        )}
-        tabIndex={100}
-        onFocus={onFocusRole}
-        onBlur={onBlurRole}
-      >
-        <RadioInput
-          name="role"
-          id="supplier"
-          value="Supplier"
-          checked={selectedRole === "Supplier"}
-          onChange={handleRoleChange}
-        >
-          <b className="text-lg">Supplier</b> (Can create/transfer/sell tokens)
-          *Recommended for testing the app
-        </RadioInput>
-
-        <RadioInput
-          name="role"
-          id="supplier"
-          value="Vendor"
-          checked={selectedRole === "Vendor"}
-          onChange={handleRoleChange}
-        >
-          <b className="text-lg">Vendor</b> (Only can sell tokens)
-        </RadioInput>
-      </div>
-
+      <Dropdown
+        options={options}
+        selectedOption={selectedRole}
+        onChange={handleRoleChange}
+      />
       <TextInput
         name="name"
-        label={`${selectedRole || ""} Name`}
+        label={`${selectedRole?.title || ""} Name`}
         value={name}
         onChange={handleDataChange}
       />
       <TextInput
         name="description"
-        label={`${selectedRole || ""} Description`}
+        label={`${selectedRole?.title || ""} Description`}
         value={description}
         onChange={handleDataChange}
       />

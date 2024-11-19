@@ -1,24 +1,23 @@
 import { useAuthContext, useWallet } from "@hooks";
 import { AnimatedButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
+import { BurgerMenu,UserMenu } from "@components/Menues";
 import { NavItems } from "@components/NavItems";
-
-import { DrawerMenuButton, UserMenu } from "./";
 
 export const Navbar = () => {
   const { user } = useAuthContext();
   const { handleConnect } = useWallet();
   return (
-    <header className="relative flex items-center justify-between w-full text-xl font-semibold text-white z-1 glass-alt h-[55px] border-b-2 border-b-transparent">
-      <DrawerMenuButton />
+    <header className="relative flex items-center justify-between w-full text-xl font-semibold text-white z-1 glass-alt h-[55px] border-b-2 border-b-transparent px-2">
+      <BurgerMenu />
       <Logo type="navbar" />
       <NavItems />
-      <div className="flex justify-end flex-1 md:mr-2">
+      <div className="flex justify-end flex-1">
         {user?.address ? (
           <UserMenu address={user.address} />
         ) : (
           <AnimatedButton
-            className="!text-base md:px-4"
+            className="!text-base lg:px-4"
             onClick={handleConnect}
           >
             Login

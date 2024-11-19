@@ -1,4 +1,4 @@
-import { FaWineBottle } from "react-icons/fa";
+import { LiaCertificateSolid } from "react-icons/lia";
 import { twMerge } from "tailwind-merge";
 
 type LogoProps = {
@@ -7,21 +7,21 @@ type LogoProps = {
 
 export const Logo = ({ type = "login" }: LogoProps) => {
   const isLogin = type === "login";
-  const containerStyles = isLogin ? "flex-col" : "flex-row ml-2";
-  const textStyles = isLogin ? "text-5xl" : "text-2xl";
+  const containerStyles = !isLogin && "flex-row ml-2";
+  const textStyles = isLogin ? "text-6xl md:text-7xl" : "text-2xl";
 
   return (
     <div
       data-testid="logo"
       className={twMerge(
-        "flex items-start justify-center md:justify-start gap-1 flex-1",
+        "flex items-center justify-center lg:justify-start gap-1 flex-1",
         containerStyles
       )}
     >
-      <FaWineBottle
+      <LiaCertificateSolid
         data-testid="Icon logo"
-        size={type === "login" ? 40 : 25}
-        className="text-white -rotate-45"
+        size={30}
+        className={twMerge("text-white", isLogin && 'hidden')}
       />
       <h1
         className={twMerge(

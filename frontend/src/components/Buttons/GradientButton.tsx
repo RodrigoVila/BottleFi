@@ -38,7 +38,7 @@ export const GradientButton = ({
   return (
     <button
       className={twMerge(
-        "w-full",
+        "w-full rounded-full",
         className,
         loading || rest.disabled ? "bg-slate-500" : "bg-gradient"
       )}
@@ -47,7 +47,7 @@ export const GradientButton = ({
     >
       <div
         className={twMerge(
-          "flex items-center gap-6 bg-black m-px font-semibold h-12 hover:bg-transparent transition-all duration-300",
+          "flex items-center gap-6 bg-black m-px font-semibold h-12 hover:bg-transparent transition-all duration-300 rounded-full",
           iconStyles,
           bodyClassName,
           loadingStyles

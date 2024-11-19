@@ -18,7 +18,7 @@ import {
   TokenDescription,
   TokenLayout,
   TokenTitle,
-} from "./layout";
+} from "./Layout";
 
 const initialData = { name: "", description: "" };
 
@@ -136,7 +136,7 @@ export const MintToken = () => {
         />
 
         <GradientButton loading={isLoading} onClick={handleSubmit}>
-          Add
+          Mint
         </GradientButton>
       </TokenColumn>
     </TokenLayout>

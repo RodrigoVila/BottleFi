@@ -9,7 +9,7 @@ import {
   useWallet,
 } from "@hooks";
 import { LOCAL_STORAGE_KEY, supportedNetworkId } from "@constants";
-import { Modals } from "@components/Modal";
+import { ChainSwitchModal, RolesModal } from "@components/Modal";
 
 import { Layout } from "./layout";
 
@@ -66,7 +66,8 @@ export const App = () => {
   return (
     <>
       <Navigate to="/dashboard" />
-      <Modals />
+      <ChainSwitchModal />
+      <RolesModal />
       <Layout />
     </>
   );

@@ -9,8 +9,6 @@ import {
 type ModalContextType = {
   isChainSwitchModalOpen: boolean;
   setChainSwitchModalOpen: Dispatch<SetStateAction<boolean>>;
-  isDrawerModalOpen: boolean;
-  setDrawerModalOpen: Dispatch<SetStateAction<boolean>>;
   isRolesModalOpen: boolean;
   setRolesModalOpen: Dispatch<SetStateAction<boolean>>;
   closeAllModals: () => void;
@@ -23,8 +21,6 @@ type ModalProviderProps = {
 const initialValue = {
   isChainSwitchModalOpen: false,
   setChainSwitchModalOpen: () => {},
-  isDrawerModalOpen: false,
-  setDrawerModalOpen: () => {},
   isRolesModalOpen: false,
   setRolesModalOpen: () => {},
   closeAllModals: () => {},
@@ -37,25 +33,18 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     initialValue.isChainSwitchModalOpen
   );
 
-  const [isDrawerModalOpen, setDrawerModalOpen] = useState(
-    initialValue.isDrawerModalOpen
-  );
-
   const [isRolesModalOpen, setRolesModalOpen] = useState(
     initialValue.isRolesModalOpen
   );
 
   const closeAllModals = () => {
     setChainSwitchModalOpen(false);
-    setDrawerModalOpen(false);
     setRolesModalOpen(false);
   };
 
   const value = {
     isChainSwitchModalOpen,
     setChainSwitchModalOpen,
-    isDrawerModalOpen,
-    setDrawerModalOpen,
     isRolesModalOpen,
     setRolesModalOpen,
     closeAllModals,

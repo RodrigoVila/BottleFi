@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useMergeRefs } from '@floating-ui/react'
-import { FloatingPortal, FloatingFocusManager } from '@floating-ui/react'
+import { FloatingFocusManager,FloatingPortal } from '@floating-ui/react'
+
 import { useFloatingMenuContext } from '../hooks/useFloatingMenu'
 
 export const FloatingMenuContent = React.forwardRef<

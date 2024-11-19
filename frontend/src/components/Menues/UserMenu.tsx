@@ -8,7 +8,7 @@ import {
   FloatingMenu,
   FloatingMenuContent,
   FloatingMenuTrigger,
-} from "@components/FloatingMenu";
+} from "@components/Menues/FloatingMenu";
 import { parseAccount } from "@utils/parse";
 
 export const UserMenu = ({ address }: { address: string }) => {
@@ -24,11 +24,11 @@ export const UserMenu = ({ address }: { address: string }) => {
         <FloatingMenuTrigger onClick={toggle}>
           <>
             {/* Mobile: User Icon as a Menu button */}
-            <FaUserAstronaut className="w-6 h-6 cursor-pointer md:hidden hover:text-white" />
+            <FaUserAstronaut className="w-6 h-6 cursor-pointer lg:hidden hover:text-white" />
             {/* Tablet onwards: User Address as a Menu button */}
             <div
               className={twMerge(
-                "hidden md:block py-1 px-3 ml-3 sm:ml-0 text-base font-marcellus w-max text-glass-3 bg-transparent",
+                "hidden lg:block py-1 px-3 ml-3 sm:ml-0 text-base font-marcellus w-max text-glass-3 bg-transparent",
                 isOpen && "text-black bg-white"
               )}
             >

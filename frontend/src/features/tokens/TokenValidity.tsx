@@ -8,7 +8,7 @@ import { Spinner } from "@components/Spinner";
 import { parseAccount, parseRevertErrorMessage } from "@utils/parse";
 import { Token } from "@types";
 
-import { Divider, TokenColumn, TokenLayout } from "./layout";
+import { Divider, TokenColumn, TokenLayout } from "./Layout";
 
 export const TokenValidity = () => {
   const [tokenValid, setTokenValid] = useState<boolean | null>(null);

@@ -90,15 +90,15 @@ npm run deploy:localhost
 Copy the contract addresses from the console output. You will see something like this:
 
 ```sh
-Roles contract deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
-NFT contract deployed to: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+Roles contract deployed to: <<COPY_THIS_ROLES_CONTRACT_ADDRESS>>
+NFT contract deployed to: <<COPY_THIS_NFT_CONTRACT_ADDRESS>>
 ```
 
 Create an .env file at the frontend folder and add these addresses to the .env file under these keys:
 
 ```sh
-VITE_ROLES_CONTRACT_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
-VITE_NFT_CONTRACT_ADDRESS=0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+VITE_ROLES_CONTRACT_ADDRESS= <<COPIED_ROLES_CONTRACT_ADDRESS>>
+VITE_NFT_CONTRACT_ADDRESS= <<COPIED_NFT_CONTRACT_ADDRESS>>
 ```
 
 ### 6. Install Frontend Dependencies
@@ -142,12 +142,15 @@ npm run dev
    - The token will no longer be valid after the sale.
 
 ## Testing
+
 To run the smart contract tests, go to project root and run
+
 ```sh
 npm run test
 ```
 
 To run frontend tests, go to frontend folder and run
+
 ```sh
 cd frontend
 npm run test

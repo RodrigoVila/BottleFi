@@ -16,7 +16,7 @@ import {
   TokenDescription,
   TokenLayout,
   TokenTitle,
-} from "./layout";
+} from "./Layout";
 
 export const SellToken = () => {
   const [tokenId, setTokenId] = useState("");

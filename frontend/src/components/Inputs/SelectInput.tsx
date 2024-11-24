@@ -33,13 +33,13 @@ export const SelectInput = ({
         // defaultValue="default"
         {...rest}
       >
-        <option value="default" disabled>
+        <option value="default" disabled className="bg-slate-950">
           Select a token from the list
         </option>
         {options &&
           options.length > 0 &&
           options.map((option) => (
-            <option key={option.id} value={option.id}>
+            <option key={option.id} value={option.id} className="bg-slate-950">
               {option.name}
             </option>
           ))}

@@ -36,7 +36,7 @@ export const UserMenu = ({ address }: { address: string }) => {
             </div>
           </>
         </FloatingMenuTrigger>
-        <FloatingMenuContent className="p-2 border-0 bg-slate-800">
+        <FloatingMenuContent className="p-2 border-0 bg-slate-800 z-[1]">
           <Button className="px-6 py-1" onClick={handleDisconnect}>
             Logout
           </Button>

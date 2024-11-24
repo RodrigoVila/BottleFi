@@ -44,9 +44,9 @@ export const Token = ({ token, isShown, showQR }: TokenProps) => {
       <td className="px-1">{mintedAt}</td>
       <td className="px-1">
         {isValid ? (
-          <BiCheckCircle className="w-5 h-5 mx-auto text-green-400" />
+          <BiCheckCircle className="w-8 h-8 mx-auto text-green-400" />
         ) : (
-          <GiCancel className="w-5 h-5 mx-auto text-red-400" />
+          <GiCancel className="w-8 h-8 mx-auto text-red-400" />
         )}
       </td>
       <td className="relative w-20 h-20 md:w-24 md:h-24" onClick={toggleShowQR}>

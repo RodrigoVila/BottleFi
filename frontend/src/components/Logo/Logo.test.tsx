@@ -7,11 +7,15 @@ describe("AnimatedContainer", () => {
     render(<Logo />);
     const logo = screen.getByTestId("logo");
     expect(logo).toBeInTheDocument();
-    expect(logo).toHaveClass("flex-col");
+    expect(logo).toHaveClass(
+      " flex items-center justify-center lg:justify-start gap-1 flex-1"
+    );
 
     const title = screen.getByRole("heading", { level: 1 });
     expect(title).toHaveTextContent("BottleFi");
-    expect(title).toHaveClass("text-5xl");
+    expect(title).toHaveClass(
+      " m-0 font-semibold font-fondamento text-6xl md:text-7xl"
+    );
   });
 
   it("Should render navbar styles", async () => {

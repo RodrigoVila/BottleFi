@@ -98,7 +98,9 @@ export const TokenValidity = () => {
       ) : (
         <div className="flex-col max-w-md gap-4 text-center center">
           <TfiFaceSad size={62} />
-          <h3 className="text-5xl font-semibold font-marcellus">Oh dear!</h3>
+          <h3 className="text-5xl font-semibold font-marcellus">
+            Token not verified!
+          </h3>
           <p className="font-marcellus">
             We were unable to verify the authenticity of this token, and
             consequently, we advise against purchasing this item. If you come

@@ -58,7 +58,6 @@ export const useNFTContract = () => {
           return token;
         })
       );
-
       return tokens;
     } catch {
       return [];

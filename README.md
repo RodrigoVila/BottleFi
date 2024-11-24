@@ -58,12 +58,12 @@ npm install
 ```
 
 ### 3. Add Infura account and wallet key and start the Local Blockchain Node
+
 a) [Create an infura account](https://developer.metamask.io/) and create a Sepolia API key.
 
-b) Get one of your Metamask account private keys (*IMPORTANT NOTE: DO NOT USE KEYS WHERE YOU HAVE REAL FUNDS.*)
+b) Get one of your Metamask account private keys (_IMPORTANT NOTE: DO NOT USE KEYS WHERE YOU HAVE REAL FUNDS._)
 
 c) Create a .env file at the root folder and add your keys
-
 
 ```sh
 INFURA_API_KEY=<YOUR_INFURA_KEY>
@@ -97,8 +97,8 @@ NFT contract deployed to: <<COPY_THIS_NFT_CONTRACT_ADDRESS>>
 Create an .env file at the frontend folder and add these addresses to the .env file under these keys:
 
 ```sh
-VITE_ROLES_CONTRACT_ADDRESS= <<COPIED_ROLES_CONTRACT_ADDRESS>>
-VITE_NFT_CONTRACT_ADDRESS= <<COPIED_NFT_CONTRACT_ADDRESS>>
+VITE_ROLES_CONTRACT_ADDRESS=<<COPIED_ROLES_CONTRACT_ADDRESS>>
+VITE_NFT_CONTRACT_ADDRESS=<<COPIED_NFT_CONTRACT_ADDRESS>>
 ```
 
 ### 6. Install Frontend Dependencies
@@ -119,25 +119,26 @@ npm run dev
 
 ### Steps:
 
-1. **Log in to MetaMask**: Ensure you are connected to the Sepolia test network.
-2. **Get Sepolia ETH**: Obtain some Sepolia ETH from a [faucet](https://www.coingecko.com/learn/sepolia-eth)
+1. **Log in to MetaMask**: Ensure you are connected to Sepolia/Hardhat test network.
+   2a. **Sepolia**: Obtain some Sepolia ETH from a [faucet](https://www.coingecko.com/learn/sepolia-eth)
+   2b. **Hardhat**: Hardhat automatically gives you 10000 test ETH. Chech the console for accounts to use
 
-3. **Create a Role**:
+2. **Create a Role**:
 
    - **Supplier**: This is like an admin role and can perform all transactions (create, transfer, and sell).
    - **Vendor**: This role can only sell tokens.
 
-4. **Mint a Token**:
+3. **Mint a Token**:
 
    - Provide a name, a short description, and a token image.
    - The newly created token will appear on the dashboard.
 
-5. **Transfer the Token**:
+4. **Transfer the Token**:
 
    - Transfer the token to another account.
    - The token remains valid after the transfer.
 
-6. **Sell the Token**:
+5. **Sell the Token**:
    - Sell the token back to yourself or to another account.
    - The token will no longer be valid after the sale.
 

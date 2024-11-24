@@ -67,7 +67,7 @@ c) Create a .env file at the root folder and add your keys
 
 ```sh
 INFURA_API_KEY=<YOUR_INFURA_KEY>
-HARDHAT_DEPLOY_PRIVATE_KEY=<YOUR_NOT_IMPORTANT_METAMASK_PRIVATE_KEY> (Read important note above)
+DEPLOY_PRIVATE_KEY=<YOUR_NOT_IMPORTANT_METAMASK_PRIVATE_KEY> (Read important note above)
 ```
 
 d) Run local node

@@ -3,7 +3,6 @@ import { TokenResponse } from "@types";
 import {
   parseAccount,
   parseBigInt,
-  parseBigNumToDate,
   parseCatchError,
   parseRevertErrorMessage,
   parseTokenResponse,
@@ -16,13 +15,9 @@ describe("Parse Utils", () => {
     expect(parsed).toBe("0ax1...1x3s");
   });
 
-  it("Should parseBigInt and parseBigNumToDate", () => {
-    const bigNum = 1331300839;
+  it("Should parseBigInt", () => {
     const parsed = parseBigInt(BigInt(1331300839));
     expect(parsed.toString()).toBe("82429610041");
-
-    const date = parseBigNumToDate(bigNum);
-    expect(date).toBe("9/3/2012");
   });
 
   it("Should parseWalletErrors", () => {

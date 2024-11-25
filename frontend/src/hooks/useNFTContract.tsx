@@ -17,7 +17,7 @@ export const useNFTContract = () => {
   const abi = nftContractArtifact["abi"];
   const signer = getSigner();
 
-  const nft = new Contract(address, abi, signer!) as Contract & NFT; //Is there another way to type this? Looks a bit odd.
+  const nft = new Contract(address, abi, signer!) as Contract & NFT; //TODO: Is there another way to type this?
 
   const isTokenValid = async (tokenID: number) => {
     return await nft.isValidToken(tokenID);

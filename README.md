@@ -40,35 +40,57 @@ Blockchain is the foundation of BottleFi, providing a secure, immutable, and tra
 
 ## How to Run This Project
 
-Check out the live demo at [https://bottlefi.vercel.app](https://bottlefi.vercel.app).
+### Create a Metamask Account
 
-or
+First, you will need a Metamask Account. Follow [this guide](https://support.metamask.io/es/getting-started/getting-started-with-metamask/) in order to get a one.
 
-### 1. Clone the repository and go to project folder
+### 2 ways to run this project:
+1) Use the Live Demo (You will need Sepolia test ETH). 
+2) Run your own Hardhat Node
+
+### 1) Sepolia Live Demo
+[Open Live demo here](https://bottlefi.vercel.app).
+
+#### Get Sepolia Test ETH.
+
+Follow <ins>one</ins> of this guides in order to get Sepolia test ETH. You will need them to interact with the app.
+
+- [Alchemy Guide](https://www.alchemy.com/overviews/sepolia-eth)
+- [Chanlink Guide](https://blog.chain.link/sepolia-eth/)
+- [Medium Guide (QuickNode)](https://medium.com/@Skydrome/how-to-get-sepolia-eth-from-faucets-3ea3660142c0)
+
+### 2) Run your own Hardhat Node
+
+#### 1. Clone the repository and go to project folder
 
 ```sh
 git clone https://github.com/RodrigoVila/BottleFi.git
 cd BottleFi
 ```
 
-### 2. Install Blockchain Dependencies
+#### 2. Install Blockchain Dependencies
 
 ```sh
 npm install
 ```
-
-### 3. Add Infura account and wallet key and start the Local Blockchain Node
+#### 3. Add Infura account and wallet key and start the Local Blockchain Node
 
 a) [Create an infura account](https://developer.metamask.io/) and create a Sepolia API key.
 
-b) Get one of your Metamask account private keys (_IMPORTANT NOTE: DO NOT USE KEYS WHERE YOU HAVE REAL FUNDS._)
+b) Create a Infura Dedicated Gateway 
 
-c) Create a .env file at the root folder and add your keys
+Follow [this guide](https://www.infura.io/blog/post/introducing-ipfs-dedicated-gateways)
+
+c) Create a .env file at the frontend folder and add your keys
 
 ```sh
-INFURA_API_KEY=<YOUR_INFURA_KEY>
-DEPLOY_PRIVATE_KEY=<YOUR_NOT_IMPORTANT_METAMASK_PRIVATE_KEY> (Read important note above)
+VITE_INFURA_IPFS_API_KEY=<YOUR_INFURA_KEY>
+VITE_INFURA_IPFS_API_KEY_SECRET=<ONE_OF_YOUR_PROVIDED_HARDHAT_PRIVATE_KEY>
+VITE_INFURA_GATEWAY_SUBDOMAIN=<<YOUR_ADDRESS.infura-ipfs.io>>
 ```
+- You can get VITE_INFURA_IPFS_API_KEY from your active endpoints
+- VITE_INFURA_IPFS_API_KEY_SECRET is under settings
+- VITE_INFURA_GATEWAY_SUBDOMAIN follow previous point (letter "b")
 
 d) Run local node
 
@@ -76,7 +98,18 @@ d) Run local node
 npm run hardhat:node
 ```
 
-### 4. Compile and deploy Contracts to the Local Network
+e) Use one of the provided Hardhat accounts.
+
+Copy one of the provided Private Keys at your console where the Node is running. Import that account at Metamask using the private key.
+- Open Metamask
+- Click on your account (Middle top button)
+- Click on Add new account
+- Click on import account
+- Make sure that selected type is "Private Key"
+- Paste one of your Hardhat accounts
+- Use this account to interact with the app. Maybe you want to add another one to try different roles (Supplier, Vendor)
+
+#### 4. Compile and deploy Contracts to the Local Network
 
 Open a new terminal and run
 
@@ -85,7 +118,7 @@ npm run compile
 npm run deploy:localhost
 ```
 
-### 5. Add contract addresses to the .env file
+#### 5. Add contract addresses to the .env file
 
 Copy the contract addresses from the console output. You will see something like this:
 
@@ -94,14 +127,23 @@ Roles contract deployed to: <<COPY_THIS_ROLES_CONTRACT_ADDRESS>>
 NFT contract deployed to: <<COPY_THIS_NFT_CONTRACT_ADDRESS>>
 ```
 
-Create an .env file at the frontend folder and add these addresses to the .env file under these keys:
+Add addresses to the .env file under these keys:
 
 ```sh
 VITE_ROLES_CONTRACT_ADDRESS=<<COPIED_ROLES_CONTRACT_ADDRESS>>
 VITE_NFT_CONTRACT_ADDRESS=<<COPIED_NFT_CONTRACT_ADDRESS>>
 ```
 
-### 6. Install Frontend Dependencies
+So far, our .env should have 5 keys
+```bash
+VITE_ROLES_CONTRACT_ADDRESS=
+VITE_NFT_CONTRACT_ADDRESS=
+VITE_INFURA_IPFS_API_KEY=
+VITE_INFURA_IPFS_API_KEY_SECRET=
+VITE_INFURA_GATEWAY_SUBDOMAIN=
+```
+
+#### 6. Install Frontend Dependencies
 
 Within the frontend folder, run:
 
@@ -109,7 +151,12 @@ Within the frontend folder, run:
 npm install
 ```
 
-### 7. Run the app
+#### 7. Add Hardhat network to your Metamask Account
+
+Follow [this guide](https://support.chainstack.com/hc/en-us/articles/4408642503449-Using-MetaMask-with-a-Hardhat-node) to add Hardhat to your networks.
+
+
+#### 8. Run the app
 
 ```sh
 npm run dev
@@ -120,8 +167,7 @@ npm run dev
 ### Steps:
 
 1. **Log in to MetaMask**: Ensure you are connected to Sepolia/Hardhat test network.
-   2a. **Sepolia**: Obtain some Sepolia ETH from a [faucet](https://www.coingecko.com/learn/sepolia-eth)
-   2b. **Hardhat**: Hardhat automatically gives you 10000 test ETH. Chech the console for accounts to use
+Ensure that you have test ETH on your balance. Hardhat asigns 10000 test ETH. For Sepolia you need to get test from a faucet. Read the "Get Sepolia Test ETH" section to understand how to get them.
 
 2. **Create a Role**:
 

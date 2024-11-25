@@ -75,7 +75,6 @@ export const RolesModal = () => {
     try {
       const role = await register(selectedRole.title, name, description);
       if (role !== undefined) {
-        console.log({role})
         setUser((prev) => ({ ...prev, role, name }));
         showSuccessNotification(`${role} registered successfully!`);
         closeModal();

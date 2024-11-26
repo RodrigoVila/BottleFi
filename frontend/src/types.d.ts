@@ -32,7 +32,7 @@ type Provider = Web3ProviderType | InfuraProvider | undefined;
 type Signer = ethers.Signer | undefined;
 type Network = ethers.providers.Network | undefined;
 
-type Roles = "Supplier" | "Vendor";
+type Roles = "supplier" | "vendor";
 
 type BigNumber = { _hex: string; _isBigNumber: boolean };
 

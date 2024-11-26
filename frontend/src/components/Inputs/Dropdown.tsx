@@ -34,21 +34,20 @@ export const Dropdown = ({
           <label htmlFor={rest.name} />
           <select
             className={twMerge(
-              "border-2 border-glass w-full bg-black px-1 py-3 text-base text-white transition-all hover:cursor-pointer focus:outline-white",
+              "border-2 border-glass w-full bg-black px-1 py-3 text-base text-white transition-all hover:cursor-pointer focus:outline-white capitalize",
               className
             )}
             onChange={(event) => handleChange(event.target.value)}
             defaultValue="Select role"
             {...rest}
           >
-            <option disabled className="capitalize">
+            <option disabled>
               Select role
             </option>
             {options.map((option, index) => (
               <option
                 key={index}
                 value={JSON.stringify(option)}
-                className="capitalize"
               >
                 {option.title}
               </option>

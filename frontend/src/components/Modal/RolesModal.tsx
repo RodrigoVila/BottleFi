@@ -38,10 +38,10 @@ export const RolesModal = () => {
 
   const options: Option[] = [
     {
-      title: "Supplier",
+      title: "supplier",
       description: "Suppliers can do any action: Mint, transfer, sell",
     },
-    { title: "Vendor", description: "Vendors can only sell and verify" },
+    { title: "vendor", description: "Vendors can only sell and verify" },
   ];
 
   const clearInputs = () => {
@@ -121,13 +121,13 @@ export const RolesModal = () => {
       />
       <TextInput
         name="name"
-        label={`${selectedRole?.title || ""} Name`}
+        label="Name"
         value={name}
         onChange={handleDataChange}
       />
       <TextInput
         name="description"
-        label={`${selectedRole?.title || ""} Description`}
+        label="Description"
         value={description}
         onChange={handleDataChange}
       />

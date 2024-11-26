@@ -14,7 +14,7 @@ export const useRolesContract = () => {
   const abi = rolesContractArtifact["abi"];
   const signer = getSigner();
 
-  const roles = new Contract(address, abi, signer!) as Contract & Roles; //Is there another way to type this? Looks a bit odd.
+  const roles = new Contract(address, abi, signer!) as Contract & Roles; //TODO: Is there another way to type this?
 
   const register = async (
     role: RolesType,
@@ -22,32 +22,29 @@ export const useRolesContract = () => {
     description: string
   ): Promise<RolesType | undefined> => {
     try {
-      let response;
-      if (role === "Supplier") {
-        response = await roles.registerSupplier(name, description);
-      } else {
-        response = await roles.registerVendor(name, description);
-      }
-
+      const response = await roles.register(name, description, role);
       const receipt = await response.wait();
       if (receipt) return role;
     } catch (err) {
       notifyMetamaskErrors(err);
       return undefined;
     }
-    return undefined;
   };
 
   const getRoleData = async (): Promise<RolesType | null> => {
     const address = await getCurrentAccount();
     if (!address) return null;
+
     try {
-      const supplierProfile = await roles.suppliers(address);
-      if (supplierProfile?.name) return "Supplier";
+      // Check if user is a supplier
+      const isSupplier = await roles.isSupplier(address);
+      if (isSupplier) return "supplier";
 
-      const vendorProfile = await roles.vendors(address);
-      if (vendorProfile?.name) return "Vendor";
+      // Check if user is a vendor
+      const isVendor = await roles.isVendor(address);
+      if (isVendor) return "vendor";
 
+      // No role asigned
       return null;
     } catch (error) {
       return null;

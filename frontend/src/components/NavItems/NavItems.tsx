@@ -55,8 +55,8 @@ export const NavItems = ({ position = "horizontal" }: NavItemProps) => {
       : "flex-col px-2";
 
   const RoleLinks: Record<string, string[]> = {
-    Supplier: ["Dashboard", "Mint", "Transfer", "Sell", "Verify"],
-    Vendor: ["Dashboard", "Sell", "Verify"],
+    supplier: ["Dashboard", "Mint", "Transfer", "Sell", "Verify"],
+    vendor: ["Dashboard", "Sell", "Verify"],
     default: ["Dashboard", "Verify"],
   };
 

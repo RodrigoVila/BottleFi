@@ -4,17 +4,20 @@ import { useAuthContext, useDappContext } from "@hooks";
 import { Spinner } from "@components/Spinner";
 
 import { TokensTable } from "./TokensTable";
+import { twMerge } from "tailwind-merge";
 
 export const Dashboard = () => {
-  const { isLoading, tokens } = useDappContext();
+  const { isLoading, tokens, isProfessionalTheme } = useDappContext();
   const { user } = useAuthContext();
+
+  const themeStyles = isProfessionalTheme ? "text-gray-900" : "text-white"
 
   return (
     <div className="flex-col w-full max-w-4xl gap-2 mx-2 min-w-xl lg:mx-0 center">
       {tokens.length > 0 ? (
         <TokensTable tokens={tokens} />
       ) : (
-        <div className="w-full h-screen px-8 text-xl text-center center">
+        <div className={twMerge("w-full h-screen px-8 text-xl text-center center", themeStyles)}>
           {isLoading ? (
             <Spinner>Loading tokens...</Spinner>
           ) : user?.address ? (

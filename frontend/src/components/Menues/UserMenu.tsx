@@ -10,6 +10,7 @@ import {
   FloatingMenuTrigger,
 } from "@components/Menues/FloatingMenu";
 import { parseAccount } from "@utils/parse";
+import { ThemeToggle } from "@components/Inputs/ThemeToggle";
 
 export const UserMenu = ({ address }: { address: string }) => {
   const [isOpen, setOpen] = useState(false);
@@ -28,7 +29,7 @@ export const UserMenu = ({ address }: { address: string }) => {
             {/* Tablet onwards: User Address as a Menu button */}
             <div
               className={twMerge(
-                "hidden lg:block py-1 px-3 ml-3 sm:ml-0 text-base font-marcellus w-max text-glass-3 bg-transparent",
+                "hidden lg:block py-1 px-3 ml-3 sm:ml-0 text-base font-marcellus w-max bg-transparent",
                 isOpen && "text-black bg-white"
               )}
             >
@@ -36,7 +37,8 @@ export const UserMenu = ({ address }: { address: string }) => {
             </div>
           </>
         </FloatingMenuTrigger>
-        <FloatingMenuContent className="p-2 border-0 bg-slate-800 z-[1]">
+        <FloatingMenuContent className="p-2 border-0 bg-slate-800 z-[1] gap-2 flex flex-col">
+          <ThemeToggle />
           <Button className="px-6 py-1" onClick={handleDisconnect}>
             Logout
           </Button>

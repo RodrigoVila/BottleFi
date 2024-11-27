@@ -1,17 +1,19 @@
 import { toast, ToastOptions } from "react-toastify";
-
-const options: ToastOptions = {
-  position: "top-center",
-  autoClose: 4000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: false,
-  draggable: true,
-  progress: undefined,
-  theme: "dark",
-};
+import { useDappContext } from "./useDappContext";
 
 export const useToastNotifications = () => {
+  const { isProfessionalTheme } = useDappContext()
+  
+  const options: ToastOptions = {
+    position: "top-center",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: isProfessionalTheme? "light" :"dark",
+  };
   const showSuccessNotification = (message: string) => {
     toast.success(message, options);
   };

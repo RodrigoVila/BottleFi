@@ -18,7 +18,7 @@ import {
   TokenDescription,
   TokenLayout,
   TokenTitle,
-} from "./Layout";
+} from "./layout";
 
 const initialData = { name: "", description: "" };
 

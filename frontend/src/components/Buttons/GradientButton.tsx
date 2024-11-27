@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Spinner } from "@components/Spinner";
+import { useDappContext } from "@hooks";
 
 type GradientButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
@@ -21,6 +22,10 @@ export const GradientButton = ({
 }: GradientButtonProps) => {
   const [isLongWait, setLongWait] = useState(false);
 
+  const { isProfessionalTheme } = useDappContext()
+
+  const themeStyles = isProfessionalTheme ? "m-0 bg-indigo-500 text-white" : "m-px bg-black"
+
   const loadingStyles = loading
     ? "bg-slate-500 pointer-events-none px-4"
     : "bg-black px-16";
@@ -31,7 +36,7 @@ export const GradientButton = ({
 
     const timer = setTimeout(() => {
       setLongWait(true);
-    }, 4000);
+    }, 8000);
     return () => clearTimeout(timer);
   }, [loading]);
 
@@ -50,7 +55,8 @@ export const GradientButton = ({
           "flex items-center gap-6 bg-black m-px font-semibold h-12 hover:bg-transparent transition-all duration-300 rounded-full",
           iconStyles,
           bodyClassName,
-          loadingStyles
+          loadingStyles,
+          themeStyles
         )}
       >
         {!loading && icon && <span>{icon}</span>}

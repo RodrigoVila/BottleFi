@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
-import { useAuthContext } from "@hooks";
+import { useAuthContext, useDappContext } from "@hooks";
 
 type Link = {
   title: string;
@@ -48,8 +48,9 @@ const links: Link[] = [
 export const NavItems = ({ position = "horizontal" }: NavItemProps) => {
   const { pathname } = useLocation();
   const { user } = useAuthContext();
+  const { isProfessionalTheme } = useDappContext()
 
-  const positionStyles =
+    const positionStyles =
     position === "horizontal"
       ? "hidden flex-1 lg:flex flex-row w-full mx-2"
       : "flex-col px-2";
@@ -74,8 +75,8 @@ export const NavItems = ({ position = "horizontal" }: NavItemProps) => {
             className={twMerge(
               "text-base text-white text-center cursor-pointer transition-colors duration-200 h-full py-4 border-b-2 border-b-transparent font-marcellus",
               position === "horizontal" ? "py-4" : "px-6",
-              link.hoverColor,
-              pathname.includes(link.to) && link.borderColor
+              isProfessionalTheme ? "hover:border-b-white" : link.hoverColor,
+              pathname.includes(link.to) ? isProfessionalTheme ? "border-b-white" : link.borderColor : ""
             )}
           >
             <Link to={link.to}>{link.title}</Link>

@@ -11,7 +11,7 @@ import {
   TokenDescription,
   TokenLayout,
   TokenTitle,
-} from "./Layout";
+} from "./layout";
 
 export const VerifyToken = () => {
   const [tokenId, setTokenId] = useState<string>();

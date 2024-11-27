@@ -1,5 +1,7 @@
+import { useDappContext } from "@hooks";
 import { InputHTMLAttributes } from "react";
 import { BsFillCloudUploadFill } from "react-icons/bs";
+import { twMerge } from "tailwind-merge";
 
 type FileInputProps = Omit<InputHTMLAttributes<HTMLInputElement>,"value"> & {
   value: File | null
@@ -7,11 +9,15 @@ type FileInputProps = Omit<InputHTMLAttributes<HTMLInputElement>,"value"> & {
 };
 
 export const FileInput = ({ value, label, ...rest }: FileInputProps) => {
+  const { isProfessionalTheme } = useDappContext()
+
+  const themeStyles = isProfessionalTheme ? "border-slate-800 text-gray-700" : "border-glass focus:outline-none focus:border-white bg-transparent"
+
   return (
     <div className="flex flex-col gap-2">
-      <p className="hidden font-semibold text-white md:block">{label}</p>
+      <p className="hidden font-semibold md:block">{label}</p>
       <label htmlFor="file-upload" className="custom-file-upload">
-        <div className="flex items-center w-full gap-2 px-2 bg-transparent border-2 rounded-md border-glass focus:outline-none focus:border-white py-[6px]">
+        <div className={twMerge("flex items-center w-full gap-2 px-2  border-2 rounded-md py-[6px]", themeStyles)}>
           <BsFillCloudUploadFill />
           {value?.name || "Upload File"}
         </div>

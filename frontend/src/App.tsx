@@ -67,7 +67,7 @@ export const App = () => {
     <>
       <Navigate to="/dashboard" />
       <ChainSwitchModal />
-      <RolesModal />
+      {/* <RolesModal /> */}
       <Layout />
     </>
   );

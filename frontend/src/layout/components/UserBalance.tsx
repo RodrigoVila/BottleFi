@@ -1,10 +1,25 @@
 import { Spinner } from "@components/Spinner";
+import { getBalance } from "@utils/ethers";
+import { useEffect, useState } from "react";
 
-type UserBalance = {
-  balance: string | null;
-};
 
-export const UserBalance = ({ balance }: UserBalance) => {
+export const UserBalance = () => {
+  const [balance, setBalance] = useState<string | null>(null)
+
+  const fetchBalance = async () => {
+    try {
+      const balance = await getBalance()
+      console.log({balance})
+      if (balance) setBalance(balance)
+    } catch (error) {
+      console.error("Error getting balance: ", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchBalance()
+  }, [])
+
   return (
     <div className="overflow-hidden text-xs border-2 rounded-xl border-glass center">
       <div className="flex flex-1 py-[6px] px-1 text-center bg-glass">

@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
-import { useAuthContext, useDappContext } from "@hooks";
+import { useAuthContext, useThemeContext } from "@hooks";
 
 type Link = {
   title: string;
@@ -48,12 +48,12 @@ const links: Link[] = [
 export const NavItems = ({ position = "horizontal" }: NavItemProps) => {
   const { pathname } = useLocation();
   const { user } = useAuthContext();
-  const { isProfessionalTheme } = useDappContext()
+  const { isProfessionalTheme } = useThemeContext()
 
     const positionStyles =
     position === "horizontal"
-      ? "hidden flex-1 lg:flex flex-row w-full mx-2"
-      : "flex-col px-2";
+      ? "hidden flex-1 lg:flex flex-row w-full"
+      : "flex-col";
 
   const RoleLinks: Record<string, string[]> = {
     supplier: ["Dashboard", "Mint", "Transfer", "Sell", "Verify"],

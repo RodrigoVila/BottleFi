@@ -1,5 +1,6 @@
 export { useAuthContext } from "./useAuthContext";
 export { useDappContext } from "./useDappContext";
+export { useThemeContext } from "./useThemeContext";
 export { useErrors } from "./useErrors";
 export { useIPFS } from "./useIPFS";
 export { useLocalStorage } from "./useLocalStorage";

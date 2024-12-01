@@ -1,4 +1,4 @@
-import { useDappContext } from "@hooks";
+import { useThemeContext } from "@hooks";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -12,10 +12,10 @@ export const AnimatedButton = ({
   className,
   ...rest
 }: AnimatedButtonProps) => {
-  const { isProfessionalTheme } = useDappContext()
+  const { isProfessionalTheme } = useThemeContext()
 
   const themeStyles = isProfessionalTheme ? "p-0" : "p-[2px]"
-  const themeSpanStyles = isProfessionalTheme ? "bg-indigo-900" : "bg-black"
+  const themeSpanStyles = isProfessionalTheme ? "bg-slate-900" : "bg-black"
 
   return (
     <button
@@ -24,7 +24,7 @@ export const AnimatedButton = ({
     >
       <span
         className={twMerge(
-          "block px-4 py-2 text-base font-bold text-white bg-black md:px-16 hover:bg-transparent md:text-xl",
+          "block px-4 py-2 text-base font-bold text-white bg-black md:px-6 hover:bg-transparent md:text-xl",
           themeSpanStyles,
           className
         )}

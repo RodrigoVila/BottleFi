@@ -37,6 +37,7 @@ export const useWallet = () => {
   const handleConnect = async () => {
     const network = await getNetwork();
     const chainId = network?.chainId;
+    console.log("useWallet chainId: ", chainId)
 
     try {
       const address = await getCurrentAccount();
@@ -80,8 +81,8 @@ export const useWallet = () => {
   const handleChainChanged = async (hexChainId: string) => {
     const chainId = parseInt(hexChainId);
     if (chainId === supportedNetworkId) {
-      const role = await getRoleData();
-      setUser((prev) => ({ ...prev, chainId, role }));
+      setUser((prev) => ({ ...prev, chainId }));
+      setChainSwitchModalOpen(false)
     } else {
       closeAllModals();
       setChainSwitchModalOpen(true);

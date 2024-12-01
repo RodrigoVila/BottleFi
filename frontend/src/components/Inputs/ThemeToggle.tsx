@@ -1,10 +1,10 @@
-import { useDappContext } from "@hooks";
+import { useThemeContext } from "@hooks";
 import { LiaUserTieSolid } from "react-icons/lia";
 import { PiMountains } from "react-icons/pi";
 
 export const ThemeToggle = () => {
 
-    const { isProfessionalTheme, setTheme } = useDappContext()
+    const { isProfessionalTheme, setTheme } = useThemeContext()
 
     const handleToggle = () => setTheme((currTheme) => currTheme === 'professional' ? 'futuristic' : 'professional')
 

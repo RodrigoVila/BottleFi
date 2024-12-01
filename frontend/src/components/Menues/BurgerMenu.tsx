@@ -9,12 +9,12 @@ import { NavItems } from "@components/NavItems";
 
 export const BurgerMenu = () => {
   return (
-    <div className="flex flex-1 lg:hidden">
+    <div className="flex flex-1 lg:hidden shadow-2xl">
       <FloatingMenu>
         <FloatingMenuTrigger>
           <GiHamburgerMenu size={20} />
         </FloatingMenuTrigger>
-        <FloatingMenuContent className="z-[1] bg-slate-800">
+        <FloatingMenuContent className="z-[1] bg-slate-800 mt-2 -ml-2">
           <NavItems position="vertical" />
         </FloatingMenuContent>
       </FloatingMenu>

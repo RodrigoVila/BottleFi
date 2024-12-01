@@ -1,4 +1,4 @@
-import { useDappContext } from "@hooks";
+import { useThemeContext } from "@hooks";
 import { InputHTMLAttributes } from "react";
 import { BsFillCloudUploadFill } from "react-icons/bs";
 import { twMerge } from "tailwind-merge";
@@ -9,7 +9,7 @@ type FileInputProps = Omit<InputHTMLAttributes<HTMLInputElement>,"value"> & {
 };
 
 export const FileInput = ({ value, label, ...rest }: FileInputProps) => {
-  const { isProfessionalTheme } = useDappContext()
+  const { isProfessionalTheme } = useThemeContext()
 
   const themeStyles = isProfessionalTheme ? "border-slate-800 text-gray-700" : "border-glass focus:outline-none focus:border-white bg-transparent"
 

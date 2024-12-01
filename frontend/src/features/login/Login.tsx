@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useAuthContext, useModalContext, useWallet } from "@hooks";
 import { supportedNetworkId, supportedNetworkName } from "@constants";
-import { AnimatedButton } from "@components/Buttons";
+import { AnimatedButton, GradientButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
 import { ChainSwitchModal } from "@components/Modal";
 
@@ -13,7 +13,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (!user) return;
-
+console.log({user, supportedNetworkId})
     user.chainId === supportedNetworkId
       ? setChainSwitchModalOpen(false)
       : setChainSwitchModalOpen(true);
@@ -36,9 +36,9 @@ export const Login = () => {
               Avoid counterfeit and bring trust to your customers.
             </p>
             <div className="flex flex-col items-center justify-center gap-2 text-sm text-center">
-              <AnimatedButton onClick={handleConnect} className="px-16">
+              <GradientButton onClick={handleConnect}>
                 Connect with wallet
-              </AnimatedButton>
+              </GradientButton>
               {`* Please make sure you are connected to ${supportedNetworkName} `}
             </div>
           </div>

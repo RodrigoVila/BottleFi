@@ -1,16 +1,16 @@
 import { Outlet } from "react-router-dom";
 
 import { MainContainer, Navbar } from "./components";
-import { useDappContext } from "@hooks";
+import { useThemeContext } from "@hooks";
 import { twMerge } from "tailwind-merge";
 
 export const Layout = () => {
-  const { isProfessionalTheme } = useDappContext()
+  const { isProfessionalTheme } = useThemeContext()
 
-  const themeStyles = isProfessionalTheme ? "bg-gray-100" : "bg-layout"
+  const themeStyles = isProfessionalTheme ? "bg-slate-900" : "bg-layout"
   return (
-    <div className={twMerge("w-full h-screen bg-center bg-no-repeat bg-cover", themeStyles)}>
-      <div className="flex flex-col h-screen overflow-hidden text-white">
+    <div className={twMerge("flex w-full min-h-screen bg-center bg-no-repeat bg-cover", themeStyles)}>
+      <div className="flex flex-col overflow-hidden text-white flex-1">
         <Navbar />
         <MainContainer>
           <Outlet />

@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 
-import { useAuthContext, useDappContext } from "@hooks";
+import { useAuthContext, useDappContext, useThemeContext } from "@hooks";
 import { Spinner } from "@components/Spinner";
 
 import { TokensTable } from "./TokensTable";
 import { twMerge } from "tailwind-merge";
 
 export const Dashboard = () => {
-  const { isLoading, tokens, isProfessionalTheme } = useDappContext();
+  const { isLoading, tokens } = useDappContext();
+  const { isProfessionalTheme } = useThemeContext();
   const { user } = useAuthContext();
 
-  const themeStyles = isProfessionalTheme ? "text-gray-900" : "text-white"
+  const themeStyles = isProfessionalTheme ? "text-gray-100" : "text-white"
 
   return (
     <div className="flex-col w-full max-w-4xl gap-2 mx-2 min-w-xl lg:mx-0 center">

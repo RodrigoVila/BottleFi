@@ -31,6 +31,7 @@ export const App = () => {
 
   // Modal flow are handled by order importance
   useEffect(() => {
+    console.log({user, supportedNetworkId})
     // 1) User  is not authenticated. They will interact with handleConnect function
     // located at the "Connect" button in the navbar
     if (!user) return;
@@ -52,7 +53,7 @@ export const App = () => {
       setRolesModalOpen(true);
       return;
     }
-
+console.log("hisadsd", {isChainSwitchModalOpen, user})
     // 5) Finally, user has a role and is ready to interact with the app
     isChainSwitchModalOpen && setChainSwitchModalOpen(false);
     isRolesModalOpen && setRolesModalOpen(false);
@@ -67,7 +68,7 @@ export const App = () => {
     <>
       <Navigate to="/dashboard" />
       <ChainSwitchModal />
-      {/* <RolesModal /> */}
+      <RolesModal />
       <Layout />
     </>
   );

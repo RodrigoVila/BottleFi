@@ -34,28 +34,25 @@ export const VerifyToken = () => {
 
   return (
     <TokenLayout>
-      <TokenColumn>
         <TokenTitle>Verify: Checks token authenticity</TokenTitle>
         <TokenDescription>
           Verification provides assurance of a token's legitimacy. By verifying,
           you ensure its genuine origin and uncompromised value. Trust the
           verified status for secure transactions and confident actions.
         </TokenDescription>
-      </TokenColumn>
 
       <Divider type="horizontal" />
 
-      <TokenColumn className="gap-8">
         <TextInput
           type="number"
           min={0}
           label="Token ID"
+          placeholder="Token address to verify"
           value={tokenId}
           onChange={handleTokenSelect}
           required
         />
         <GradientButton onClick={handleClick}>Verify</GradientButton>
-      </TokenColumn>
     </TokenLayout>
   );
 };

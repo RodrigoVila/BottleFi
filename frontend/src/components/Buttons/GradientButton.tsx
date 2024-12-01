@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Spinner } from "@components/Spinner";
-import { useDappContext } from "@hooks";
+import { useThemeContext } from "@hooks";
 
 type GradientButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
@@ -22,13 +22,13 @@ export const GradientButton = ({
 }: GradientButtonProps) => {
   const [isLongWait, setLongWait] = useState(false);
 
-  const { isProfessionalTheme } = useDappContext()
+  const { isProfessionalTheme } = useThemeContext()
 
-  const themeStyles = isProfessionalTheme ? "m-0 bg-indigo-500 text-white" : "m-px bg-black"
+  const themeStyles = isProfessionalTheme ? "bg-blue-500 hover:bg-blue-700" : "bg-black m-px hover:bg-transparent"
 
   const loadingStyles = loading
     ? "bg-slate-500 pointer-events-none px-4"
-    : "bg-black px-16";
+    : "px-16";
   const iconStyles = icon ? "justify-start" : "justify-center";
 
   useEffect(() => {
@@ -43,20 +43,20 @@ export const GradientButton = ({
   return (
     <button
       className={twMerge(
-        "w-full rounded-full",
+        "md:w-full rounded-full bg-gradient overflow-hidden",
         className,
-        loading || rest.disabled ? "bg-slate-500" : "bg-gradient"
+        (loading || rest.disabled) && "bg-slate-500"
       )}
       disabled={rest.disabled || loading}
       {...rest}
     >
       <div
         className={twMerge(
-          "flex items-center gap-6 bg-black m-px font-semibold h-12 hover:bg-transparent transition-all duration-300 rounded-full",
+          "flex items-center gap-6 font-semibold h-12 transition-all duration-300 rounded-full",
           iconStyles,
+          themeStyles,
           bodyClassName,
-          loadingStyles,
-          themeStyles
+          loadingStyles
         )}
       >
         {!loading && icon && <span>{icon}</span>}
@@ -70,7 +70,7 @@ export const GradientButton = ({
             ) : null}
           </div>
         ) : (
-          <span>{children}</span>
+          <span className="text-lg md:text-xl">{children}</span>
         )}
       </div>
     </button>

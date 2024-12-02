@@ -13,7 +13,6 @@ export const Login = () => {
 
   useEffect(() => {
     if (!user) return;
-console.log({user, supportedNetworkId})
     user.chainId === supportedNetworkId
       ? setChainSwitchModalOpen(false)
       : setChainSwitchModalOpen(true);

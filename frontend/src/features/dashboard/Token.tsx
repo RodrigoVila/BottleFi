@@ -17,7 +17,7 @@ export const Token = ({ token, isShown, showQR }: TokenProps) => {
 
   const { id, image, name, description, mintedAt, isValid } = token;
   const desktopURL = `/verify/${id.toString()}`;
-  const mobileURL = `${window.location.origin}/mobileVerify/${id.toString()}`;
+  const mobileURL = `${window.location.origin}/verify/${id.toString()}`;
 
   const toggleShowQR = (e: MouseEvent<HTMLTableCellElement>) => {
     e.stopPropagation();

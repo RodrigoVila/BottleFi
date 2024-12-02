@@ -24,7 +24,7 @@ export const GradientButton = ({
 
   const { isProfessionalTheme } = useThemeContext()
 
-  const themeStyles = isProfessionalTheme ? "bg-blue-500 hover:bg-blue-700" : "bg-black m-px hover:bg-transparent"
+  const themeStyles = isProfessionalTheme ? "bg-purple-800 hover:bg-purple-900" : "bg-black m-px hover:bg-transparent"
 
   const loadingStyles = loading
     ? "bg-slate-500 pointer-events-none px-4"

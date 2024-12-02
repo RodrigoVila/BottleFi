@@ -19,11 +19,12 @@ export const TextInput = ({
   const { isProfessionalTheme } = useThemeContext()
 
   const themeStyles = isProfessionalTheme ? "border-gray-800 bg-slate-100 placeholder:text-gray-400 text-slate-800 font-medium py-3" : "bg-transparent border-glass focus:border-white md:placeholder-gray-300"
+  const labelThemeStyles = isProfessionalTheme ? "text-slate-100" : "text-white"
 
   return (
-    <div className="flex flex-col w-full gap-4 mb-4">
+    <div className="flex flex-col w-full mb-4">
       {label && (
-        <label htmlFor={label} className="hidden font-semibold md:block w-max">
+        <label htmlFor={label} className={twMerge("font-semibold w-max", labelThemeStyles)}>
           {label}
         </label>
       )}

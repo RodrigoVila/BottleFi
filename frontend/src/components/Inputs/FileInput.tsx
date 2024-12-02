@@ -11,7 +11,7 @@ type FileInputProps = Omit<InputHTMLAttributes<HTMLInputElement>,"value"> & {
 export const FileInput = ({ value, label, ...rest }: FileInputProps) => {
   const { isProfessionalTheme } = useThemeContext()
 
-  const themeStyles = isProfessionalTheme ? "border-slate-800 text-gray-700" : "border-glass focus:outline-none focus:border-white bg-transparent"
+  const themeStyles = isProfessionalTheme ? "bg-slate-100 text-slate-800 py-3" : "border-glass focus:outline-none focus:border-white bg-transparent"
 
   return (
     <div className="flex flex-col gap-2">

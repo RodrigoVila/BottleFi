@@ -37,7 +37,6 @@ export const useWallet = () => {
   const handleConnect = async () => {
     const network = await getNetwork();
     const chainId = network?.chainId;
-    console.log("useWallet chainId: ", chainId)
 
     try {
       const address = await getCurrentAccount();

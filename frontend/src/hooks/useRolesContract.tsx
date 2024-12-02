@@ -34,7 +34,7 @@ export const useRolesContract = () => {
   const getRoleData = async (): Promise<RolesType | null> => {
     const address = await getCurrentAccount();
     if (!address) return null;
-console.log("1111")
+
     try {
       // Check if user is a supplier
       const isSupplier = await roles.isSupplier(address);
@@ -43,11 +43,9 @@ console.log("1111")
       // Check if user is a vendor
       const isVendor = await roles.isVendor(address);
       if (isVendor) return "vendor";
-console.log("2222")
       // No role asigned
       return null;
     } catch (error) {
-      console.log("3333 Error assigning role: ", error)
       return null;
     }
   };

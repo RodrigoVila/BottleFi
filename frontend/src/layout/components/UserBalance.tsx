@@ -9,7 +9,6 @@ export const UserBalance = () => {
   const fetchBalance = async () => {
     try {
       const balance = await getBalance()
-      console.log({balance})
       if (balance) setBalance(balance)
     } catch (error) {
       console.error("Error getting balance: ", error)

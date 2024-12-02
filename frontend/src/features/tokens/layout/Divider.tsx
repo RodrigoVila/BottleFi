@@ -9,7 +9,7 @@ type DividerType = {
 export const Divider = ({ type = "horizontal", className }: DividerType) => {
   const { isProfessionalTheme } = useThemeContext()
 
-  const typeStyles = type === "horizontal" ? "h-[1px] md:my-4" : "w-[1px] mx-4";
+  const typeStyles = type === "horizontal" ? "h-[1px] md:my-2" : "w-[1px] mx-2";
   const themeStyles = isProfessionalTheme ? "bg-slate-700" : "bg-glass"
 
   return <div className={twMerge("flex-none", typeStyles, themeStyles, className)} />;

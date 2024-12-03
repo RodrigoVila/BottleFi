@@ -1,15 +1,15 @@
 import { useThemeContext } from "@hooks";
 import { TokenValidity } from ".";
-import { twJoin, twMerge } from "tailwind-merge";
+import { twJoin } from "tailwind-merge";
 
 export const MobileTokenValidity = () => {
   const {isProfessionalTheme} = useThemeContext()
 
-  const themeStyles = isProfessionalTheme ? "bg-slate-900" : "bg-layout"
+  const themeStyles = isProfessionalTheme ? "bg-slate-900" : ""
 
   return (
-    <div className={twJoin("w-full h-full min-h-screen bg-center bg-no-repeat bg-cover bg-layout", themeStyles)}>
-      <div className="h-full center my-16">
+    <div className={twJoin("w-full h-full min-h-screen bg-center bg-no-repeat bg-cover", themeStyles)}>
+      <div className="min-h-screen flex items-center justify-center bg-red-300 center my-16 lg:my-0">
         <TokenValidity />
       </div>
     </div>

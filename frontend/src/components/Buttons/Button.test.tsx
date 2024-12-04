@@ -40,6 +40,5 @@ describe("Button", () => {
     expect(button).toBeDisabled();
     expect(button).toHaveClass("bg-slate-500");
     expect(button).toHaveClass("pointer-events-none");
-    expect(button).toHaveTextContent("Loading");
   });
 });

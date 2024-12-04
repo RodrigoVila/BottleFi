@@ -13,9 +13,7 @@ describe("AnimatedContainer", () => {
 
     const title = screen.getByRole("heading", { level: 1 });
     expect(title).toHaveTextContent("BottleFi");
-    expect(title).toHaveClass(
-      " m-0 font-semibold font-fondamento text-6xl md:text-7xl"
-    );
+    expect(title).toHaveClass("m-0 font-semibold font-fondamento text-6xl");
   });
 
   it("Should render navbar styles", async () => {

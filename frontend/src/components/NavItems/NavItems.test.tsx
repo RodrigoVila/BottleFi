@@ -3,14 +3,21 @@ import { render, screen } from "@testing-library/react";
 
 import { NavItems } from ".";
 
-let mockRole = "Supplier";
+const mocks = vi.hoisted(() => ({
+  role: "supplier",
+  theme: false,
+}));
+
 vi.mock("@hooks", () => ({
   useAuthContext: () => ({
     user: {
       address: "0xa",
       name: "John",
-      role: mockRole,
+      role: mocks.role,
     },
+  }),
+  useThemeContext: () => ({
+    isProfessionalTheme: mocks.theme,
   }),
 }));
 
@@ -37,7 +44,7 @@ describe("NavItems", () => {
   });
 
   it("Should render NavItems for Vendor Role", () => {
-    mockRole = "Vendor";
+    mocks.role = "vendor";
     render(
       <ReactRouterDom.MemoryRouter>
         <NavItems />

@@ -20,10 +20,7 @@ export const renderSut = async (type: "supplier" | "vendor") => {
   const name = `${type} name`;
   const desc = `${type} desc`;
 
-  const register =
-    type === "supplier"
-      ? rolesContract.registerSupplier(name, desc)
-      : rolesContract.registerVendor(name, desc);
+  const register = rolesContract.register(name, desc, type);
 
   const address = owner.address;
 
@@ -33,20 +30,17 @@ export const renderSut = async (type: "supplier" | "vendor") => {
       : await rolesContract.VENDOR_ROLE();
 
   await expect(register)
-    .to.emit(rolesContract, "ProfileRegistered")
+    .to.emit(rolesContract, "RoleAssigned")
     .withArgs(address, role, name);
 
   const addedProfile =
     type === "supplier"
-      ? await rolesContract.suppliers(address)
-      : await rolesContract.vendors(address);
+      ? await rolesContract.isSupplier(address)
+      : await rolesContract.isVendor(address);
 
-  expect(addedProfile).to.include(name);
+  expect(addedProfile).to.be.true;
 
-  const register2 =
-    type === "supplier"
-      ? rolesContract.registerSupplier(name, desc)
-      : rolesContract.registerVendor(name, desc);
+  const register2 = rolesContract.register(name, desc, type);
 
   await expect(register2).to.be.revertedWith(`Already registered as a ${type}`);
 };

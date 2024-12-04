@@ -16,12 +16,12 @@ const config: HardhatUserConfig = {
       See Readme for more information
   */
 
-  // networks: {
-  //   sepolia: {
-  //     url: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
-  //     accounts: [`${process.env.DEPLOY_PRIVATE_KEY}`],
-  //   },
-  // },
+  networks: {
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      accounts: [`${process.env.DEPLOY_PRIVATE_KEY}`],
+    },
+  },
 };
 
 export default config;

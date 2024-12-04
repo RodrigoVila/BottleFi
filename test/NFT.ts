@@ -29,7 +29,7 @@ describe("NFT contract", function () {
       "Only supplier roles can perform this task"
     );
 
-    await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
+    await rolesContract.register("Fake Supplier", "Fake Desc", "supplier");
 
     const mint2 = nftContract.mint(uri);
     await expect(mint2)
@@ -47,7 +47,7 @@ describe("NFT contract", function () {
       "Only supplier roles can perform this task"
     );
 
-    await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
+    await rolesContract.register("Fake Supplier", "Fake Desc", "supplier");
     await nftContract.mint("http://test.com");
 
     const transfer2 = nftContract.transfer(addr1.address, 1);
@@ -68,7 +68,7 @@ describe("NFT contract", function () {
       "Only suppliers or vendors can perform this task"
     );
 
-    await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
+    await rolesContract.register("Fake Supplier", "Fake Desc", "supplier");
     await nftContract.mint("http://test.com");
 
     expect(await nftContract.isValidToken(1)).to.be.true;
@@ -88,14 +88,14 @@ describe("NFT contract", function () {
       tokenFixture
     );
     //We register supplier, then mint and transfer token to addr1
-    await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
+    await rolesContract.register("Fake Supplier", "Fake Desc", "supplier");
     await nftContract.mint("http://test.com");
     await nftContract.transfer(addr1.address, 1);
 
     // Then create a vendor account with addr1
     await rolesContract
       .connect(addr1)
-      .registerVendor("Fake Vendor", "Fake Desc");
+      .register("Fake Vendor", "Fake Desc", "vendor");
 
     // As transfer is not active with vendor acc, tx is rejected
     await expect(
@@ -114,12 +114,12 @@ describe("NFT contract", function () {
     const { owner, addr1, rolesContract, nftContract } = await loadFixture(
       tokenFixture
     );
-    await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
+    await rolesContract.register("Fake Supplier", "Fake Desc", "supplier");
     await nftContract.mint("http://test.com");
 
     await rolesContract
       .connect(addr1)
-      .registerSupplier("Fake Supplier2", "Fake Desc2");
+      .register("Fake Supplier2", "Fake Desc2", "supplier");
 
     await expect(
       nftContract.connect(addr1).transfer(owner.address, 1)
@@ -130,12 +130,12 @@ describe("NFT contract", function () {
     const { owner, addr1, rolesContract, nftContract } = await loadFixture(
       tokenFixture
     );
-    await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
+    await rolesContract.register("Fake Supplier", "Fake Desc", "supplier");
     await nftContract.mint("http://test.com");
 
     await rolesContract
       .connect(addr1)
-      .registerSupplier("Fake Supplier2", "Fake Desc2");
+      .register("Fake Supplier2", "Fake Desc2", "supplier");
 
     await expect(
       nftContract.connect(addr1).sell(owner.address, 1)
@@ -145,7 +145,7 @@ describe("NFT contract", function () {
   it("Should return an array of tokens owned by an address", async function () {
     const { rolesContract, nftContract } = await loadFixture(tokenFixture);
     //We register supplier, then mint and transfer token to addr1
-    await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
+    await rolesContract.register("Fake Supplier", "Fake Desc", "supplier");
     await nftContract.mint("ab");
     await nftContract.mint("cd");
     await nftContract.mint("ef");
@@ -157,7 +157,7 @@ describe("NFT contract", function () {
     const { rolesContract, nftContract } = await loadFixture(tokenFixture);
     const uri = "http://www.uri.com";
 
-    await rolesContract.registerSupplier("Fake Supplier", "Fake Desc");
+    await rolesContract.register("Fake Supplier", "Fake Desc", "supplier");
     await nftContract.mint(uri);
 
     const tokenId = 1;

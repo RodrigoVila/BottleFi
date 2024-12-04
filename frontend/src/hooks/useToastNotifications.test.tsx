@@ -6,7 +6,7 @@ import { useToastNotifications } from "@hooks";
 
 const options = {
   position: "top-center",
-  autoClose: 3000,
+  autoClose: 4000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: false,
@@ -35,28 +35,37 @@ describe("useToastNotifications", () => {
     const { showSuccessNotification } = renderSut();
 
     showSuccessNotification("Test success");
-    expect(ToastLibrary.toast.success).toHaveBeenCalledWith("Test success",options);
+    expect(ToastLibrary.toast.success).toHaveBeenCalledWith(
+      "Test success",
+      options
+    );
   });
 
   it("Should render error notification", async () => {
     const { showErrorNotification } = renderSut();
 
     showErrorNotification("Test error");
-    expect(ToastLibrary.toast.error).toHaveBeenCalledWith("Test error",options);
+    expect(ToastLibrary.toast.error).toHaveBeenCalledWith(
+      "Test error",
+      options
+    );
   });
 
   it("Should render info notification", async () => {
     const { showInfoNotification } = renderSut();
 
     showInfoNotification("Test info");
-    expect(ToastLibrary.toast.info).toHaveBeenCalledWith("Test info",options);
+    expect(ToastLibrary.toast.info).toHaveBeenCalledWith("Test info", options);
   });
 
   it("Should render warning notification", async () => {
     const { showWarningNotification } = renderSut();
 
     showWarningNotification("Test warning");
-    expect(ToastLibrary.toast.warning).toHaveBeenCalledWith("Test warning",options);
+    expect(ToastLibrary.toast.warning).toHaveBeenCalledWith(
+      "Test warning",
+      options
+    );
   });
 });
 

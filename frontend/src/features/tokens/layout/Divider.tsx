@@ -15,6 +15,8 @@ export const Divider = ({ type = "horizontal", className }: DividerType) => {
   const themeStyles = isProfessionalTheme ? "bg-slate-700" : "bg-glass";
 
   return (
-    <div className={twMerge("flex-none", typeStyles, themeStyles, className)} />
+    <div
+      className={twMerge("flex-none ", typeStyles, themeStyles, className)}
+    />
   );
 };

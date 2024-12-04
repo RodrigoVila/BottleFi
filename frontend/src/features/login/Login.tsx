@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useAuthContext, useModalContext, useWallet } from "@hooks";
 import { supportedNetworkId, supportedNetworkName } from "@constants";
-import { AnimatedButton, GradientButton } from "@components/Buttons";
+import { GradientButton } from "@components/Buttons";
 import { Logo } from "@components/Logo";
 import { ChainSwitchModal } from "@components/Modal";
 

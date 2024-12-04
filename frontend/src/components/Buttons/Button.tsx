@@ -1,7 +1,9 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+import { Spinner } from "@components/Spinner";
+
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
   children: ReactNode;
   className?: string;
@@ -14,7 +16,7 @@ export const Button = ({
   ...rest
 }: ButtonProps) => {
   const baseStyles =
-    "flex justify-between items-center w-full bg-black border border-white my-1 mx-0 p-2 text-white cursor-pointer text-base hover:bg-white transition-all duration-300 hover:text-black";
+    "flex justify-between items-center w-max border border-white my-1 mx-0 p-2 text-white cursor-pointer text-base hover:bg-white transition-all duration-300 hover:text-black";
   const loadingStyles = loading && "bg-slate-500 pointer-events-none";
 
   return (
@@ -24,7 +26,7 @@ export const Button = ({
       {...rest}
     >
       <div className="flex items-center justify-center w-full">
-        <p>{loading ? "Loading" : children}</p>
+        <p>{loading ? <Spinner /> : children}</p>
       </div>
     </button>
   );

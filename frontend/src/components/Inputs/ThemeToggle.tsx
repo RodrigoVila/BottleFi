@@ -1,6 +1,7 @@
-import { useThemeContext } from "@hooks";
 import { LiaUserTieSolid } from "react-icons/lia";
 import { PiMountains } from "react-icons/pi";
+
+import { useThemeContext } from "@hooks";
 
 export const ThemeToggle = () => {
 

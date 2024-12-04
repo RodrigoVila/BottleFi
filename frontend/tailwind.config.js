@@ -5,14 +5,14 @@ module.exports = {
     extend: {
       animation: {
         background: "background 4s ease infinite",
-        "bounce-slow": "bounce 1.5s infinite"
+        "bounce-slow": "bounce 5s infinite"
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-          login: "url(assets/login-bg.jpeg)",
-          layout:"url(assets/sky-bg.jpeg)"
+        login: "url(assets/login-bg.jpeg)",
+        layout: "url(assets/sky-bg.jpeg)"
       },
       colors: {
         opacityRed: "rgba(205, 4, 4, 0.7)",

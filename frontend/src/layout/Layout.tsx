@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
+
+import { useThemeContext } from "@hooks";
 
 import { MainContainer, Navbar } from "./components";
-import { useThemeContext } from "@hooks";
-import { twMerge } from "tailwind-merge";
 
 export const Layout = () => {
   const { isProfessionalTheme } = useThemeContext()

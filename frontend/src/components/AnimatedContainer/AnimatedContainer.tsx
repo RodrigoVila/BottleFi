@@ -1,6 +1,7 @@
-import { useThemeContext } from "@hooks";
 import { HTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+
+import { useThemeContext } from "@hooks";
 
 type AnimatedContainerProps = HTMLAttributes<HTMLDivElement> & {
   children: ReactNode;

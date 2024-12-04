@@ -41,7 +41,7 @@ export const TokensTable = ({ tokens }: TokensTableType) => {
     <div className="relative w-full">
       <QRMessage isShown={isQRMessageShown} />
       <div id="table" className="w-full overflow-scroll max-h-96">
-        <table className="relative text-white border-glass border-[2px] w-full rounded-xl border-collapse overflow-scroll h-full">
+        <table className="relative text-white w-full rounded-xl border-collapse overflow-scroll h-full">
           {/* TODO: Thead doesn't stick on top. See previous comment  */}
           <thead>
             <tr>

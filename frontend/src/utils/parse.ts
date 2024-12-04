@@ -67,7 +67,7 @@ export const parseTokenResponse = (token: TokenResponse) => {
   const uri = token[1];
   const mintedAt = new Date(Number(token[2]) * 1000)
     .toLocaleString()
-    .slice(0, 10);
+    .slice(0, 9);
   const isValid = token[3];
 
   return { id, uri, mintedAt, isValid };

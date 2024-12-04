@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { BsPatchCheck } from "react-icons/bs";
-import { TfiFaceSad } from "react-icons/tfi";
+import { BsPatchCheck, BsPatchExclamation } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 
 import { useNFTContract } from "@hooks";
@@ -97,7 +96,7 @@ export const TokenValidity = () => {
         </>
       ) : (
         <div className="flex-col max-w-md gap-4 text-center center">
-          <TfiFaceSad size={62} />
+          <BsPatchExclamation size={62} className="text-red-400" />
           <h3 className="text-5xl font-semibold font-marcellus">
             Token not verified!
           </h3>

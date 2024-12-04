@@ -14,7 +14,7 @@ export const ChainSwitchModal = () => {
     <Modal
       isOpen={isChainSwitchModalOpen}
       onClose={closeModal}
-      className="p-0 border-4 border-red-500 z-[2]"
+      className="p-0 border-2 border-red-500 z-[2]"
       bodyClassName="p-8"
       disableOutsideClick
       withoutCloseButton
@@ -35,7 +35,11 @@ export const ChainSwitchModal = () => {
         . To utilize its features, please ensure you are connected to this
         network.
       </h5>
-      <GradientButton onClick={connectToSupportedNetwork}>
+      <GradientButton
+        className="bg-red-500"
+        bodyClassName="bg-slate-900"
+        onClick={connectToSupportedNetwork}
+      >
         {`Connect to ${supportedNetworkName}`}
       </GradientButton>
     </Modal>

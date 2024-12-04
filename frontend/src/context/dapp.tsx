@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useMemo, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 import { useNFTContract } from "@hooks";
 import { TokenList } from "@types";

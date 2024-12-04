@@ -3,15 +3,16 @@ import { create, IPFSHTTPClient } from "ipfs-http-client";
 
 import { getInfuraAuthHeaders } from "@constants";
 import { IPFSStorageData } from "@types";
+
 import { useToastNotifications } from "./useToastNotifications";
 
 export const useIPFS = () => {
   const [IPFS, setIPFS] = useState<IPFSHTTPClient | null>(null);
 
-  const { showErrorNotification } = useToastNotifications()
+  const { showErrorNotification } = useToastNotifications();
 
-  const authHeaders = getInfuraAuthHeaders()
-  const infuraSubdomain = import.meta.env.VITE_INFURA_GATEWAY_SUBDOMAIN
+  const authHeaders = getInfuraAuthHeaders();
+  const infuraSubdomain = import.meta.env.VITE_INFURA_GATEWAY_SUBDOMAIN;
 
   const uploadDataToIPFS = async (
     rawData: IPFSStorageData | File
@@ -26,8 +27,8 @@ export const useIPFS = () => {
       const { path } = await IPFS.add(data);
       return path;
     } catch (error) {
-      const errorMsg = `Error trying to upload data to IPFS: ${error}`
-      showErrorNotification(errorMsg)
+      const errorMsg = `Error trying to upload data to IPFS: ${error}`;
+      showErrorNotification(errorMsg);
       console.error(errorMsg);
     }
   };
@@ -35,12 +36,11 @@ export const useIPFS = () => {
   const getDataFromIPFS = async (
     path: string
   ): Promise<IPFSStorageData | undefined> => {
-    if (!authHeaders || !infuraSubdomain) return
+    if (!authHeaders || !infuraSubdomain) return;
     try {
-      const response = await fetch(
-        `${infuraSubdomain}/${path}`,
-        { headers: { Authorization: authHeaders } }
-      );
+      const response = await fetch(`${infuraSubdomain}/${path}`, {
+        headers: { Authorization: authHeaders },
+      });
 
       const json = await response.json();
       return json;
@@ -51,12 +51,16 @@ export const useIPFS = () => {
 
   useEffect(() => {
     if (!authHeaders) {
-      showErrorNotification("You need to set the ENV variables VITE_INFURA_IPFS_API_KEY and VITE_INFURA_IPFS_API_KEY_SECRET. Check Readme to understand how to get those values")
-      return
+      showErrorNotification(
+        "You need to set the ENV variables VITE_INFURA_IPFS_API_KEY and VITE_INFURA_IPFS_API_KEY_SECRET. Check Readme to understand how to get those values"
+      );
+      return;
     }
     if (!infuraSubdomain) {
-      showErrorNotification("You need to set the ENV variabe VITE_INFURA_GATEWAY_SUBDOMAIN. Check Readme to understand how to get those values")
-      return
+      showErrorNotification(
+        "You need to set the ENV variabe VITE_INFURA_GATEWAY_SUBDOMAIN. Check Readme to understand how to get those values"
+      );
+      return;
     }
     const init = async () => {
       const instance = create({
@@ -67,6 +71,7 @@ export const useIPFS = () => {
       setIPFS(instance);
     };
     init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

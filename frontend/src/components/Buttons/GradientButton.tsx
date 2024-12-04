@@ -2,7 +2,6 @@ import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Spinner } from "@components/Spinner";
-import { useThemeContext } from "@hooks";
 
 type GradientButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
@@ -22,10 +21,6 @@ export const GradientButton = ({
 }: GradientButtonProps) => {
   const [isLongWait, setLongWait] = useState(false);
 
-  const { isProfessionalTheme } = useThemeContext()
-
-  const themeStyles = isProfessionalTheme ? "bg-purple-800 hover:bg-purple-900" : "bg-black m-px hover:bg-transparent"
-
   const loadingStyles = loading
     ? "bg-slate-500 pointer-events-none px-4"
     : "px-16";
@@ -36,7 +31,7 @@ export const GradientButton = ({
 
     const timer = setTimeout(() => {
       setLongWait(true);
-    }, 8000);
+    }, 10000);
     return () => clearTimeout(timer);
   }, [loading]);
 
@@ -52,9 +47,8 @@ export const GradientButton = ({
     >
       <div
         className={twMerge(
-          "flex items-center gap-6 font-semibold h-12 transition-all duration-300 rounded-full",
+          "flex items-center gap-6 font-semibold h-12 bg-black m-px hover:bg-transparent transition-all duration-300 rounded-full",
           iconStyles,
-          themeStyles,
           bodyClassName,
           loadingStyles
         )}
@@ -64,9 +58,7 @@ export const GradientButton = ({
           <div className="flex items-center gap-2">
             <Spinner />
             {isLongWait ? (
-              <span className="w-full mr-2 text-sm">
-                Please wait...
-              </span>
+              <span className="w-full mr-2 text-sm">Please wait...</span>
             ) : null}
           </div>
         ) : (

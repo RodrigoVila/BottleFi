@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Marcellus&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -53,6 +53,15 @@
   }
 }
 
+@layer base {
+  input:-webkit-autofill {
+    @apply bg-slate-100 text-slate-800;
+    -webkit-text-fill-color: #374151 !important; /* Adjust to match your design */
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important; /* Replace with your background */
+    box-shadow: 0 0 0px 1000px #f1f5f9 inset !important; /* Replace with your background */
+  }
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -78,6 +87,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }

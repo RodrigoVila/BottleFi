@@ -8,7 +8,7 @@ import {
   useToastNotifications,
   useWallet,
 } from "@hooks";
-import { GradientButton } from "@components/Buttons";
+import { TokenButton } from "@components/Buttons/TokenButton";
 import { FileInput, TextInput } from "@components/Inputs";
 import { IPFSStorageData } from "@types";
 
@@ -135,9 +135,9 @@ export const MintToken = () => {
           onChange={handleFileSelect}
         />
 
-        <GradientButton loading={isLoading} onClick={handleSubmit}>
+        <TokenButton isLoading={isLoading} onClick={handleSubmit}>
           Mint
-        </GradientButton>
+        </TokenButton>
       </TokenColumn>
     </TokenLayout>
   );

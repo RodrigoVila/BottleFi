@@ -1,27 +1,30 @@
 import { useState } from "react";
-import { FaUserAstronaut,FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaUserAstronaut } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
-import { useThemeContext, useWallet } from "@hooks";
+import { useAuthContext, useThemeContext, useWallet } from "@hooks";
+import { Divider } from "@features/tokens/layout";
 import { Button } from "@components/Buttons";
+import { ThemeToggle } from "@components/Inputs/ThemeToggle";
 import {
   FloatingMenu,
   FloatingMenuContent,
   FloatingMenuTrigger,
 } from "@components/Menues/FloatingMenu";
-import { parseAccount } from "@utils/parse";
-import { ThemeToggle } from "@components/Inputs/ThemeToggle";
-import { Divider } from "@features/tokens/layout";
 import { UserBalance } from "@layout/components/UserBalance";
+import { parseAccount } from "@utils/parse";
 
 export const UserMenu = ({ address }: { address: string }) => {
   const [isOpen, setOpen] = useState(false);
 
-  const { isProfessionalTheme } = useThemeContext()
+  const { isProfessionalTheme } = useThemeContext();
   const { handleDisconnect } = useWallet();
+  const { user } = useAuthContext();
 
-  const themeStyles = isProfessionalTheme ? "bg-slate-800 border-slate-900 shadow-xl" : "glass-alt"
-  const iconStyles = "w-6 h-6 cursor-pointer lg:hidden hover:text-white"
+  const themeStyles = isProfessionalTheme
+    ? "bg-slate-800 border-slate-900 shadow-xl"
+    : "glass-alt";
+  const iconStyles = "w-6 h-6 cursor-pointer lg:hidden hover:text-white";
 
   const toggle = () => setOpen((open) => !open);
 
@@ -31,7 +34,11 @@ export const UserMenu = ({ address }: { address: string }) => {
         <FloatingMenuTrigger onClick={toggle}>
           <>
             {/* Mobile: User Icon as a Menu button */}
-            {isProfessionalTheme ? <FaRegUser className={iconStyles} /> : <FaUserAstronaut className={iconStyles} />}
+            {isProfessionalTheme ? (
+              <FaRegUser className={iconStyles} />
+            ) : (
+              <FaUserAstronaut className={iconStyles} />
+            )}
 
             {/* Tablet onwards: User Address as a Menu button */}
             <div
@@ -44,7 +51,18 @@ export const UserMenu = ({ address }: { address: string }) => {
             </div>
           </>
         </FloatingMenuTrigger>
-        <FloatingMenuContent className={twMerge("p-4 border-0 z-[1] gap-4 mt-2 ml-2 flex flex-col", themeStyles)}>
+        <FloatingMenuContent
+          className={twMerge(
+            "p-4 border-0 z-[1] gap-4 mt-2 ml-2 flex flex-col items-center",
+            themeStyles
+          )}
+        >
+          {user?.role && (
+            <>
+              <p className="capitalize w-full text-center">{user?.role} role</p>
+              <Divider type="horizontal" className="md:my-0" />
+            </>
+          )}
           <UserBalance />
           <Divider type="horizontal" className="md:my-0" />
           <ThemeToggle />

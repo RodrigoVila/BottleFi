@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useId } from '@floating-ui/react'
+
 import { useFloatingMenuContext } from '../hooks/useFloatingMenu'
 
 export const FloatingMenuHeading = React.forwardRef<

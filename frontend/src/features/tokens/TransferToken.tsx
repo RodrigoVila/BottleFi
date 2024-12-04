@@ -7,7 +7,7 @@ import {
   useToastNotifications,
   useWallet,
 } from "@hooks";
-import { GradientButton } from "@components/Buttons";
+import { TokenButton } from "@components/Buttons/TokenButton";
 import { SelectInput, TextInput } from "@components/Inputs";
 
 import {
@@ -100,9 +100,9 @@ export const TransferToken = () => {
           value={destinationAddress}
           onChange={(e) => setDestinationAddress(e.target.value)}
         />
-        <GradientButton loading={isLoading} onClick={handleSubmit}>
+        <TokenButton isLoading={isLoading} onClick={handleSubmit}>
           Transfer
-        </GradientButton>
+        </TokenButton>
       </TokenColumn>
     </TokenLayout>
   );

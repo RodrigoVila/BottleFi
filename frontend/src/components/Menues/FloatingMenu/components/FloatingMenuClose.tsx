@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 import { useFloatingMenuContext } from '../hooks/useFloatingMenu'
 
 export const FloatingMenuClose = React.forwardRef<

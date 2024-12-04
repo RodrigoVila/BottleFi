@@ -8,7 +8,7 @@ type LogoProps = {
 export const Logo = ({ type = "login" }: LogoProps) => {
   const isLogin = type === "login";
   const containerStyles = !isLogin && "flex-row ml-2";
-  const textStyles = isLogin ? "text-6xl md:text-7xl" : "text-2xl";
+  const textStyles = isLogin ? "text-6xl" : "text-2xl";
 
   return (
     <div
@@ -21,7 +21,7 @@ export const Logo = ({ type = "login" }: LogoProps) => {
       <LiaCertificateSolid
         data-testid="Icon logo"
         size={30}
-        className={twMerge("text-white", isLogin && 'hidden')}
+        className={twMerge("text-white", isLogin && "hidden")}
       />
       <h1
         className={twMerge(

@@ -1,8 +1,8 @@
 import { SelectHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { Roles } from "@types";
 import { useThemeContext } from "@hooks";
+import { Roles } from "@types";
 
 export type Option = {
   title: Roles;
@@ -26,9 +26,11 @@ export const Dropdown = ({
   onChange,
   ...rest
 }: CustomDropDownProps) => {
-  const { isProfessionalTheme } = useThemeContext()
+  const { isProfessionalTheme } = useThemeContext();
 
-  const themeStyles = isProfessionalTheme ? "bg-slate-100 text-slate-800" : "bg-black text-slate-100"
+  const themeStyles = isProfessionalTheme
+    ? "bg-slate-100 text-slate-800"
+    : "bg-black text-slate-100";
 
   const handleChange = (value: string) => onChange(JSON.parse(value));
 
@@ -39,7 +41,7 @@ export const Dropdown = ({
           <label htmlFor={rest.name} />
           <select
             className={twMerge(
-              "border-2 border-glass w-full px-1 py-3 text-base transition-all hover:cursor-pointer focus:outline-white capitalize font-medium",
+              "border-2 border-glass w-full px-1 py-2 text-base transition-all hover:cursor-pointer focus:outline-white capitalize font-medium",
               themeStyles,
               className
             )}
@@ -47,14 +49,9 @@ export const Dropdown = ({
             defaultValue="Select role"
             {...rest}
           >
-            <option disabled>
-              Select role
-            </option>
+            <option disabled>Select role</option>
             {options.map((option, index) => (
-              <option
-                key={index}
-                value={JSON.stringify(option)}
-              >
+              <option key={index} value={JSON.stringify(option)}>
                 {option.title}
               </option>
             ))}

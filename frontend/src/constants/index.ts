@@ -6,15 +6,15 @@ type MetamaskPossibleErrors = {
 };
 
 export const SEPOLIA_NETWORK_ID = 11155111;
-export const HARDHAT_NETWORK_ID = 31337;
+export const LOCALHOST_NETWORK_ID = 31337;
 
 export const supportedNetworkId = import.meta.env.DEV
-  ? HARDHAT_NETWORK_ID
+  ? LOCALHOST_NETWORK_ID
   : SEPOLIA_NETWORK_ID;
 
 export const supportedNetworkName = import.meta.env.DEV
-  ? "Hardhat local network"
-  : "Sepolia network";
+  ? "Localhost Network"
+  : "Sepolia Network";
 
 export const LOCAL_STORAGE_KEY = "@BF_DATA";
 
@@ -22,9 +22,9 @@ const IPFS_PUBLIC_KEY = import.meta.env.VITE_INFURA_IPFS_API_KEY;
 const IPFS_PRIVATE_KEY = import.meta.env.VITE_INFURA_IPFS_API_KEY_SECRET;
 
 export const getInfuraAuthHeaders = (): null | string => {
-  if (!IPFS_PUBLIC_KEY || !IPFS_PRIVATE_KEY) return null
+  if (!IPFS_PUBLIC_KEY || !IPFS_PRIVATE_KEY) return null;
   return "Basic " + btoa(IPFS_PUBLIC_KEY + ":" + IPFS_PRIVATE_KEY);
-}
+};
 
 export const METAMASK_POSSIBLE_ERRORS: MetamaskPossibleErrors = {
   "-32700": {

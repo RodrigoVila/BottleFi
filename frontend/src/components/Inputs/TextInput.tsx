@@ -1,10 +1,11 @@
-import { useThemeContext } from "@hooks";
 import { InputHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { useThemeContext } from "@hooks";
+
 type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
-  placeholder?:string;
+  placeholder?: string;
   className?: string;
   type?: string;
 };
@@ -16,15 +17,22 @@ export const TextInput = ({
   type = "text",
   ...rest
 }: TextInputProps) => {
-  const { isProfessionalTheme } = useThemeContext()
+  const { isProfessionalTheme } = useThemeContext();
 
-  const themeStyles = isProfessionalTheme ? "border-gray-800 bg-slate-100 placeholder:text-gray-400 text-slate-800 font-medium py-3" : "bg-transparent border-glass focus:border-white md:placeholder-gray-300"
-  const labelThemeStyles = isProfessionalTheme ? "text-slate-100" : "text-white"
+  const themeStyles = isProfessionalTheme
+    ? "border-gray-800 bg-slate-100 placeholder:text-gray-400 text-slate-800 font-medium"
+    : "bg-transparent border-glass focus:border-white md:placeholder-gray-300";
+  const labelThemeStyles = isProfessionalTheme
+    ? "text-slate-100"
+    : "text-white";
 
   return (
     <div className="flex flex-col w-full mb-4">
       {label && (
-        <label htmlFor={label} className={twMerge("font-semibold w-max", labelThemeStyles)}>
+        <label
+          htmlFor={label}
+          className={twMerge("font-semibold w-max", labelThemeStyles)}
+        >
           {label}
         </label>
       )}
@@ -34,7 +42,7 @@ export const TextInput = ({
         placeholder={placeholder}
         name={label?.toLowerCase()}
         className={twMerge(
-          "border-2 flex-1 p-1 pl-3 rounded-md focus:outline-none py-[6px] disabled:bg-gray-700 text-base",
+          "border-2 flex-1 p-1 pl-3 rounded-md focus:outline-none py-2 disabled:bg-gray-700 text-base",
           themeStyles,
           className
         )}

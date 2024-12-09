@@ -112,12 +112,16 @@ export const RolesModal = () => {
       disableOutsideClick
       withoutCloseButton
     >
-      <h3 className="mx-4 text-3xl font-semibold text-center">{`Create role for ${address}`}</h3>
+      <div className="flex flex-col items-center gap-1">
+        <h3 className="mx-4 text-3xl font-semibold text-center">Create role for account</h3>
+        <h3 className="text-xl font-semibold text-center border-2 border-white px-4 rounded-full tracking-widest bg-slate-950">{address}</h3>
+      </div>
       <label className="self-start -mb-4 font-semibold text-white">Role</label>
       <Dropdown
         options={options}
         selectedOption={selectedRole}
         onChange={handleRoleChange}
+        className="py-[10px]"
       />
       <TextInput
         name="name"

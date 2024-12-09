@@ -49,7 +49,7 @@ export const Dropdown = ({
             defaultValue="Select role"
             {...rest}
           >
-            <option disabled>Select role</option>
+            <option selected={selectedOption === null}>Select role</option>
             {options.map((option, index) => (
               <option key={index} value={JSON.stringify(option)}>
                 {option.title}

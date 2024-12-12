@@ -64,11 +64,20 @@ contract Roles is AccessControl {
 		return true;
 	}
 
-    function isSupplier(address _account) external view returns (bool) {
+    function isSupplier(address _account) public view returns (bool) {
         return hasRole(SUPPLIER_ROLE, _account);
     }
 
-    function isVendor(address _account) external view returns (bool) {
+    function isVendor(address _account) public view returns (bool) {
         return hasRole(VENDOR_ROLE, _account);
+    }
+
+    // Wrappers to use as a modifiers at the main contract
+    function ensureSupplier(address _account) external view {
+        require(isSupplier(_account), "Roles: Not a supplier");
+    }
+
+    function ensureVendor(address _account) external view {
+        require(isVendor(_account), "Roles: Not a vendor");
     }
 }
